@@ -15,6 +15,7 @@ gem 'tzinfo'
 
 group :development do
   gem 'rspec-rails', '2.11.0'
+  gem 'debugger'
 #  gem 'sqlite3', '1.3.5'
 end
 
@@ -57,4 +58,4 @@ end
 # gem 'capistrano'
 
 # To use debugger
-gem 'debugger'
+
