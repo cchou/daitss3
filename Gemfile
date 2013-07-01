@@ -1,12 +1,20 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+#gem 'rails', '3.2.13'
+gem 'bootstrap-sass', '2.1'
+
+gem 'activesupport',      '3.2.13', :require => 'active_support'
+gem 'actionpack',         '3.2.13', :require => 'action_pack'
+gem 'actionmailer',       '3.2.13', :require => 'action_mailer'
+gem 'railties',           '3.2.13', :require => 'rails'
+gem 'tzinfo'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development do
-  gem 'sqlite3', '1.3.5'
+  gem 'rspec-rails', '2.11.0'
+#  gem 'sqlite3', '1.3.5'
 end
 
 # Gems used only for assets and not required
@@ -23,6 +31,18 @@ end
 
 gem 'jquery-rails', '2.0.2'
 
+%w{core constraints migrations transactions timestamps do-adapter rails active_model postgres-adapter}.each do |dmgem|
+  gem "dm-#{dmgem}"
+end
+
+group :production do
+  gem 'pg', '0.12.2'
+end
+
+group :test do
+  gem 'capybara', '1.1.2'
+end
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -36,4 +56,4 @@ gem 'jquery-rails', '2.0.2'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'debugger'
+gem 'debugger'
