@@ -1,10 +1,15 @@
 Daitss::Application.routes.draw do
-  root to: 'main#home'
-  
-  match '/help',  to: 'main#help'
   resources :accounts
-
-
+  resources :users
+  resources :sessions, only: [:new, :create, :destroy]
+  resources :operators, :controller => "users"
+  
+  root to: 'main#home'
+  match '/signup',  to: 'users#new'
+  match '/signin',  to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete    
+  match '/help',  to: 'main#help'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

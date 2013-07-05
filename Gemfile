@@ -15,8 +15,9 @@ gem 'tzinfo'
 
 group :development do
   gem 'rspec-rails', '2.11.0'
+  # To use debugger
   gem 'debugger'
-#  gem 'sqlite3', '1.3.5'
+  # gem 'sqlite3', '1.3.5'
 end
 
 # Gems used only for assets and not required
@@ -33,7 +34,7 @@ end
 
 gem 'jquery-rails', '2.0.2'
 
-%w{core constraints migrations transactions timestamps do-adapter rails active_model postgres-adapter}.each do |dmgem|
+%w{core types constraints validations migrations transactions timestamps do-adapter rails active_model postgres-adapter}.each do |dmgem|
   gem "dm-#{dmgem}"
 end
 
@@ -56,6 +57,3 @@ end
 
 # Deploy with Capistrano
 # gem 'capistrano'
-
-# To use debugger
-
