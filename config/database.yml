@@ -18,9 +18,9 @@ test:
   timeout: 5000
 
 production:
-  adapter: postgresql
+  adapter: sqlite3
   encoding: unicode
-  database: core_production
+  database: db/production.sqlite3
   username: daitss
   pool: 5
   timeout: 5000
