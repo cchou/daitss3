@@ -3,6 +3,7 @@ require File.expand_path('../boot', __FILE__)
 #require 'rails/all'
 require 'action_controller/railtie'
 require 'dm-rails/railtie'
+require "will_paginate/data_mapper"
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -60,5 +61,8 @@ module Daitss
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    
+    # silence served asset log messages
+    config.assets.logger = false
   end
 end

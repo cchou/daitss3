@@ -15,7 +15,13 @@ class Agent
   has n, :comments
 
   belongs_to :account
-
+  
+  before :save, :encrypt
+  
+  def encrypt
+    encrypt_auth(self.auth_key)
+  end
+  
   def encrypt_auth pass
     self.auth_key = Digest::SHA1.hexdigest("#{self.salt}:#{pass}")
   end
@@ -41,7 +47,6 @@ class User < Agent
 
   private
     def create_remember_token
-      debugger
       self.remember_token = SecureRandom.urlsafe_base64
     end
 end

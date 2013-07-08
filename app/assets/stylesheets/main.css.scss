@@ -57,6 +57,17 @@ p {
   font-size: 1.1em;
   line-height: 1.7em;
 }
+
+table {
+  border-collapse:collapse;
+}
+
+table, th, td {
+  overflow: auto;
+  padding: 4px;
+  border-top: 1px solid $grayLighter;
+}
+
 /* header */
 
 #logo {
@@ -148,3 +159,4 @@ input {
   @extend .control-group;
   @extend .error;
 }
+

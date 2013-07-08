@@ -2,7 +2,7 @@ Daitss::Application.routes.draw do
   resources :accounts
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :operators, :controller => "users"
+  resources :operators, :controller => "users" # single table inheritance, operator is a kind of user.
   
   root to: 'main#home'
   match '/signup',  to: 'users#new'

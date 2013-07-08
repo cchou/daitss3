@@ -3,12 +3,17 @@ ruby "1.9.3"
 
 #gem 'rails', '3.2.13'
 gem 'bootstrap-sass', '2.1'
+gem 'faker', '1.0.1' # to create realistic sample db data
+gem 'will_paginate', '3.0.3'
+gem 'bootstrap-will_paginate', '0.0.6'
 
 gem 'activesupport',      '3.2.13', :require => 'active_support'
 gem 'actionpack',         '3.2.13', :require => 'action_pack'
 gem 'actionmailer',       '3.2.13', :require => 'action_mailer'
 gem 'railties',           '3.2.13', :require => 'rails'
 gem 'tzinfo'
+
+gem 'thin'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -29,7 +34,7 @@ end
 
 gem 'jquery-rails', '2.0.2'
 
-%w{core types constraints validations migrations transactions timestamps do-adapter rails active_model postgres-adapter}.each do |dmgem|
+%w{core types constraints validations migrations aggregates transactions timestamps do-adapter rails active_model postgres-adapter}.each do |dmgem|
   gem "dm-#{dmgem}"
 end
 
