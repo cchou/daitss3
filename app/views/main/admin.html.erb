@@ -1,0 +1,29 @@
+<% provide(:title, 'Admin View') %>
+<h1>Admin View</h1>
+<div class="row-fluid">
+  <div class="span4">
+    <label for="account">Accounts</label>
+    <%= collection_select(:account, :account_id,  @accounts,  :id, :id, {:prompt   => "Select an account"}, {:id => 'account_select', :multiple => true, :size => 20 })%>
+  </div>
+  <div class="span4">
+    <label for="project">Projects</label>	
+    <%= collection_select(:project, :project_id,  @projects,  :id, :id, {:prompt   => ""}, { :id => 'project_select', :size => 20 })%>
+  </div>
+  <div class="span4">
+    <label for="contact">Contacts</label>	
+    <%= collection_select(:user, :user_id,  @users,  :id, :id, {:prompt   => ""}, { :id => 'user_select', :size => 20 })%>
+  </div>
+</div>
+<script>
+  $(document).ready(function() {
+    $('#account_select').change(function() {
+      $.ajax({
+        url: "main/select_account",
+        data: {
+          account_id : $('#account_select').val()
+        },
+        dataType: "script"
+      });
+    });
+  });
+</script>

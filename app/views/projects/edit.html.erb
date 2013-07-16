@@ -1,0 +1,22 @@
+<% provide(:title, 'Edit project') %>
+<h1>Update project</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@project) do |f| %>
+      <%#= render 'shared/error_messages' %>
+
+      <%= f.label :id %><br />
+      <%= f.text_field :id %>
+
+      <%= f.label :description %><br />
+      <%= f.text_field :description %>
+ 
+      <%= f.label :account_id %><br />
+      <%= f.select(:account_id, Account.all.collect {|a| a.id}) %>
+ 
+	  <%= hidden_field_tag :account_id, @project.account_id%> 
+      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

@@ -1,9 +1,9 @@
 <% provide(:title, 'All Users') %>
-<h1>All users</h1>
+<h1>All Users</h1>
 
 <%= will_paginate %>
 
-<table class="users">
+<table class="table table-striped">
   <tr>
     <th>Id</th>
     <th>Account</th>
@@ -22,7 +22,7 @@
     <td><%= user.email %></td>
     <td><%= user.first_name %></td>
     <td><%= user.last_name %></td>
-    <% if current_user.is_admin_contact? && !current_user?(user)%>
+    <% if current_user.is_admin_contact? && !current_user?(user) %>
 	<td><%= link_to "delete", user, method: :delete,
                                   data: { confirm: "You sure?" } %></td>
     <% end %>

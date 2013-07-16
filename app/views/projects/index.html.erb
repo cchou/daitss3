@@ -1,0 +1,24 @@
+<% provide(:title, 'All Projects') %>
+<h1>All Projects</h1>
+
+<table class='table table-striped'>
+  <tr>
+    <th>Id</th>
+    <th>Description</th>
+    <th>Account</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @projects.each do |project| %>
+  <tr>
+    <td><%= project.id %></td>
+    <td><%= project.description %></td>
+    <td><%= project.account_id%></td>
+    <td><%= link_to 'Edit', edit_project_path(:id => project.id, :account_id => project.account_id) %></td>
+    <td><%= link_to 'Destroy', project_path(project, :account_id => project.account_id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />

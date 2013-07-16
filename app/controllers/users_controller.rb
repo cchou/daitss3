@@ -19,7 +19,6 @@ class UsersController < ApplicationController
   # create a new user model with the information entered.
   def create
     @user = User.new(params[:user])
-    debugger
     @user.encrypt_auth(@user.auth_key)
     if @user.save
       sign_in @user
@@ -37,7 +36,7 @@ class UsersController < ApplicationController
   # update user profile
   def update
     @user = User.get(params[:id])
-    if @user.update(params[:user])
+    if @user.authenticate(params[:user][:auth_key]) && @user.update(params[:user])
       flash[:success] = "Profile updated"
       sign_in @user
       redirect_to @user

@@ -1,5 +1,6 @@
 Daitss::Application.routes.draw do
   resources :accounts
+  resources :projects
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :operators, :controller => "users" # single table inheritance, operator is a kind of user.
@@ -10,6 +11,9 @@ Daitss::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete    
   match '/help',  to: 'main#help'
   
+  match '/admin' => 'main#admin'
+
+  get 'main/select_account', :as => 'select_account'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -12,4 +12,9 @@ class Project
   has 0..n, :packages
 
   belongs_to :account, :key => true
+  
+ def to_param
+    id
+   # "#{id}/#{account_id}"
+  end  
 end

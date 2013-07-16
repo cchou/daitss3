@@ -12,7 +12,7 @@
       <%= f.text_field :description %>
 
       <%= f.label :account_id %>
-      <%= f.text_field :account_id %>
+      <%= f.select(:account_id, Account.all.collect {|a| a.id}) %>
 
       <%= f.label :first_name %>
       <%= f.text_field :first_name %>
@@ -24,7 +24,7 @@
       <%= f.text_field :email %>
 
       <%= f.label :auth_key %>
-      <%= f.password_field :auth_key %>
+      <%= f.password_field :auth_key, :placeholder="Password" %>
 
       <%= f.label :phone %>
       <%= f.text_field :phone %>
