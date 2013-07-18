@@ -45,6 +45,16 @@ class UsersController < ApplicationController
     end
   end  
 
+  # update user profile by an administrator
+  def admin_update
+    @user = User.get(params[:id])
+    if @user.update(params[:user])
+      flash[:success] = "User updated"
+    else
+      render 'edit'
+    end
+  end  
+  
   def destroy
     User.get(params[:id]).destroy!
     flash[:success] = "User destroyed."
