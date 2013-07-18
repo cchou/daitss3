@@ -13,9 +13,7 @@ namespace :db do
                    is_admin_contact: true,
                    is_tech_contact: true,
                    account_id: account)       
-    100.times do |n|
- 
-      
+    50.times do |n|
       user = User.create(id: Faker::Name.name, 
                    first_name: Faker::Name.first_name, 
                    last_name: Faker::Name.last_name,
@@ -23,9 +21,17 @@ namespace :db do
                    auth_key: password,
                    phone: Faker::PhoneNumber.phone_number,
                    address: Faker::Address.street_address,
-                   account_id: account)
-      # puts user.inspect
-      # puts user.saved?    
+                   account_id: "UF")
+    end
+    50.times do |n|
+      user = User.create(id: Faker::Name.name, 
+                   first_name: Faker::Name.first_name, 
+                   last_name: Faker::Name.last_name,
+                   email: Faker::Internet.email, 
+                   auth_key: password,
+                   phone: Faker::PhoneNumber.phone_number,
+                   address: Faker::Address.street_address,
+                   account_id: "USF")                      
     end
   end
 end

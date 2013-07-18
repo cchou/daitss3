@@ -10,13 +10,13 @@ class ProjectsController < ApplicationController
   end
   
   # create a new project model with the information entered.
-  # def create
-  #    @project = Project.new(params[:project])
-  #    
-  #    if @project.save
-  #      redirect_to @project
-  #    end
-  #  end
+  def create
+    @project = Project.new(params[:project])
+      
+    if @project.save
+      redirect_to projects_url
+    end
+  end
  
   def edit
     @project = Project.get(params[:id], params[:account_id])
