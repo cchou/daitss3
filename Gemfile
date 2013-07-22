@@ -12,7 +12,8 @@ gem 'actionpack',         '3.2.13', :require => 'action_pack'
 gem 'actionmailer',       '3.2.13', :require => 'action_mailer'
 gem 'railties',           '3.2.13', :require => 'rails'
 gem 'tzinfo'
-
+gem 'libxml-ruby'
+gem 'nokogiri'
 gem 'thin'
 
 # Bundle edge Rails instead:

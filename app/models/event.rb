@@ -10,7 +10,6 @@
     belongs_to :agent
     belongs_to :package
     has n, :comments
-  end
 
   def polite_name
     if name =~ /unsnafu/
@@ -18,4 +17,5 @@
     else
       name.gsub 'snafu', 'error'
     end
+  end
   end

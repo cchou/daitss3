@@ -1,5 +1,3 @@
-require 'dm-core'
-require 'dm-validations'
 
 class Project
   include DataMapper::Resource

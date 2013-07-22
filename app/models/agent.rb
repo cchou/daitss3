@@ -15,9 +15,7 @@ class Agent
   has n, :comments
 
   belongs_to :account
-  
-#  before :save, :encrypt
-  
+    
   def encrypt
     encrypt_auth(self.auth_key)
   end
