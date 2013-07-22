@@ -8,7 +8,7 @@ class Agent
 
   property :type, Discriminator
   property :deleted_at, ParanoidDateTime
-  property :remember_token, String, :index => true
+  property :remember_token, String, :required  => true, :index => true
   
   has n, :events
   has n, :requests
@@ -16,7 +16,7 @@ class Agent
 
   belongs_to :account
   
-  before :save, :encrypt
+#  before :save, :encrypt
   
   def encrypt
     encrypt_auth(self.auth_key)
@@ -29,6 +29,11 @@ class Agent
   def authenticate pass
     self.auth_key == Digest::SHA1.hexdigest("#{self.salt}:#{pass}") and self.deleted_at.nil?
   end
+  
+  def new_remember_token
+    SecureRandom.urlsafe_base64
+  end  
+  
 end
 
 class User < Agent
@@ -40,15 +45,14 @@ class User < Agent
   property :is_admin_contact, Boolean, :default => false
   property :is_tech_contact, Boolean, :default => false
 
-  before :save, :create_remember_token
   def packages
     self.account.projects.packages
   end
 
-  private
+  private 
     def create_remember_token
-      self.remember_token = SecureRandom.urlsafe_base64
-    end
+      self.remember_token = new_remember_token
+  end
 end
 
 class Contact < User

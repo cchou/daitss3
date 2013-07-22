@@ -23,4 +23,8 @@ class Account
     return p
   end
 
+  # retrieve the list of user accounts, excluding the "SYSTEM" - system account used by DAITSS program
+  def self.user_accounts
+    Account.all - Account.all(:id => "SYSTEM")
+  end
 end

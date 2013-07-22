@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   # GET /projects
 
   def index
-    @projects = Project.all
+    @projects = Project.all - Project.all(:account_id => "SYSTEM")
   end
     
   def new

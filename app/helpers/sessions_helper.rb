@@ -1,6 +1,8 @@
 module SessionsHelper
   def sign_in(user)
-    cookies.permanent[:remember_token] = user.remember_token
+    remember_token = user.new_remember_token
+    cookies.permanent[:remember_token] = remember_token
+    user.update(:remember_token => remember_token)
     self.current_user = user
   end
 
@@ -28,13 +30,8 @@ module SessionsHelper
   def admin_user?
     current_user.is_admin_contact?
   end
-      
-  def sign_out
-    self.current_user = nil
-    cookies.delete(:remember_token)
-  end  
 
- def redirect_back_or(default)
+  def redirect_back_or(default)
     redirect_to(session[:return_to] || default)
     session.delete(:return_to)
   end

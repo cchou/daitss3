@@ -6,7 +6,7 @@ class MainController < ApplicationController
   end
   
   def admin
-    @accounts = Account.all
+    @accounts = Account.user_accounts
     @projects = []
     @users = []
     
