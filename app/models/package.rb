@@ -36,6 +36,10 @@ class Package
     'integrity failure'
   ]
 
+  def self.search(id)
+    all(:id.like => "%#{id}%")
+  end
+  
   def normal_events
     events.all(:order => [:id.asc]) - (fixity_passed_events + legacy_events + fixity_failed_events)
   end

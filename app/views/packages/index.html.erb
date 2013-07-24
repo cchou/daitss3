@@ -1,13 +1,18 @@
 <% provide(:title, 'View Packages') %>
 <h1>View Packages</h1>
 
+<%= form_tag packages_path, :method => 'get' do %>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+<% end %>
+
 <%= will_paginate %>
 
 <table id="packages" class="table table-condensed table-striped">
   <thead>
     <tr>
-      <th>Id</th>
-      <th>IEID</th>
+      <th><%= sortable "id" %></th>
+      <th>Package Name</th>
       <th>Account</th>
       <th>Project</th>
       <th>Size</th>
@@ -17,6 +22,19 @@
       <th>Title</th>
       <th>Volume</th>
       <th>Issue</th>
+    </tr>
+    <tr>
+      <th><%= text_field_tag :search_id, params[:search_id], :size => 10 %></th>
+      <th><%= text_field_tag :search_name, params[:search_name], :size => 10  %></th>
+      <th><%= text_field_tag :search_account, params[:search_account], :size => 5  %></th>
+      <th><%= text_field_tag :search_project, params[:search_project], :size => 5  %></th>
+      <th></th>
+      <th></th>
+      <th><%= text_field_tag :search_activity, params[:search_activity], :size => 5  %></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
