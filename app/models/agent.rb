@@ -30,8 +30,10 @@ class Agent
   
   def new_remember_token
     SecureRandom.urlsafe_base64
-  end  
-  
+  end 
+  def create_remember_token
+      self.remember_token = new_remember_token
+  end     
 end
 
 class User < Agent
@@ -46,11 +48,7 @@ class User < Agent
   def packages
     self.account.projects.packages
   end
-
-  private 
-    def create_remember_token
-      self.remember_token = new_remember_token
-  end
+  
 end
 
 class Contact < User

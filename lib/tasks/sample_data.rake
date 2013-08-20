@@ -37,34 +37,44 @@ namespace :db do
     program = Program.create(:id => SYSTEM_PROGRAM_ID,
                           :description => "daitss software agent",
                           :account => a)
-
-    program.save or raise "cannot save system program"
+    program.create_remember_token
+    program.save or raise "cannot save system program, #{program.errors.full_messages}"
 
     program = Program.create(:id => D1_PROGRAM_ID,
                           :description => "daitss 1 software agent",
                           :account => a)
-
+    program.create_remember_token
     program.save or raise "cannot save daitss 1 program"
 
     operator = Operator.create(:id => ROOT_OPERATOR_ID,
                             :description => "default operator account",
                             :account => a,
                             auth_key: ROOT_OPERATOR_ID)   
-                           
+    operator.encrypt_auth(ROOT_OPERATOR_ID)
+    operator.create_remember_token
+    operator.save or raise "cannot save operator, #{program.errors.full_messages}"
+                          
   end
   
   desc "Fill database with sample data"
   task populate: :environment do          
     password  = "pw"
      
-    // create sample accounts
+    # create sample accounts
     Account.create(id: "UF", description: "UF", report_email: "report@uf.edu")
     Account.create(id: "USF", description: "USF", report_email: "report@usf.edu")
     Account.create(id: "UCF", description: "UCF", report_email: "report@ucf.edu")
     Account.create(id: "FSU", description: "FSU", report_email: "report@fsu.edu")
     Account.create(id: "FAU", description: "FAU", report_email: "report@fau.edu")
 
-    // create sample projects
+    # create sample projects
+    Project.create(id: "ETD", description: "Electronic Thesis Disertation", account_id: "UF")
+    Project.create(id: "ETD", description: "Electronic Thesis Disertation", account_id: "USF")
+    Project.create(id: "ETD", description: "Electronic Thesis Disertation", account_id: "UCF")
+    Project.create(id: "ETD", description: "Electronic Thesis Disertation", account_id: "FSU")
+    Project.create(id: "ETD", description: "Electronic Thesis Disertation", account_id: "FAU")
+
+    # create sample users, packages
     20.times do |n|
       user = User.create(id: Faker::Name.name, 
                    first_name: Faker::Name.first_name, 
@@ -74,7 +84,16 @@ namespace :db do
                    phone: Faker::PhoneNumber.phone_number,
                    address: Faker::Address.street_address,
                    account_id: "UF")
+      user.create_remember_token
+      prj = Account.get("UF").projects.first("ETD")
+      package = Package.new 
+      package.sip = Sip.new :name => "UF"+rand(100000).to_s
+      prj.packages << package      
+      package.log 'submit', :notes => "N/A"      
+      user.save or raise "cannot save user #{user.id}, #{user.errors.full_messages}"
+      package.save or raise "cannot save package #{package.id}"       
     end
+    
     20.times do |n|
       user = User.create(id: Faker::Name.name, 
                    first_name: Faker::Name.first_name, 
@@ -83,7 +102,16 @@ namespace :db do
                    auth_key: password,
                    phone: Faker::PhoneNumber.phone_number,
                    address: Faker::Address.street_address,
-                   account_id: "USF")                      
+                   account_id: "USF")  
+      user.create_remember_token
+      prj = Account.get("USF").projects.first("ETD")
+      package = Package.new 
+      package.sip = Sip.new :name => "USF"+rand(100000).to_s
+      prj.packages << package      
+      package.log 'submit', :notes => "N/A"      
+      user.save or raise "cannot save user #{user.id}, #{user.errors.full_messages}"
+      package.save or raise "cannot save package #{package.id}"
+                                             
     end
     20.times do |n|
       user = User.create(id: Faker::Name.name, 
@@ -93,8 +121,17 @@ namespace :db do
       auth_key: password,
       phone: Faker::PhoneNumber.phone_number,
       address: Faker::Address.street_address,
-      account_id: "UCF")                      
+      account_id: "UCF")
+      user.create_remember_token
+      prj = Account.get("UCF").projects.first("ETD")
+      package = Package.new 
+      package.sip = Sip.new :name => "UCF"+rand(100000).to_s
+      prj.packages << package      
+      package.log 'submit', :notes => "N/A"
+      user.save or raise "cannot save user #{user.id}, #{user.errors.full_messages}"
+      package.save or raise "cannot save package #{package.id}"                            
     end    
+    
     20.times do |n|
       user = User.create(id: Faker::Name.name, 
       first_name: Faker::Name.first_name, 
@@ -104,7 +141,16 @@ namespace :db do
       phone: Faker::PhoneNumber.phone_number,
       address: Faker::Address.street_address,
       account_id: "FSU")                      
+      user.create_remember_token
+      prj = Account.get("FSU").projects.first("ETD")
+      package = Package.new 
+      package.sip = Sip.new :name => "FSU"+rand(100000).to_s
+      prj.packages << package      
+      package.log 'submit', :notes => "N/A"
+      user.save or raise "cannot save user #{user.id}, #{user.errors.full_messages}"
+      package.save or raise "cannot save package #{package.id}"
     end    
+    
     20.times do |n|
       user = User.create(id: Faker::Name.name, 
       first_name: Faker::Name.first_name, 
@@ -113,7 +159,15 @@ namespace :db do
       auth_key: password,
       phone: Faker::PhoneNumber.phone_number,
       address: Faker::Address.street_address,
-      account_id: "FAU")                      
+      account_id: "FAU")    
+      user.create_remember_token
+      prj = Account.get("FAU").projects.first("ETD")
+      package = Package.new 
+      package.sip = Sip.new :name => "FAU"+rand(100000).to_s
+      prj.packages << package      
+      package.log 'submit', :notes => "N/A"      
+      user.save or raise "cannot save user #{user.id}, #{user.errors.full_messages}"
+      package.save or raise "cannot save package #{package.id}"                        
     end
   end
   

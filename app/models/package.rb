@@ -5,7 +5,7 @@ class Package
   # NOTE: be sure to update storage side models if this schema changes!
 
   property :id, EggHeadKey
-  property :uri, String, :unique => true, :required => true, :default => proc { |r,p| Daitss.archive.uri_prefix + r.id }
+  property :uri, String, :unique => true, :required => true, :default => proc { |r,p| "info:fda/" + r.id }
 
   has n, :events
   has n, :requests
