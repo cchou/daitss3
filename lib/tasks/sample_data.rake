@@ -55,12 +55,17 @@ namespace :db do
   
   desc "Fill database with sample data"
   task populate: :environment do          
-     password  = "password"
-     Account.create(id: "UF", description: "UF", report_email: "report@uf.edu")
-     Account.create(id: "USF", description: "USF", report_email: "report@usf.edu")
-     Account.create(id: "UCF", description: "UCF", report_email: "report@ucf.edu")
+    password  = "pw"
+     
+    // create sample accounts
+    Account.create(id: "UF", description: "UF", report_email: "report@uf.edu")
+    Account.create(id: "USF", description: "USF", report_email: "report@usf.edu")
+    Account.create(id: "UCF", description: "UCF", report_email: "report@ucf.edu")
+    Account.create(id: "FSU", description: "FSU", report_email: "report@fsu.edu")
+    Account.create(id: "FAU", description: "FAU", report_email: "report@fau.edu")
 
-    50.times do |n|
+    // create sample projects
+    20.times do |n|
       user = User.create(id: Faker::Name.name, 
                    first_name: Faker::Name.first_name, 
                    last_name: Faker::Name.last_name,
@@ -70,7 +75,7 @@ namespace :db do
                    address: Faker::Address.street_address,
                    account_id: "UF")
     end
-    50.times do |n|
+    20.times do |n|
       user = User.create(id: Faker::Name.name, 
                    first_name: Faker::Name.first_name, 
                    last_name: Faker::Name.last_name,
@@ -79,6 +84,36 @@ namespace :db do
                    phone: Faker::PhoneNumber.phone_number,
                    address: Faker::Address.street_address,
                    account_id: "USF")                      
+    end
+    20.times do |n|
+      user = User.create(id: Faker::Name.name, 
+      first_name: Faker::Name.first_name, 
+      last_name: Faker::Name.last_name,
+      email: Faker::Internet.email, 
+      auth_key: password,
+      phone: Faker::PhoneNumber.phone_number,
+      address: Faker::Address.street_address,
+      account_id: "UCF")                      
+    end    
+    20.times do |n|
+      user = User.create(id: Faker::Name.name, 
+      first_name: Faker::Name.first_name, 
+      last_name: Faker::Name.last_name,
+      email: Faker::Internet.email, 
+      auth_key: password,
+      phone: Faker::PhoneNumber.phone_number,
+      address: Faker::Address.street_address,
+      account_id: "FSU")                      
+    end    
+    20.times do |n|
+      user = User.create(id: Faker::Name.name, 
+      first_name: Faker::Name.first_name, 
+      last_name: Faker::Name.last_name,
+      email: Faker::Internet.email, 
+      auth_key: password,
+      phone: Faker::PhoneNumber.phone_number,
+      address: Faker::Address.street_address,
+      account_id: "FAU")                      
     end
   end
   

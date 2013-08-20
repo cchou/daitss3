@@ -1,11 +1,36 @@
 <% provide(:title, 'View Packages') %>
-<h1>View Packages</h1>
-
-<%= form_tag packages_path, :method => 'get' do %>
-    <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag "Search", :name => nil %>
-<% end %>
-
+<h6>Packages->View</h1>
+<div class="row-fluid">
+  <form action="/packages", class="well", method ="get">
+	<div class="span1">
+      <%= text_field_tag :search, params[:search], :size => 10, :placeholder => "IEID" %>
+    </div>
+    <div class="span2">
+      <%= text_field_tag :name_search, params[:name_search], :size => 10, :placeholder => "Package Name" %>
+    </div>
+    <div class="span1">
+      <%= text_field_tag :account_search, params[:account_search], :placeholder => "Account" %>
+    </div>
+    <div class="span1">
+      <%= text_field_tag :project_search, params[:project_search], :placeholder => "Project" %>
+    </div>
+    <div class="span1">
+      <%= text_field_tag :batch_search, params[:batch_search], :placeholder => "Batch" %>
+    </div>
+    <div class="span1">
+      <%= text_field_tag :activity_search, params[:activity_search], :placeholder => "Activity" %>
+    </div>
+    <div class="span2">
+      <%= text_field_tag :start_time_search, params[:start_time_search], :placeholder => "Start Date" %>
+    </div>
+    <div class="span2">
+      <%= text_field_tag :end_time_search, params[:end_time_search], :placeholder => "End Date" %>
+    </div>
+    <div class="span1">
+      <%= submit_tag "Search", :class=>"btn", :name => nil %>
+    </div>
+  </form>
+</div>
 <%= will_paginate %>
 
 <table id="packages" class="table table-condensed table-striped">
@@ -13,8 +38,8 @@
     <tr>
       <th><%= sortable "id" %></th>
       <th>Package Name</th>
-      <th>Account</th>
-      <th>Project</th>
+      <th><%= sortable "account" %></th>
+      <th><%= sortable "project" %></th>
       <th>Size</th>
       <th># Files</th>
       <th>Latest Activity</th>
@@ -23,19 +48,19 @@
       <th>Volume</th>
       <th>Issue</th>
     </tr>
-    <tr>
-      <th><%= text_field_tag :search_id, params[:search_id], :size => 10 %></th>
-      <th><%= text_field_tag :search_name, params[:search_name], :size => 10  %></th>
-      <th><%= text_field_tag :search_account, params[:search_account], :size => 5  %></th>
-      <th><%= text_field_tag :search_project, params[:search_project], :size => 5  %></th>
-      <th></th>
-      <th></th>
-      <th><%= text_field_tag :search_activity, params[:search_activity], :size => 5  %></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
+    <!-- <tr>
+       <th><%= text_field_tag :search_id, params[:search_id], :size => 10 %></th>
+       <th><%= text_field_tag :search_name, params[:search_name], :size => 10  %></th>
+       <th><%= text_field_tag :search_account, params[:search_account], :size => 5  %></th>
+       <th><%= text_field_tag :search_project, params[:search_project], :size => 5  %></th>
+       <th></th>
+       <th></th>
+       <th><%= text_field_tag :search_activity, params[:search_activity], :size => 5  %></th>
+       <th></th>
+       <th></th>
+       <th></th>
+       <th></th>
+     </tr> -->
   </thead>
   <tbody>
     <% @packages.each do |package| %>
