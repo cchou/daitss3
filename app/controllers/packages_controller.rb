@@ -16,4 +16,6 @@ class PackagesController < ApplicationController
     params[:direction] || "asc"  
   end    
 
+  def submit
+  end
 end

@@ -1,5 +1,5 @@
 class MainController < ApplicationController
-  def home
+  def dashboard
   end
   
   def help
