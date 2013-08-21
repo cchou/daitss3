@@ -1,0 +1,13 @@
+<% provide(:title, 'Submit Packages') %>
+<h6>Packages->Submit</h1>
+<div class="row">
+  <div class="span6 offset3">
+  <form action="/packages", class="well", method ="post">
+      <%= label :batch, "Batch" %>		
+      <%= text_field_tag :batch, params[:batch], :size => 10 %>
+      <%= label :note, "Note" %>		
+      <%= text_field_tag :note, params[:note], :size => 10 %>
+      <%= submit_tag "Submit", :class=>"btn", :name => nil %>
+  </form>
+  </div>
+</div>
