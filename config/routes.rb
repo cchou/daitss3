@@ -15,9 +15,10 @@ Daitss::Application.routes.draw do
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete    
   match '/help',  to: 'main#help'
-  
   match '/admin' => 'main#admin'
-
+  match '/submit', to: 'packages#submit'
+  match '/upload', to: 'packages#upload'
+  
   get 'main/select_account', :as => 'select_account'
   # The priority is based upon order of creation:
   # first created -> highest priority.
