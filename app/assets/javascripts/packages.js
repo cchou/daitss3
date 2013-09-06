@@ -2,17 +2,6 @@
 //# All this logic will automatically be available in application.js.
 //# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-// implement a HashTable, since js has no build-in one 
-// function HashTable() {
-// 	var hashTableItems = {};
-// 	this.SetItem = function(key, value) {
-// 		hashTableItems[key] = value;
-// 	}
-// 	this.GetItem = function(key) {
-// 		return hashTableItems[key];
-// 	}
-// }
-
 var upload_queue = {};
 
 // get the HTML element by its id.
@@ -62,15 +51,6 @@ function Init() {
 			var progress_bar = row.cells[4].firstChild.firstChild;
 			UploadFile(file, progress_bar);
 		}
-		
-		// for (var file in upload_queue) {
-		// // find the file object in the hash
-		// 	progress_bar = upload_queue[file];
-		// 	// find the progress bar inside the queue table for the file object.
-		// 	//var progress = $id("queue").rows[n].cells[4].firstChild.firstChild;
-		// 	
-		// 	UploadFile(file, progress_bar);
-		// }
 	})
 }
 
@@ -142,7 +122,6 @@ function InspectFile(file) {
 	var btn = "<button class=\"btn btn-warning\"type=\"button\">Cancel</button>";
 	cell6.innerHTML = btn;
 	
-
 	$(".btn-warning").on('click', function (e) {
 	    alert('cancel' + this.id);
 	    // remove the current row from the queue table
