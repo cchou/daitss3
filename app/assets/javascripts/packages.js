@@ -77,15 +77,15 @@ function AddFile(e) {
 // inspect the selected file
 function InspectFile(file) {
 	var id = "tr_" + file.name;
-	var message = "";
+	var error = "";
 
 	// check the file size, display a message if it's over the max_file_size
 	if (file.size > $id("MAX_FILE_SIZE").value) {
-		message = "Exceed maximum file size:" + $id("MAX_FILE_SIZE").value;
+		error = "Exceed maximum file size:" + $id("MAX_FILE_SIZE").value;
 	}
 	// check file type, display a message if it's not tarred or zipped.
 	if (file.type.indexOf("zip") == -1 && file.type.indexOf("tar") == -1) {
-		message = "Invalid file type, only tarred or zipped files are allowed";
+		error = "Invalid file type, only tarred or zipped files are allowed";
 	}
 	
 	// add a new row to the queue table
@@ -97,8 +97,12 @@ function InspectFile(file) {
 	cell1.innerHTML = file.name;
 	
 	var cell2 = row.insertCell(1);
-	cell2.innerHTML = message;
-	
+	if (error.length > 0) {
+		cell2.innerHTML = "<div class=\"alert alert-error\">" + error + "</div>";
+	} else {
+		cell2.innerHTML = "";
+	}
+		
 	var cell3 = row.insertCell(2);
 	cell3.innerHTML = file.type;
 	
