@@ -33,7 +33,7 @@ group :assets do
   gem 'uglifier', '1.2.3'
 end
 
-gem 'jquery-rails', '2.0.2'
+gem 'jquery-rails', '~>2.1'
 
 %w{core types constraints validations migrations aggregates transactions timestamps do-adapter rails active_model postgres-adapter}.each do |dmgem|
   gem "dm-#{dmgem}"

@@ -21,7 +21,7 @@
       <%= text_field_tag :activity_search, params[:activity_search], :placeholder => "Activity" %>
     </div>
     <div class="span2">
-      <%= text_field_tag :start_time_search, params[:start_time_search], :placeholder => "Start Date" %>
+      <%= text_field_tag :start_time_search, params[:start_time_search], :type=> "datetime-local", :placeholder => "Start Date" %>
     </div>
     <div class="span2">
       <%= text_field_tag :end_time_search, params[:end_time_search], :placeholder => "End Date" %>

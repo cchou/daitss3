@@ -12,6 +12,8 @@ module SessionsHelper
   end
   
   def signed_in?
+    puts "current user #{@current_user}"
+    puts "cookies #{cookies[:remember_token]}"
     !current_user.nil?
   end
     

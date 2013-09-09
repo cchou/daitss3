@@ -171,6 +171,9 @@ function UploadFile(file, progress) {
 		};
 	    // start uploading
 		xhr.open("POST", $id("upload").action, true);
+		// pass the csrf token
+		var token =$("meta[name='csrf-token']").attr("content");
+  		xhr.setRequestHeader("X-CSRF-Token", token);  
 		xhr.setRequestHeader("X_FILENAME", file.name);
 		xhr.setRequestHeader("Content-Type", file.type);
 
