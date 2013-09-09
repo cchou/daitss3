@@ -9,7 +9,6 @@ function $id(id) {
 	return document.getElementById(id);
 }
 
-
 // call initialization file
 function load() {
 	if (window.File && window.FileList && window.FileReader) {
@@ -35,7 +34,7 @@ function Init() {
 		filedrag.addEventListener("dragleave", DragHoverFile, false);
 		filedrag.addEventListener("drop", AddFile, false);
 		filedrag.style.display = "block";
-		// remove submit button
+		// remove the submit button
 		submitbutton.style.display = "none";
 	}
 	
@@ -70,11 +69,10 @@ function AddFile(e) {
 	// process all File objects
 	for (var i = 0, f; f = files[i]; i++) {
 		InspectFile(f);
-//		UploadFile(f);
 	}
 }
 
-// inspect the selected file
+// inspect the selected file, check for errors and add a row for the selected file to the queue table.
 function InspectFile(file) {
 	var id = "tr_" + file.name;
 	var error = "";
@@ -155,23 +153,23 @@ function InspectFile(file) {
 // asynchronously upload a file
 function UploadFile(file, progress) {
 	var xhr = new XMLHttpRequest();
-	if (xhr.upload && file.size <= $id("MAX_FILE_SIZE").value) {
+	if (xhr.upload && file.size <= $id("MAX_FILE_SIZE").value && 
+	    (file.type == 'application/x-tar' || file.type == 'application/zip')) {
 		// add an event listener to the progress bar
 		xhr.upload.addEventListener("progress", function(evt) {
 			var percent = parseInt((evt.loaded/evt.total*100));
-			// puts "percent = #{percent}";
 			progress.style.width ='#{percent}%';
 		}, false);
 		// whether file uploading were received or failed
 		xhr.onreadystatechange = function(evt) {
 			if (xhr.readyState == 4) {
 				progress.style.width ='100%';
-			//	progress.className = (xhr.status == 200 ? "success" : "failure");
 			}
 		};
 	    // start uploading
 		xhr.open("POST", $id("upload").action, true);
-		// pass the csrf token
+		// pass the csrf token in the ajax post request
+		// see http://www.mindfiresolutions.com/How-to-work-with-CSRF-token-while-AJAX-posting-in-Rails-31-1651.php
 		var token =$("meta[name='csrf-token']").attr("content");
   		xhr.setRequestHeader("X-CSRF-Token", token);  
 		xhr.setRequestHeader("X_FILENAME", file.name);
