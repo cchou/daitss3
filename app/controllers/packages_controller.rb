@@ -6,12 +6,6 @@ class PackagesController < ApplicationController
     sort = DataMapper::Query::Operator.new(sort_column, sort_direction)
     @packages= Package.search(params[:search]).all(:order => [sort]).paginate(page: params[:page])
   end
-
-  def submit
-  end
-   
-  def show
-  end
      
   # upload a package 
   def upload
@@ -28,6 +22,12 @@ class PackagesController < ApplicationController
     # HTTP 200, with empty response_body
     render :nothing => true
   end
+ 
+  def submit
+  end
+   
+  def show
+  end 
   
   private
   def sort_column  
