@@ -3,36 +3,69 @@
 
 <div class="row">
   <div class="span6 offset3">
-    <%= form_for(@user) do |f| %>
+    <%= form_for(@user, :as => :user, :html => {:class => "form-horizontal"}) do |f| %>
       <%#= render 'shared/error_messages' %>
-      <%= f.label :id %>
-      <%= f.text_field :id %>
+      <div class="control-group">
+        <%= f.label :id, class: "control-label" %>
+        <div class="controls">
+      	  <%= f.text_field :id, :readonly => true %>
+        </div>
+      </div>
 
-      <%= f.label :description %>
-      <%= f.text_field :description %>
+      <div class="control-group">
+        <%= f.label :description, class: "control-label" %>
+        <div class="controls">
+      	  <%= f.text_field :description %>
+        </div>
+      </div>
 
-      <%= f.label :account_id %>
-      <%= f.select(:account_id, Account.all.collect {|a| a.id}) %>
+      <div class="control-group">
+        <%= f.label :account_id, class: "control-label" %>
+        <div class="controls">
+          <%= f.select(:account_id, Account.all.collect {|a| a.id}) %>
+        </div>
+      </div>
 
-      <%= f.label :first_name %>
-      <%= f.text_field :first_name %>
+     <div class="control-group">
+      <%= f.label :first_name, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :first_name %>
+       </div>
+      </div>
 
-      <%= f.label :last_name %>
-      <%= f.text_field :last_name %>
+     <div class="control-group">
+      <%= f.label :last_name, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :last_name %>
+       </div>
+      </div>
+ 
+     <div class="control-group">
+      <%= f.label :email, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :email, :type => "email" %>
+       </div>
+      </div>
 
-      <%= f.label :email %>
-      <%= f.text_field :email %>
+      <div class="control-group">
+        <%= f.label :phone, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :phone, :type=>'tel', :pattern=>'[\(]\d{3}[\)]\d{3}[\-]\d{4}', :title=>'Phone Number (Format: (999)999-9999)'%>
+        </div>
+      </div>
 
-      <%= f.label :password %>
-      <%= f.password_field :auth_key, :placeholder=>"Password" %>
+      <div class="control-group">
+        <%= f.label :address, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_area :address, rows: "2" %>
+        </div>
+      </div>
 
-      <%= f.label :phone %>
-      <%= f.text_field :phone %>
-
-      <%= f.label :address %>
-      <%= f.text_field :address %>
-
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+      <div class="control-group">
+	    <div class="controls">
+          <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>
