@@ -36,7 +36,8 @@ class UsersController < ApplicationController
   # update user profile
   def update
     @user = User.get(params[:id])
-    if @user.authenticate(params[:user][:auth_key]) && @user.update(params[:user])
+    #    if @user.authenticate(params[:user][:auth_key]) && @user.update(params[:user])
+    if @user.update(params[:user])
       flash[:success] = "Profile updated"
       sign_in @user
       redirect_to @user
