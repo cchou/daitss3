@@ -2,6 +2,19 @@
 //# All this logic will automatically be available in application.js.
 //# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+
+  $(document).ready(function() {
+    $('#account_search').change(function() {
+      $.ajax({
+        url: "packages/select_account",
+        data: {
+          account_id : $('#account_search').val()
+        },
+        dataType: "script"
+      });
+    });
+  });
+
 var upload_queue = {};
 
 // get the HTML element by its id.
@@ -51,6 +64,11 @@ function Init() {
 			UploadFile(file, progress_bar);
 		}
 	})
+	
+	// remove all the files.....
+	$("#delete_all").on('click', function (e) {
+		$id("queue").innerHTML = "";
+	})	
 }
 
 // file drag hover
@@ -125,7 +143,6 @@ function InspectFile(file) {
 	cell6.innerHTML = btn;
 	
 	$(".btn-warning").on('click', function (e) {
-	    alert('cancel' + this.id);
 	    // remove the current row from the queue table
         $(this).closest('tr').remove();
     })

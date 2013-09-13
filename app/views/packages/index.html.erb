@@ -2,17 +2,11 @@
 <h6>Packages->View</h1>
 <div class="row-fluid">
   <form action="/packages", class="well", method ="get">
-	<div class="span1">
-      <%= text_field_tag :search, params[:search], :size => 10, :placeholder => "IEID" %>
-    </div>
-    <div class="span2">
-      <%= text_field_tag :name_search, params[:name_search], :size => 10, :placeholder => "Package Name" %>
+    <div class="span1">
+	  <%= collection_select(:account,  :account_id, Account.all, :id, :id, {:prompt => "Account"}, {:id => 'account_search', include_blank: 'None'})%>
     </div>
     <div class="span1">
-      <%= text_field_tag :account_search, params[:account_search], :placeholder => "Account" %>
-    </div>
-    <div class="span1">
-      <%= text_field_tag :project_search, params[:project_search], :placeholder => "Project" %>
+	   <%= collection_select(:project, :project_id,  @projects,  :id, :id, {:prompt   => "Project"}, { :id => 'project_search'})%>
     </div>
     <div class="span1">
       <%= text_field_tag :batch_search, params[:batch_search], :placeholder => "Batch" %>
@@ -21,16 +15,22 @@
       <%= text_field_tag :activity_search, params[:activity_search], :placeholder => "Activity" %>
     </div>
     <div class="span2">
-      <%= text_field_tag :start_time_search, params[:start_time_search], :type=> "datetime-local", :placeholder => "Start Date" %>
+      <%= text_field_tag :start_time_search, params[:start_time_search], :type=> "datetime-local", :title => "Start Date" %>
     </div>
     <div class="span2">
-      <%= text_field_tag :end_time_search, params[:end_time_search], :placeholder => "End Date" %>
+      <%= text_field_tag :end_time_search, params[:end_time_search], :type=> "datetime-local", :title => "End Date" %>
     </div>
     <div class="span1">
-      <%= submit_tag "Search", :class=>"btn", :name => nil %>
+	</div>
+	<div class="input-append">
+      <%= text_field_tag :search, params[:search], :size => 10, :class => 'span2', :placeholder => "IEID or Package Name" %>
+      <%= button_tag(type: "submit", class: "btn") do %>
+         <i class="icon-search"></i>
+      <% end %>
     </div>
   </form>
 </div>
+
 <%= will_paginate %>
 
 <table id="packages" class="table table-condensed table-striped">

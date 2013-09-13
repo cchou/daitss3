@@ -5,6 +5,7 @@ class PackagesController < ApplicationController
     # @packages = Package.paginate(page: params[:page])
     sort = DataMapper::Query::Operator.new(sort_column, sort_direction)
     @packages= Package.search(params[:search]).all(:order => [sort]).paginate(page: params[:page])
+    @projects = []
   end
      
   # upload a package 
@@ -27,8 +28,18 @@ class PackagesController < ApplicationController
   end
    
   def show
+    debugger
   end 
   
+  # retrieve the list of projects associated with the selected account
+  def select_account
+    debugger
+    # updates projects  based on the account selected
+    projects = Project.all(:account_id => params[:account_id])
+    # map to id for use in options_for_select
+    @projects = projects.map{|a| a.id}
+  end
+    
   private
   def sort_column  
     params[:sort] || "id"  
