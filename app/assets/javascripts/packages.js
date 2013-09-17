@@ -2,18 +2,25 @@
 //# All this logic will automatically be available in application.js.
 //# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+// ajax callback to dynamically display the list of projects under each account.
+$(document).ready(function() {
+	$('#account_search').change(function() {
+		$.ajax({
+			url: "packages/select_package_account",
+			data: {
+				account_id : $('#account_search').val()
+			},
+			dataType: "script"
+		});
+	});
+});
 
-  $(document).ready(function() {
-    $('#account_search').change(function() {
-      $.ajax({
-        url: "packages/select_account",
-        data: {
-          account_id : $('#account_search').val()
-        },
-        dataType: "script"
-      });
-    });
-  });
+// tooltip hover over searching start and end date/time 
+$(function() {
+	$('#start_time_search').tooltip({'trigger':'hover', 'placement':'bottom'});
+	$('#end_time_search').tooltip({'trigger':'hover', 'placement':'bottom'});	
+});
+
 
 var upload_queue = {};
 

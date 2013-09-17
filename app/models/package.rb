@@ -76,7 +76,6 @@ class Package
     unless e.save
       raise "cannot save op event: #{name} (#{e.errors.size}):\n#{e.errors.map.join "\n"}"
     end
-
   end
 
   # return a wip if exists in workspace, otherwise nil
@@ -108,7 +107,6 @@ class Package
   end
 
   def status
-
     if self.aip
       'archived'
     elsif self.events.first :name => 'reject'
@@ -120,7 +118,6 @@ class Package
     else
       'submitted'
     end
-
   end
 
   def elapsed_time
@@ -140,16 +137,13 @@ class Package
   end
 
   def d1?
-
     if aip and aip.xml
       doc = Nokogiri::XML aip.xml
       doc.root.name == 'daitss1'
     end
-
   end
 
   def dips
-
     if ! File.exist? archive.disseminate_path+'/'+project_account_id 
       []
     else	
@@ -157,7 +151,6 @@ class Package
         Dir['*'].select { |dip| dip =~ /^#{id}-\d+.tar$/ }
       end
     end
-
   end
 
   def queue_reject_report

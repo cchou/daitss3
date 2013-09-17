@@ -1,7 +1,18 @@
 <% provide(:title, 'View Packages') %>
 <h6>Packages->View</h1>
-<div class="row-fluid">
-  <form action="/packages", class="well", method ="get">
+<div class="row">
+	<div class="span3">
+	  <form action="/packages", class="form-search", method ="get">
+  	  <div class="input-append">
+        <%= text_field_tag :id_search, params[:id_search], :size => 13, :class => 'search-query', :placeholder => "IEID or Package Name" %>
+        <%= button_tag(type: "submit", class: "btn") do %>
+          <i class="icon-search"></i>
+        <% end %>
+ 	  </div>
+      </form>
+	</div>
+  <div class="span10">
+  <form action="/packages", class="form-inline", method ="get">
     <div class="span1">
 	  <%= collection_select(:account,  :account_id, Account.all, :id, :id, {:prompt => "Account"}, {:id => 'account_search', include_blank: 'None'})%>
     </div>
@@ -21,14 +32,15 @@
       <%= text_field_tag :end_time_search, params[:end_time_search], :type=> "datetime-local", :title => "End Date" %>
     </div>
     <div class="span1">
-	</div>
-	<div class="input-append">
-      <%= text_field_tag :search, params[:search], :size => 10, :class => 'span2', :placeholder => "IEID or Package Name" %>
+	  <div class="input-append">
+      <%= text_field_tag :search_limit, params[:search_limit], :size => 5,:placeholder => "Limit" %>
       <%= button_tag(type: "submit", class: "btn") do %>
          <i class="icon-search"></i>
-      <% end %>
-    </div>
+         <% end %>
+	  </div>
+	</div>
   </form>
+</div>
 </div>
 
 <%= will_paginate %>
@@ -46,7 +58,7 @@
       <th>Time</th>
       <th>Title</th>
       <th>Volume</th>
-      <th>Issue</th>
+      <th>Issue</Th.
     </tr>
     <!-- <tr>
        <th><%= text_field_tag :search_id, params[:search_id], :size => 10 %></th>

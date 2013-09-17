@@ -5,7 +5,7 @@ Daitss::Application.routes.draw do
   resources :accounts
   resources :projects
   resources :users
-  resources :packages
+  resources :packages, only: [:index, :submit]
   resources :sessions, only: [:new, :create, :destroy]
   resources :operators, :controller => "users" # single table inheritance, operator is a kind of user.
   
@@ -20,6 +20,8 @@ Daitss::Application.routes.draw do
   match '/upload', to: 'packages#upload'
 
   get 'main/select_account', :as => 'select_account'
+  get 'packages/select_package_account', :as => 'select_package_account'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
