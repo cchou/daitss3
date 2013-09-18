@@ -1,6 +1,6 @@
 class PackagesController < ApplicationController
   helper_method :sort_column, :sort_direction  # make these two methods available to application helpers 
-
+  
   def index
     # debugger
     # @packages = Package.paginate(page: params[:page])
@@ -8,7 +8,7 @@ class PackagesController < ApplicationController
     # if (params[:sort] == "account")
     # elsif (params[:sort] == "project")
     # else
-    unless (params[:id_search].nil?)
+    unless (params[:id_search].empty?)
       sort = DataMapper::Query::Operator.new(sort_column, sort_direction)
       @packages= Package.search(params[:id_search]).all(:order => [sort]).paginate(page: params[:page])
     else
@@ -47,12 +47,20 @@ class PackagesController < ApplicationController
       end_date += 1
       range = (start_date..end_date)
 
-      # lookup account, project if passed in
+      # lookup account if passed in
       if (params[:account] && params[:account]["account_id"])
         account = Account.get(params[:account]["account_id"])
-        if params[:project] && params[:project] ["project_id"]
+      end
+      
+      # lookup project if passed in
+      if params[:project] && params[:project] ["project_id"]
+        # account and project specified
+        project = account.projects.first(:id => params[:project]["project_id"]) if account
+      end
+      
+      if account 
+        if (project)
           # account and project specified
-          project = account.projects.first(:id => params[:project]["project_id"])    
           ps = project.packages.events.all(:timestamp => range, :name => names, :order => [ :timestamp.desc ]).packages 
         else
           # account but not project specified
@@ -70,6 +78,7 @@ class PackagesController < ApplicationController
       end
       @packages = ps.paginate(page: params[:page])
     end
+    
     @projects = []
   end
   
@@ -87,6 +96,7 @@ class PackagesController < ApplicationController
     path = File.join dir, filename
     open(path, 'wb') { |io| io.write data }
     flash[:success] = "uploaded to #{path}"
+
     # return HTTP 200, with empty response_body
     render :nothing => true
   end
@@ -101,6 +111,7 @@ class PackagesController < ApplicationController
   def select_package_account
     # updates projects  based on the account selected
     projects = Project.all(:account_id => params[:account_id])
+
     # map to id for use in options_for_select
     @projects = projects.map{|a| a.id}
   end
