@@ -2,13 +2,12 @@ class PackagesController < ApplicationController
   helper_method :sort_column, :sort_direction  # make these two methods available to application helpers 
   
   def index
-    # debugger
     # @packages = Package.paginate(page: params[:page])
     # http://stackoverflow.com/questions/12429429/datamapper-sorting-results-through-association
     # if (params[:sort] == "account")
     # elsif (params[:sort] == "project")
     # else
-    unless (params[:id_search].empty?)
+    if (params[:id_search] && !params[:id_search].empty?)
       sort = DataMapper::Query::Operator.new(sort_column, sort_direction)
       @packages= Package.search(params[:id_search]).all(:order => [sort]).paginate(page: params[:page])
     else
