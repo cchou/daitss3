@@ -4,10 +4,10 @@
   <div class="span12">
   <form action="/packages", class="form-search", method ="get">
     <div class="span1">
-	  <%= collection_select(:account,  :account_id, Account.all, :id, :id, {:prompt => "Account"}, {:id => 'account_search', include_blank: 'None'})%>
+	  <%= collection_select(:account,  :account_id, Account.all, :id, :id, {:prompt => "Account"}, {:id => 'account_search', :selected=> params[:account_id]})%>
     </div>
     <div class="span1">
-	   <%= collection_select(:project, :project_id,  @projects,  :id, :id, {:prompt   => "Project"}, { :id => 'project_search'})%>
+	   <%= collection_select(:project, :project_id,  @projects,  :id, :id, {:prompt   => "Project"}, { :id => 'project_search', :selected=> params[:project_id]})%>
     </div>
     <div class="span1">
       <%= text_field_tag :batch_search, params[:batch_search], :placeholder => "Batch" %>
@@ -16,10 +16,10 @@
       <%= text_field_tag :activity_search, params[:activity_search], :placeholder => "Activity" %>
     </div>
     <div class="span2">
-      <%= text_field_tag :start_time_search, params[:start_time_search], :type=> "datetime-local", :title => "Start Date" %>
+      <%= text_field_tag :start_time_search, params[:start_time_search], :type=> "date", :title => "Start Date" %>
     </div>
     <div class="span2">
-      <%= text_field_tag :end_time_search, params[:end_time_search], :type=> "datetime-local", :title => "End Date" %>
+      <%= text_field_tag :end_time_search, params[:end_time_search], :type=> "date", :title => "End Date" %>
     </div>
     <div class="span3">
 	  <div class="input-append">
@@ -38,31 +38,18 @@
 <table id="packages" class="table table-condensed table-striped">
   <thead>
     <tr>
-      <th><%= sortable "id" %></th>
+      <th><%= sortable "IEID" %></th>
       <th>Package Name</th>
-      <th><%= sortable "account" %></th>
-      <th><%= sortable "project" %></th>
+      <th>Account</th>
+      <th>Project</th>
       <th>Size</th>
       <th># Files</th>
       <th>Latest Activity</th>
-      <th>Time</th>
+      <th>Timestamp</th>
       <th>Title</th>
       <th>Volume</th>
       <th>Issue</Th.
     </tr>
-    <!-- <tr>
-       <th><%= text_field_tag :search_id, params[:search_id], :size => 10 %></th>
-       <th><%= text_field_tag :search_name, params[:search_name], :size => 10  %></th>
-       <th><%= text_field_tag :search_account, params[:search_account], :size => 5  %></th>
-       <th><%= text_field_tag :search_project, params[:search_project], :size => 5  %></th>
-       <th></th>
-       <th></th>
-       <th><%= text_field_tag :search_activity, params[:search_activity], :size => 5  %></th>
-       <th></th>
-       <th></th>
-       <th></th>
-       <th></th>
-     </tr> -->
   </thead>
   <tbody>
     <% @packages.each do |package| %>
@@ -85,4 +72,4 @@
   </tbody>
 </table>
 
-<%= will_paginate %>
+<%= will_paginate %> 

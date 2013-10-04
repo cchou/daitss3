@@ -56,10 +56,8 @@ namespace :db do
                           
   end
   
-  desc "Fill database with sample data"
-  task populate: :environment do          
-    password  = "pw"
-     
+  desc "Fill database with sample account and projects"
+  task populate_act_prj: :environment do          
     # create sample accounts
     Account.create(id: "UF", description: "UF", report_email: "report@uf.edu")
     Account.create(id: "USF", description: "USF", report_email: "report@usf.edu")
@@ -73,6 +71,11 @@ namespace :db do
     Project.create(id: "ETD", description: "Electronic Thesis Disertation", account_id: "UCF")
     Project.create(id: "ETD", description: "Electronic Thesis Disertation", account_id: "FSU")
     Project.create(id: "ETD", description: "Electronic Thesis Disertation", account_id: "FAU")
+  end
+  
+  desc "Fill database with sample packages"
+  task populate_packages: :environment do
+    password  = "pw"
 
     # create sample users, packages
     20.times do |n|

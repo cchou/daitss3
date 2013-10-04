@@ -1,5 +1,13 @@
 class PackagesController < ApplicationController
   helper_method :sort_column, :sort_direction  # make these two methods available to application helpers 
+  before_filter :load_vars
+  
+  #initialize variable only once, skipped initialization for ajax request also.
+  def load_vars
+    unless request.xhr? # unless there is an ajax request
+      @projects = []
+    end
+  end
   
   def index
     # @packages = Package.paginate(page: params[:page])
@@ -7,9 +15,19 @@ class PackagesController < ApplicationController
     # if (params[:sort] == "account")
     # elsif (params[:sort] == "project")
     # else
+    #startime = Time.at 0
+    #endtime = DateTime.now
+    #range = (startime..endtime)
+    # ps = Package.all(:order => [DataMapper::Query::Direction.new(Event.properties[:timestamp])], :links =>[:events])
+    # @packages = ps.paginate(page: params[:page]) 
+    # @packages= Package.all(Package.events.timestamp => range, :fields => [ Package.events.timestamp], :unique => true, :order => [ Package.events.timestamp.desc ]).paginate(page: params[:page])
+    #@packages = Package.ordered_by_timestamp(:desc).all.paginate(page: params[:page]) 
+    #@packages = Event.find_by_sql("SELECT * from  events order by timestamp").packages.paginate(page: params[:page])
+    sort = DataMapper::Query::Operator.new(sort_column, sort_direction)
     if (params[:id_search] && !params[:id_search].empty?)
-      sort = DataMapper::Query::Operator.new(sort_column, sort_direction)
-      @packages= Package.search(params[:id_search]).all(:order => [sort]).paginate(page: params[:page])
+      #ps = Sip.all(:name.like => params[:id_search]).packages.events.all(:order => [sort]).packages | 
+       ps = Package.all(:id.like => params[:id_search]).events.all(:order => [sort]).packages
+      @packages = ps.paginate(page: params[:page])
     else
       # filter on activity
       names = 
@@ -29,23 +47,23 @@ class PackagesController < ApplicationController
         else
           ['submit', "reject", "ingest finished", "disseminate finished", "ingest snafu", "disseminate snafu", "withdraw finished", "daitss v.1 provenance"]
         end
-
+    
       # filter on date range
       start_date  = if params[:start_time_search] and !params[:start_time_search].strip.empty?
-          DateTime.strptime(params[:start_time_search], "%Y-%m-%dT%H:%M")
+          DateTime.strptime(params[:start_time_search], "%Y-%m-%d")
         else
           Time.at 0
         end
-
+    
       end_date = if params[:end_time_search] and !params[:end_time_search].strip.empty?
-        DateTime.strptime(params[:end_time_search], "%Y-%m-%dT%H:%M")
+        DateTime.strptime(params[:end_time_search], "%Y-%m-%d")
       else
         DateTime.now
       end
-
+    
       end_date += 1
       range = (start_date..end_date)
-
+    
       # lookup account if passed in
       if (params[:account] && params[:account]["account_id"])
         account = Account.get(params[:account]["account_id"])
@@ -69,7 +87,7 @@ class PackagesController < ApplicationController
         # neither account nor project specified
         ps = Event.all(:timestamp => range, :name => names, :order => [ :timestamp.desc ]).packages 
       end
-
+    
       # filter on batches
       batch = Batch.get(params[:batch_search])
       if batch       
@@ -77,8 +95,6 @@ class PackagesController < ApplicationController
       end
       @packages = ps.paginate(page: params[:page])
     end
-    
-    @projects = []
   end
   
   # upload a package 
@@ -94,17 +110,14 @@ class PackagesController < ApplicationController
     dir = Dir.mktmpdir
     path = File.join dir, filename
     open(path, 'wb') { |io| io.write data }
-    flash[:success] = "uploaded to #{path}"
-
+    # TODO flash[:success] = "uploaded to #{path}"
+    @message = "uploaded to #{path}"
     # return HTTP 200, with empty response_body
     render :nothing => true
   end
 
   def submit
   end
-
-  def show
-  end 
 
   # retrieve the list of projects associated with the selected account
   def select_package_account

@@ -161,7 +161,7 @@ class Package
     r.save
   end
 
-  #     new for diddesm
+  # new for diddesm
   def queue_dissemination_report
     r = ReportDelivery.new :type => :dissemination
     (self.project.account.report_email == nil or self.project.account.report_email.length == 0) ? r.mechanism = :ftp : r.mechanism = :email
@@ -170,5 +170,13 @@ class Package
     r.save
   end
 
+  def self.ordered_by_timestamp direction = :asc
+    order = DataMapper::Query::Direction.new(events.timestamp, direction)
+    query = all.query
+    query.instance_variable_set("@order", [order])
+    #query.instance_variable_set("@fields", [ 'events.timpestamp'])
+    query.instance_variable_set("@links", [relationships['events'].inverse])
+    all(query)
+  end
 end
 

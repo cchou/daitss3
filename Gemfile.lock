@@ -58,6 +58,8 @@ GEM
       dm-core (~> 1.2.0)
     dm-aggregates (1.2.0)
       dm-core (~> 1.2.0)
+    dm-ar-finders (1.2.0)
+      dm-core (~> 1.2.0)
     dm-constraints (1.2.0)
       dm-core (~> 1.2.0)
     dm-core (1.2.1)
@@ -197,6 +199,7 @@ DEPENDENCIES
   debugger
   dm-active_model
   dm-aggregates
+  dm-ar-finders
   dm-constraints
   dm-core
   dm-do-adapter

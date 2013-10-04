@@ -35,7 +35,7 @@ end
 
 gem 'jquery-rails', '~>2.1'
 
-%w{core types constraints validations migrations aggregates transactions timestamps do-adapter rails active_model postgres-adapter}.each do |dmgem|
+%w{core types constraints validations migrations aggregates transactions timestamps do-adapter rails active_model postgres-adapter ar-finders}.each do |dmgem|
   gem "dm-#{dmgem}"
 end
 
