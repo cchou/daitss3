@@ -8,7 +8,8 @@ Daitss::Application.routes.draw do
   resources :packages, only: [:index, :submit]
   resources :sessions, only: [:new, :create, :destroy]
   resources :operators, :controller => "users" # single table inheritance, operator is a kind of user.
-  
+  resources :contacts, :controller => "users" # single table inheritance, contact is a kind of user.
+
   root to: 'sessions#new'
   match '/dashboard', to: 'main#dashboard'
   match '/signup',  to: 'users#new'
