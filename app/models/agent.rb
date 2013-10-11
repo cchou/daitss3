@@ -8,7 +8,7 @@ class Agent
 
   property :type, Discriminator
   property :deleted_at, ParanoidDateTime
-  property :remember_token, String, :required  => true, :index => true
+  property :remember_token, String, :index => true
   
   has n, :events
   has n, :requests

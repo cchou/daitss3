@@ -12,8 +12,8 @@
     <div class="span1">
       <%= text_field_tag :batch_search, params[:batch_search], :placeholder => "Batch" %>
     </div>
-    <div class="span1">
-      <%= text_field_tag :activity_search, params[:activity_search], :placeholder => "Activity" %>
+    <div class="span2">
+      <%= select_tag :activity_search, options_for_select(["activities", "submitted", "rejected", "archived", "disseminated", "error", "withdrawn"]) %>
     </div>
     <div class="span2">
       <%= text_field_tag :start_time_search, params[:start_time_search], :type=> "date", :title => "Start Date" %>
@@ -30,7 +30,7 @@
 	  </div>
 	</div>
   </form>
-</div>
+  </div>
 </div>
 
 <%= will_paginate %>

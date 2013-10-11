@@ -1,19 +1,17 @@
 development:
-  # adapter: postgresql
-  # encoding: unicode
-  # database: daitss_db
-  # host: ripple.fcla.edu
-  # username: cchou
-  # password: ****
-  # pool: 5
-  # timeout: 5000
-development:
   adapter: postgresql
   encoding: unicode
-  database: core_development
-  username: daitss
+  database: daitss3
+  username: daitss2
   pool: 5
   timeout: 5000
+# development:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: core_development
+#   username: daitss
+#   pool: 5
+#   timeout: 5000
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.

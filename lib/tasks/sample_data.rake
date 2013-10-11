@@ -177,9 +177,9 @@ namespace :db do
   # run this db:upgrade script after db:autoupgrade to create new columns
   desc "upgrade existing daitss2 database"
   task upgrade: :environment do
-#    User.all.each {|u| u.update(:remember_token => u.new_remember_token)}
-# execute(update agents set type = 'Program' where type = 'Daitss::Program');
-# execute(update agents set type = 'User' where type = 'Daitss::User');
-# execute(update agents set type = 'Operator' where type = 'Daitss:Operator');
+    #User.all.each {|u| u.update(:remember_token => u.new_remember_token)}
+    #execute("update agents set type = 'Program' where type = 'Daitss::Program'")
+    #execute("update agents set type = 'User' where type = 'Daitss::User'")
+    #execute("update agents set type = 'Operator' where type = 'Daitss::Operator'")
   end
 end
