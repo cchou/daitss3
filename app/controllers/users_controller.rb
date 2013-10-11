@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   
   # retrieve the information for the selected user (agent)
   def show
-    @user = Agent.get(params[:id])    
+    @user = User.get(params[:id])    
   end
   
   def new

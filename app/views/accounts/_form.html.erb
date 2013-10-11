@@ -1,5 +1,5 @@
 <%= form_for(@account) do |f| %>
-  <% if @account.errors.blank? %>
+  <% unless @account.errors.blank? %>
     <div id="error_explanation">
       <h2><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h2>
 
