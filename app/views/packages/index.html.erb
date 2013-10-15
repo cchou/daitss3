@@ -33,43 +33,36 @@
   </div>
 </div>
 
-<%= will_paginate %>
-
-<table id="packages" class="table table-condensed table-striped">
+<%= will_paginate @results%>
+<table class="table table-condensed table-striped">
   <thead>
     <tr>
       <th><%= sortable "IEID" %></th>
-      <th>Package Name</th>
-      <th>Account</th>
-      <th>Project</th>
-      <th>Size</th>
-      <th># Files</th>
-      <th>Latest Activity</th>
-      <th>Timestamp</th>
+      <th><%= sortable "Package Name" %></th>
+      <th><%= sortable "Account" %></th>
+      <th><%= sortable "Project" %></th>
+      <th><%= sortable "Size" %></th>
+      <th><%= sortable "# Files" %></th>
+      <th><%= sortable "Latest Activity" %></th>
+      <th><%= sortable "Timestamp" %></th>
       <th>Title</th>
       <th>Volume</th>
       <th>Issue</Th.
     </tr>
   </thead>
   <tbody>
-    <% @packages.each do |package| %>
+    <% @results.each do |result| %>
     <tr>
-      <td><%= package.id %></td>
-      <td><%= package.sip.name %></td>
-      <td><%= package.project.account_id %></td>
-      <td><%= package.project.id %></td>
-      <td><%= package.sip.size_in_bytes %></td>
-      <td><%= package.sip.number_of_datafiles %></td>
-      <td><%= package.normal_events.last.polite_name %></td>
-      <td><%= package.normal_events.last.timestamp.strftime("%a %b %d %Y %I:%M:%S %p") %></td>
-      <% unless package.intentity.nil?%>
-        <td><%= package.intentity.title %></td>
-        <td><%= package.intentity.volume %></td>
-        <td><%= package.intentity.issue %></td>
-      <% end %>
+      <td><%= result.id %></td>
+      <td><%= result.name %></td>
+      <td><%= result.account_id %></td>
+      <td><%= result.project_id %></td>
+      <td><%= result.size_in_bytes %></td>
+      <td><%= result.number_of_datafiles %></td>
+      <td><%= result.event_name%></td>
+      <td><%= result.timestamp.strftime("%a %b %d %Y %I:%M:%S %p") %></td>
     </tr>
     <% end %>
   </tbody>
 </table>
-
-<%= will_paginate %> 
+<%= will_paginate @results%> 

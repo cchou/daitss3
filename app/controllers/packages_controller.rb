@@ -1,3 +1,5 @@
+require 'will_paginate/array'
+
 class PackagesController < ApplicationController
   helper_method :sort_column, :sort_direction  # make these two methods available to application helpers 
   before_filter :load_vars
@@ -9,51 +11,60 @@ class PackagesController < ApplicationController
     end
   end
   
-  def index_sql
+  # the order-by clause through association doesn't quite work with datamapper,so using direct sql instead.
+  def index
     # default to order by event timestamp
-    order_by = "e.timestamp"
+    order_by = "timestamp desc"
     
     # determine the order by clause
     if (params[:sort] == "account")
-      order_by = "pj.account_id"
+      order_by = "account_id " + sort_direction
     elsif (params[:sort] == "project")
-      order_by = "pj.id"
+      order_by = "project_id " + sort_direction
     elsif (params[:sort] == "IEID")
-      order_by = "p.id"
+      order_by = "id "  + sort_direction
     elsif (params[:sort] == "Package Name")
-      order_by = "s.name"      
+      order_by = "name " + sort_direction     
     elsif (params[:sort] == "Size")
-      order_by = "s.size_in_bytes"
+      order_by = "size_in_bytes "+ sort_direction
     elsif (params[:sort] == "# Files")
-      order_by = "s.number_of_datafiles"
+      order_by = "number_of_datafiles "+ sort_direction
+    elsif (params[:sort] == "Latest Activity")
+      order_by = "event_name " + sort_direction     
     elsif (params[:sort] == "Timestamp")
-      order_by = "e.timestampe"
+      order_by = "timestamp "+ sort_direction
     end
                  
     if (params[:id_search] && !params[:id_search].empty?)
-      search_clause = "p.id like #{param[:id_search]} or s.name like #{params[:id_search]}"                      
-      sql = "SELECT p.id, s.name, pj.account_id, pj.id, s.size_in_bytes, s.number_of_datafiles, 
-        e.timestamp from packages as p, sips as s, projects as pj, events as e 
-        where #{search_clause} and p.id = e.package_id and p.id = s.package_id order by #{order_by}"
-        # sort = DataMapper::Query::Operator.new(sort_column, sort_direction)
-      @packages = Package.find_by_sql(sql)
+      search_clause = "p.id like #{param[:id_search]} or s.name like #{params[:id_search]}"      
+      sql = "select t1.*
+        from (
+        SELECT p.id, s.name, pj.account_id, pj.id as project_id, s.size_in_bytes, s.number_of_datafiles, e.name as event_name, e.timestamp
+          ,rank() over (partition by p.id order by e.timestamp) myrank
+        from packages as p inner join sips as s on (p.id = s.package_id)
+          inner join  projects as pj on (p.project_account_id = pj.account_id and p.project_id = pj.id)
+          inner join  events as e on (p.id = e.package_id)
+        where #{search_clause}
+        ) t1
+        where t1.myrank=1
+        order by #{order_by}"                
     else
       names = 
         case params[:activity_search]
         when 'submitted'
-          "submit"
+          "('submit')"
         when 'rejected'
-          ["reject","daitss v.1 reject"] 
+          "('reject','daitss v.1 reject')" 
         when 'archived'
-          "ingest finished"
+          "('ingest finished')"
         when 'disseminated'
-          "disseminate finished"
+          "('disseminate finished')"
         when 'error'
-          ["ingest snafu", "disseminate snafu", "refresh snafus"]
+          "('ingest snafu', 'disseminate snafu', 'refresh snafus')"
         when 'withdrawn'
-          "withdraw finished"
+          "('withdraw finished')"
         else
-          ['submit', 'reject', 'ingest finished', "disseminate finished", "ingest snafu", "disseminate snafu", "withdraw finished", "daitss v.1 provenance"]
+          "('submit', 'reject', 'ingest finished', 'disseminate finished', 'ingest snafu', 'disseminate snafu', 'withdraw finished', 'daitss v.1 provenance')"
         end
 
       # filter on date range
@@ -70,17 +81,47 @@ class PackagesController < ApplicationController
       end
 
       end_date += 1
-      range = (start_date..end_date)      
-      search_clause = "e.timestamp between '#{start_date}' and '#{end_date}'"                      
-      sql = "SELECT p.id, s.name, pj.account_id, pj.id, s.size_in_bytes, s.number_of_datafiles, 
-        e.timestamp from packages as p, sips as s, projects as pj, events as e 
-        where p.id = e.package_id and p.id = s.package_id order by #{order_by}"
-      #@packages = Package.find_by_sql(sql)    
-      @packages = DataMapper.repository(:default).adapter.select(sql)
+      
+       # lookup account if passed in
+        if (params[:account] && params[:account]["account_id"] && !params[:account]["account_id"].empty?)
+          account = params[:account]["account_id"]
+        end
+        
+        # lookup project if passed in
+        if (params[:project] && params[:project] ["project_id"] && !params[:project]["project_id"].empty?)
+          # account and project specified
+          project = params[:project]["project_id"] if account
+        end
+        
+        if account
+          if project
+            # account and project specified
+            search_clause = "pj.account_id = '#{account}' and pj.id = '#{project}' and "
+          else
+            # account but not project specified
+            search_clause = "pj.account_id = '#{account}' and "
+          end
+        else 
+          # neither account nor project specified
+          search_clause = ""        
+      end
+      search_clause += "e.timestamp between '#{start_date}' and '#{end_date}' and e.name in #{names}"      
+      sql = "select t1.*
+        from (
+        SELECT p.id, s.name, pj.account_id, pj.id as project_id, s.size_in_bytes, s.number_of_datafiles, e.name as event_name, e.timestamp
+          ,rank() over (partition by p.id order by e.timestamp) myrank
+        from packages as p inner join sips as s on (p.id = s.package_id)
+          inner join  projects as pj on (p.project_account_id = pj.account_id and p.project_id = pj.id)
+          inner join  events as e on (p.id = e.package_id)
+        where #{search_clause}
+        ) t1
+        where t1.myrank=1
+        order by #{order_by}"                         
     end
+    @results = DataMapper.repository(:default).adapter.select(sql).paginate(page: params[:page])
   end
   
-  def index
+  def index_dm
     # http://stackoverflow.com/questions/12429429/datamapper-sorting-results-through-association
     #startime = Time.at 0
     #endtime = DateTime.now
@@ -197,13 +238,13 @@ class PackagesController < ApplicationController
 
   private
   def sort_column  
-    params[:sort] || "id"  
+    params[:sort] || "timestamp"  
     #Package.fields.include?(params[:sort]) ? params[:sort] : "id"
   end  
 
   def sort_direction  
     # params[:direction] || "asc"  
-    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"
+    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "desc"
   end    
 
 end
