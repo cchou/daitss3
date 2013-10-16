@@ -36,7 +36,7 @@ class PackagesController < ApplicationController
     end
                  
     if (params[:id_search] && !params[:id_search].empty?)
-      search_clause = "p.id like #{param[:id_search]} or s.name like #{params[:id_search]}"      
+      search_clause = "p.id like #{params[:id_search]} or s.name like #{params[:id_search]}"      
       sql = "select t1.*
         from (
         SELECT p.id, s.name, pj.account_id, pj.id as project_id, s.size_in_bytes, s.number_of_datafiles, e.name as event_name, e.timestamp
@@ -82,7 +82,7 @@ class PackagesController < ApplicationController
 
       end_date += 1
       
-       # lookup account if passed in
+      # lookup account if passed in
         if (params[:account] && params[:account]["account_id"] && !params[:account]["account_id"].empty?)
           account = params[:account]["account_id"]
         end

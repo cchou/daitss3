@@ -26,9 +26,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: daitss2
-  username: daitss2  
-#  database: core_production
-#  username: daitss
+  database: daitss_production
+  username: daitss
   pool: 5
   timeout: 5000

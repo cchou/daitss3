@@ -178,8 +178,10 @@ namespace :db do
   desc "upgrade existing daitss2 database"
   task upgrade: :environment do
     #User.all.each {|u| u.update(:remember_token => u.new_remember_token)}
+    # rake db:autoupgrade
     #execute("update agents set type = 'Program' where type = 'Daitss::Program'")
     #execute("update agents set type = 'User' where type = 'Daitss::User'")
     #execute("update agents set type = 'Operator' where type = 'Daitss::Operator'")
+    #execute("update agents set type = 'Contact' where type = 'Daitss::Contact'")
   end
 end
