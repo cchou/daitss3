@@ -34,9 +34,13 @@ class ProjectsController < ApplicationController
   end  
 
   def destroy
-    Project.get(params[:id]).destroy!
-    flash[:success] = "Project destroyed."
-    redirect_to projects_url
+    if (Project.get(params[:id], params[:account_id]).destroy)
+      flash[:success] = "Project destroyed."
+      redirect_to projects_url
+    else
+      flash[:error] = "Cannot delete project, other packages still reference it"
+      redirect_to projects_url      
+    end
   end
       
 end
