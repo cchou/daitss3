@@ -1,41 +1,40 @@
 require 'will_paginate/array'
 
+Title_To_Column_Name = {
+  "account" => "account_id",
+  "project" => "project_id",
+  "IEID" => "id",
+  "Package Name" => "name",
+  "Size" => "size_in_bytes",
+  "# Files" => "number_of_datafiles",
+  "Latest Activity" => "event_name",
+  "Timestamp" => "timestamp"
+}
+
 class PackagesController < ApplicationController
   helper_method :sort_column, :sort_direction  # make these two methods available to application helpers 
   before_filter :load_vars
   
-  #initialize variable only once, skipped initialization for ajax request also.
+  #initialize variable only once, skip initialization for ajax request also.
   def load_vars
     unless request.xhr? # unless there is an ajax request
       @projects = []
     end
   end
   
-  # the order-by clause through association doesn't quite work with datamapper,so using direct sql instead.
+  # the order-by clause through associations doesn't quite work with datamapper and postgres,
+  # so use direct sql instead.
   def index
+    # convert the sorting title to the corresponding database column name
+    column_name = Title_To_Column_Name[params[:sort]]
     # default to order by event timestamp
-    order_by = "timestamp desc"
-    
+    column_name = "timestamp" if column_name.nil?
     # determine the order by clause
-    if (params[:sort] == "account")
-      order_by = "account_id " + sort_direction
-    elsif (params[:sort] == "project")
-      order_by = "project_id " + sort_direction
-    elsif (params[:sort] == "IEID")
-      order_by = "id "  + sort_direction
-    elsif (params[:sort] == "Package Name")
-      order_by = "name " + sort_direction     
-    elsif (params[:sort] == "Size")
-      order_by = "size_in_bytes "+ sort_direction
-    elsif (params[:sort] == "# Files")
-      order_by = "number_of_datafiles "+ sort_direction
-    elsif (params[:sort] == "Latest Activity")
-      order_by = "event_name " + sort_direction     
-    elsif (params[:sort] == "Timestamp")
-      order_by = "timestamp "+ sort_direction
-    end
+    order_by = column_name + " " + sort_direction
                  
+    # determine the search clause based on the search param
     if (params[:id_search] && !params[:id_search].empty?)
+      #TODO sanitize the search param since we are now using direct sql.
       search_clause = "p.id like '#{params[:id_search]}' or s.name like '#{params[:id_search]}'"      
       sql = "select t1.*
         from (
@@ -121,6 +120,7 @@ class PackagesController < ApplicationController
     @results = DataMapper.repository(:default).adapter.select(sql).paginate(page: params[:page])
   end
   
+  # search and order through datamapper, for historical purpose.
   def index_dm
     # http://stackoverflow.com/questions/12429429/datamapper-sorting-results-through-association
     #startime = Time.at 0
@@ -236,14 +236,14 @@ class PackagesController < ApplicationController
     @projects = projects.map{|a| a.id}
   end
 
+  # retrieve the column name to be sorted.
   private
   def sort_column  
     params[:sort] || "timestamp"  
-    #Package.fields.include?(params[:sort]) ? params[:sort] : "id"
   end  
 
+  # retrieve the sort direction for the current selected column
   def sort_direction  
-    # params[:direction] || "asc"  
     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "desc"
   end    
 

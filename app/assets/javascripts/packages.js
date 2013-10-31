@@ -15,7 +15,7 @@ $(document).ready(function() {
 	});
 });
 
-// tooltip hover over searching start and end date/time 
+// tooltip hover over searching start and end date/time (bind to jquery document.ready event)
 $(function() {
 	$('#start_time_search').tooltip({'trigger':'hover', 'placement':'bottom'});
 	$('#end_time_search').tooltip({'trigger':'hover', 'placement':'bottom'});	

@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  id: 
-  descripton: 
-  report_email: 
+  id: UF
+  descripton: University of Florida
+  report_email: user@ufl.edu
 
 two:
-  id: 
-  descripton: 
-  report_email: 
+  id: FDA
+  descripton: Florida Digital Archive
+  report_email: fda@flvc.org

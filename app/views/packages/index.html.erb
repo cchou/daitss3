@@ -2,7 +2,7 @@
 <h6>Packages->View</h1>
 <div class="row-fluid">
   <div class="span12">
-  <form action="/packages", class="form-search", method ="get">
+  <form action="/packages" class="form-search" method ="get">
     <div class="span1">
 	  <%= collection_select(:account,  :account_id, Account.all, :id, :id, {:prompt => "Account"}, {:id => 'account_search', :selected=> params[:account_id]})%>
     </div>

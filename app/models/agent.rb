@@ -39,7 +39,7 @@ end
 class User < Agent
   property :first_name, String
   property :last_name, String
-  property :email, String
+  property :email, String, :format => :email_address
   property :phone, String
   property :address, Text
   property :is_admin_contact, Boolean, :default => false

@@ -5,20 +5,13 @@ development:
   username: daitss2
   pool: 5
   timeout: 5000
-# development:
-#   adapter: postgresql
-#   encoding: unicode
-#   database: core_development
-#   username: daitss
-#   pool: 5
-#   timeout: 5000
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   adapter: postgresql
   encoding: unicode
-  database: core_test
+  database: core_development
   username: daitss
   pool: 5
   timeout: 5000
@@ -26,7 +19,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: daitss_production
-  username: daitss
+  database: daitss3
+  username: daitss2
   pool: 5
   timeout: 5000
