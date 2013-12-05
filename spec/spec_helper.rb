@@ -39,3 +39,16 @@ RSpec.configure do |config|
   # use Capybara
   config.include Capybara::DSL
 end
+
+# https://github.com/jnicklas/capybara/issues/844
+# RSpec::Matchers::define :have_title do |text|
+#   match do |page|
+#     Capybara.string(page.body).has_selector?('title', text: text)
+#   end
+# end
+# 
+# Capybara.configure do |config|
+#   config.match = :prefer_exact
+#   config.ignore_hidden_elements = false
+# end
+

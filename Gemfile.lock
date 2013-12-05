@@ -97,6 +97,11 @@ GEM
     eventmachine (1.0.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    factory_girl (4.2.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.2.1)
+      factory_girl (~> 4.2.0)
+      railties (>= 3.0.0)
     faker (1.0.1)
       i18n (~> 0.4)
     fastercsv (1.5.5)
@@ -210,6 +215,7 @@ DEPENDENCIES
   dm-transactions
   dm-types
   dm-validations
+  factory_girl_rails (= 4.2.1)
   faker (= 1.0.1)
   jquery-rails (~> 2.1)
   libxml-ruby

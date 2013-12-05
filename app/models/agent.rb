@@ -30,16 +30,17 @@ class Agent
   
   def new_remember_token
     SecureRandom.urlsafe_base64
-  end 
+  end
+   
   def create_remember_token
-      self.remember_token = new_remember_token
+    self.remember_token = new_remember_token
   end     
 end
 
 class User < Agent
   property :first_name, String
   property :last_name, String
-  property :email, String, :format => :email_address
+  property :email, String, :format => :email_address # predefined regular expresion to validate email
   property :phone, String
   property :address, Text
   property :is_admin_contact, Boolean, :default => false
