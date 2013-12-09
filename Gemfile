@@ -19,8 +19,6 @@ gem 'thin'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -49,7 +47,7 @@ group :test do
   gem 'factory_girl_rails', '4.2.1'  
 end
 
-group :development do
+group :development, :test do
   gem 'rspec-rails', '2.11.0'
   gem 'debugger'
 end

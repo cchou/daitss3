@@ -15,19 +15,6 @@ describe "Mains" do
     
     it { should have_content('Help') }
     it { should have_selector('title', :text => "Help") }
-  end  
-  
-  # describe "About page" do
-  #   it "should be a working url" do
-  #     click_link "About"
-  #     response.status.should be(200)
-  #   end
-  # end
-  # 
-  # describe "Contact page" do
-  #  it "should be a working url" do
-  #     click_link "Contact"
-  #     response.status.should be(200)    
-  #   end
-  # end
+  end
+
 end

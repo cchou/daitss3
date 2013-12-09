@@ -1,9 +1,22 @@
 FactoryGirl.define do
   factory :user do
-    id     "Michael Hartl"
-    auth_key "foobar"
-    first_name "Michael"
-    last_name "Hartl"
-    email    "michael@example.com"
+    id            "daitss"
+    auth_key      "daitss"
+    first_name    "User"
+    last_name     "Name"
+    email         "user@example.com"
   end
+  
+  factory :account do
+    id            "ACT4"
+    description   "Account"
+    report_email  "fda@example.com"
+  end
+  
+  factory :project do
+    id            "PRJ1"
+    descrption    "Project"
+    account_id    "ACT1"  
+  end
+
 end
