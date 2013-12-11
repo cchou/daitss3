@@ -22,6 +22,7 @@ describe "AuthenticationPages" do
           click_button "Sign in"
         end
 
+# TODO: check page      
 #      it { should have_title('Submit Packages') }
        it { should have_content('Packages->Submit') }
     end
