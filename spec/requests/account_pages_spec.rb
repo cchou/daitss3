@@ -26,8 +26,6 @@ describe "AccountPages" do
   end
 
   describe "delete an account" do
-    let(:account) { Account.get("ACT") }
-     
     before do
       visit accounts_path
     end
