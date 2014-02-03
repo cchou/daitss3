@@ -1,5 +1,6 @@
 require 'will_paginate/array'
 
+# Map View column title to the Database table column name
 Title_To_Column_Name = {
   "account" => "account_id",
   "project" => "project_id",
@@ -65,22 +66,20 @@ class PackagesController < ApplicationController
         else
           "('submit', 'reject', 'ingest finished', 'disseminate finished', 'ingest snafu', 'disseminate snafu', 'withdraw finished', 'daitss v.1 provenance')"
         end
-
       # filter on date range
-      start_date  = if params[:start_time_search] and !params[:start_time_search].strip.empty?
+      @start_date  = if params[:start_time_search] and !params[:start_time_search].strip.empty?
           DateTime.strptime(params[:start_time_search], "%Y-%m-%d")
         else
           Time.at 0
         end
 
-      end_date = if params[:end_time_search] and !params[:end_time_search].strip.empty?
+      @end_date = if params[:end_time_search] and !params[:end_time_search].strip.empty?
         DateTime.strptime(params[:end_time_search], "%Y-%m-%d")
       else
         DateTime.now
       end
 
-      end_date += 1
-      
+      @end_date += 1
       # lookup account if passed in
         if (params[:account] && params[:account]["account_id"] && !params[:account]["account_id"].empty?)
           account = params[:account]["account_id"]
@@ -104,7 +103,7 @@ class PackagesController < ApplicationController
           # neither account nor project specified
           search_clause = ""        
       end
-      search_clause += "e.timestamp between '#{start_date}' and '#{end_date}' and e.name in #{names}"      
+      search_clause += "e.timestamp between '#{@start_date}' and '#{@end_date}' and e.name in #{names}"      
       sql = "select t1.*
         from (
         SELECT p.id, s.name, pj.account_id, pj.id as project_id, s.size_in_bytes, s.number_of_datafiles, e.name as event_name, e.timestamp
@@ -239,12 +238,12 @@ class PackagesController < ApplicationController
   # retrieve the column name to be sorted.
   private
   def sort_column  
-    params[:sort] || "timestamp"  
+    params[:sort] || "timestamp"
   end  
 
   # retrieve the sort direction for the current selected column
-  def sort_direction  
+  def sort_direction
     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "desc"
-  end    
+  end
 
 end

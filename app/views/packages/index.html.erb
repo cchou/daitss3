@@ -4,16 +4,16 @@
   <div class="span12">
   <form action="/packages" class="form-search" method ="get">
     <div class="span1">
-	  <%= collection_select(:account,  :account_id, Account.all, :id, :id, {:prompt => "Account"}, {:id => 'account_search', :selected=> params[:account_id]})%>
+	  <%= collection_select(:account,  :account_id, Account.all, :id, :id, {:prompt => "Account"}, {:id => 'account_search', :selected=> params[:account] && params[:account]["account_id"]})%>
     </div>
     <div class="span1">
-	   <%= collection_select(:project, :project_id,  @projects,  :id, :id, {:prompt   => "Project"}, { :id => 'project_search', :selected=> params[:project_id]})%>
+	   <%= collection_select(:project, :project_id,  @projects,  :id, :id, {:prompt   => "Project"}, { :id => 'project_search', :selected=> params[:project] && params[:project]["project_id"] })%>
     </div>
     <div class="span1">
       <%= text_field_tag :batch_search, params[:batch_search], :placeholder => "Batch" %>
     </div>
     <div class="span2">
-      <%= select_tag :activity_search, options_for_select(["activities", "submitted", "rejected", "archived", "disseminated", "error", "withdrawn"]) %>
+      <%= select_tag :activity_search, options_for_select(["activities", "submitted", "rejected", "archived", "disseminated", "error", "withdrawn"], params[:activity_search]) %>
     </div>
     <div class="span2">
       <%= text_field_tag :start_time_search, params[:start_time_search], :type=> "date", :title => "Start Date" %>

@@ -29,8 +29,7 @@ describe "AccountPages" do
     before do
       visit accounts_path
     end
-    
-    it { should have_link('Destroy', href: accounts_path+'/ACT') }
+    it { should have_link('Destroy', href: accounts_path+'/ACT') }    
     it "should be able to delete an account" do
       expect do
         #click_link('Destroy', href: accounts_path+'/ACT')
