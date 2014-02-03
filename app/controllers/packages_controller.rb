@@ -39,9 +39,10 @@ class PackagesController < ApplicationController
       search_clause = "p.id like '#{params[:id_search]}' or s.name like '#{params[:id_search]}'"      
       sql = "select t1.*
         from (
-        SELECT p.id, s.name, pj.account_id, pj.id as project_id, s.size_in_bytes, s.number_of_datafiles, e.name as event_name, e.timestamp
+        SELECT p.id, s.name, pj.account_id, pj.id as project_id, s.size_in_bytes, s.number_of_datafiles, ie.title, ie.volume, ie.issue, e.name as event_name, e.timestamp
           ,rank() over (partition by p.id order by e.timestamp) myrank
         from packages as p inner join sips as s on (p.id = s.package_id)
+          inner join intentities as ie on (p.id = ie.package_id)        
           inner join  projects as pj on (p.project_account_id = pj.account_id and p.project_id = pj.id)
           inner join  events as e on (p.id = e.package_id)
         where #{search_clause}
@@ -106,11 +107,12 @@ class PackagesController < ApplicationController
       search_clause += "e.timestamp between '#{@start_date}' and '#{@end_date}' and e.name in #{names}"      
       sql = "select t1.*
         from (
-        SELECT p.id, s.name, pj.account_id, pj.id as project_id, s.size_in_bytes, s.number_of_datafiles, e.name as event_name, e.timestamp
+        SELECT p.id, s.name, pj.account_id, pj.id as project_id, s.size_in_bytes, s.number_of_datafiles, ie.title, ie.volume, ie.issue, e.name as event_name, e.timestamp
           ,rank() over (partition by p.id order by e.timestamp) myrank
         from packages as p inner join sips as s on (p.id = s.package_id)
-          inner join  projects as pj on (p.project_account_id = pj.account_id and p.project_id = pj.id)
-          inner join  events as e on (p.id = e.package_id)
+          inner join intentities as ie on (p.id = ie.package_id)
+          inner join projects as pj on (p.project_account_id = pj.account_id and p.project_id = pj.id)
+          inner join events as e on (p.id = e.package_id)
         where #{search_clause}
         ) t1
         where t1.myrank=1
@@ -119,7 +121,7 @@ class PackagesController < ApplicationController
     @results = DataMapper.repository(:default).adapter.select(sql).paginate(page: params[:page])
   end
   
-  # search and order through datamapper, for historical purpose.
+  # TO BE REMOVED, search and order through datamapper, for historical purpose.
   def index_dm
     # http://stackoverflow.com/questions/12429429/datamapper-sorting-results-through-association
     #startime = Time.at 0

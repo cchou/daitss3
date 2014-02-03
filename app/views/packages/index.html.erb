@@ -45,9 +45,9 @@
       <th><%= sortable "# Files" %></th>
       <th><%= sortable "Latest Activity" %></th>
       <th><%= sortable "Timestamp" %></th>
-      <th>Title</th>
-      <th>Volume</th>
-      <th>Issue</Th.
+      <th><%= sortable "Title" %></th>
+      <th><%= sortable "Volume" %></th>
+      <th><%= sortable "Issue" %></Th.
     </tr>
   </thead>
   <tbody>
@@ -61,6 +61,9 @@
       <td><%= result.number_of_datafiles %></td>
       <td><%= result.event_name%></td>
       <td><%= result.timestamp.strftime("%a %b %d %Y %I:%M:%S %p") %></td>
+      <td><%= result.title %></td>
+      <td><%= result.volume %></td>
+      <td><%= result.issue %></td>
     </tr>
     <% end %>
   </tbody>
