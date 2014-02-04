@@ -6,9 +6,9 @@
       <form class='form-horizontal' id ="upload" action="upload" method ="post" enctype="multipart/form-data">
         <div class="span5">
           <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="100000000" />
-          <%= label :batch, "Batch" %>		
+          <label for="batch">Batch</label>
           <%= text_field_tag :batch, params[:batch], :size => 10 %>
-          <%= label :note, "Note" %>		
+          <label for="note">Note</label>
           <%= text_area_tag :note, params[:note] %>
         </div>
         <div class="span7">
