@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy] #only signed in user can edit/update/list
-  before_filter :correct_user,   only: [:edit, :update] # make sure an user can only his/her own information
+  before_filter :correct_user,   only: [:edit, :update] # make sure an user can only edit his/her own information
   
   def index
     # @users = User.all

@@ -9,7 +9,6 @@ describe "ProjectPages" do
     it { should have_content('Admin->Projects') }
     it "should list each project" do
       Project.user_projects do |prj|
-        puts prj.inspect
         expect(page).to have_selector('td', text: prj.id)
       end
     end 
