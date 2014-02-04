@@ -14,5 +14,10 @@ class Project
  def to_param
     id
    # "#{id}/#{account_id}"
-  end  
+  end
+  
+  # retrieve the list of user accounts, excluding the "SYSTEM" - system account used by DAITSS program
+  def self.user_projects
+    Project.all - Project.all(:account_id => "SYSTEM")
+  end    
 end

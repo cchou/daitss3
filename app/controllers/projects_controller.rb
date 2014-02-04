@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   # GET /projects
 
   def index
-    @projects = Project.all - Project.all(:account_id => "SYSTEM")
+    @projects = Project.user_projects
   end
     
   def new
@@ -14,6 +14,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(params[:project])
       
     if @project.save
+      flash[:success] = "Project created"      
       redirect_to projects_url
     end
   end
