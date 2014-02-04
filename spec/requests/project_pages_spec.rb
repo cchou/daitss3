@@ -18,7 +18,7 @@ describe "ProjectPages" do
   describe "create a new project" do
      before do
        visit new_project_path 
-       fill_in "Id", with: "PRJ6"
+       fill_in "Id", with: "PRJ"
        fill_in "Description", with: "project"       
        #find("Account").select("FDA")
        select('UF', :from => 'project_account_id')
@@ -31,12 +31,12 @@ describe "ProjectPages" do
      before do
        visit projects_path
      end
-     it { should have_link('Destroy', href: projects_path+'/PRJ6?account_id=UF') }    
+     it { should have_link('Destroy', href: projects_path+'/PRJ?account_id=UF') }    
      it "should be able to delete an project" do
        expect do
-         page.find(:xpath, "//a[@href='#{projects_path}/PRJ6?account_id=UF']").click
+         page.find(:xpath, "//a[@href='#{projects_path}/PRJ?account_id=UF']").click
        end.to change(Project, :count).by(-1)
      end
-     it { should_not have_link('Destroy', href:projects_path+'/PRJ6?account_id=UF') }
+     it { should_not have_link('Destroy', href:projects_path+'/PRJ?account_id=UF') }
    end
 end

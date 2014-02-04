@@ -1,6 +1,10 @@
 <% provide(:title, 'All Projects') %>
 <h6>Admin->Projects</h6>
-
+<div class="row-fluid">
+  <div class="span2 offset10">
+	<%= link_to 'New Project', new_project_path %>
+  </div>
+</div>
 <table class='table table-striped'>
   <tr>
     <th>Id</th>
@@ -21,6 +25,3 @@
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Project', new_project_path %>

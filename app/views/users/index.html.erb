@@ -1,6 +1,12 @@
 <% provide(:title, 'All Users') %>
 <h6>Admin->Users</h6>
 
+<div class="row-fluid">
+  <div class="span2 offset10">
+	<%= link_to 'New User', new_user_path %>
+  </div>
+</div>
+
 <%= will_paginate %>
 
 <table class="table table-striped">
@@ -47,4 +53,3 @@
 
 <%= will_paginate %>
 
-<%= link_to 'New User', new_user_path %>
