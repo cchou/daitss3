@@ -16,6 +16,7 @@ class MainController < ApplicationController
     end  
   end  
 
+  # when a user select an account, retrieve all associated projects and users to that account
   def select_account
     # updates projects  based on the account selected
     projects = Project.all(:account_id => params[:account_id])

@@ -1,6 +1,6 @@
 require 'will_paginate/array'
 
-# Map View column title to the Database table column name
+# Map Packages View column title to the Database table column name
 Title_To_Column_Name = {
   "account" => "account_id",
   "project" => "project_id",
@@ -225,6 +225,10 @@ class PackagesController < ApplicationController
     render :nothing => true
   end
 
+  def show
+    @package = Package.get(params[:id])  
+  end
+  
   def submit
   end
 
@@ -247,5 +251,6 @@ class PackagesController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "desc"
   end
+
 
 end

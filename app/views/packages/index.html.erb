@@ -53,7 +53,7 @@
   <tbody>
     <% @results.each do |result| %>
     <tr>
-      <td><%= result.id %></td>
+      <td><%= link_to result.id, show_package_path(:id => result.id) %></td>
       <td><%= result.name %></td>
       <td><%= result.account_id %></td>
       <td><%= result.project_id %></td>

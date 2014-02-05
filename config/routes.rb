@@ -20,7 +20,8 @@ Daitss::Application.routes.draw do
   match '/admin' => 'main#admin'
   match '/submit', to: 'packages#submit'
   match '/upload', to: 'packages#upload'
-
+  match '/show_package', to: 'packages#show'
+  
   get 'main/select_account', :as => 'select_account'
   get 'packages/select_package_account', :as => 'select_package_account'
   
