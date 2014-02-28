@@ -64,5 +64,8 @@ module Daitss
     
     # silence served asset log messages
     config.assets.logger = false
+    
+    # for bootstrap 3
+    config.assets.initialize_on_precompile = true
   end
 end
