@@ -12,6 +12,19 @@ Title_To_Column_Name = {
   "Timestamp" => "timestamp"
 }
 
+SQL = "select t1.*
+        from (
+        SELECT p.id, s.name, pj.account_id, pj.id as project_id, s.size_in_bytes, s.number_of_datafiles, ie.title, ie.volume, ie.issue, e.name as event_name, e.timestamp
+          ,rank() over (partition by p.id order by e.timestamp) myrank
+        from packages as p inner join sips as s on (p.id = s.package_id)
+          inner join intentities as ie on (p.id = ie.package_id)
+          inner join projects as pj on (p.project_account_id = pj.account_id and p.project_id = pj.id)
+          inner join events as e on (p.id = e.package_id)
+        where search_clause
+        ) t1
+        where t1.myrank=1
+        order by order_by"
+        
 class PackagesController < ApplicationController
   helper_method :sort_column, :sort_direction  # make these two methods available to application helpers 
   before_filter :load_vars
@@ -37,18 +50,8 @@ class PackagesController < ApplicationController
     if (params[:id_search] && !params[:id_search].empty?)
       #TODO sanitize the search param since we are now using direct sql.
       search_clause = "p.id like '#{params[:id_search]}' or s.name like '#{params[:id_search]}'"      
-      sql = "select t1.*
-        from (
-        SELECT p.id, s.name, pj.account_id, pj.id as project_id, s.size_in_bytes, s.number_of_datafiles, ie.title, ie.volume, ie.issue, e.name as event_name, e.timestamp
-          ,rank() over (partition by p.id order by e.timestamp) myrank
-        from packages as p inner join sips as s on (p.id = s.package_id)
-          inner join intentities as ie on (p.id = ie.package_id)        
-          inner join  projects as pj on (p.project_account_id = pj.account_id and p.project_id = pj.id)
-          inner join  events as e on (p.id = e.package_id)
-        where #{search_clause}
-        ) t1
-        where t1.myrank=1
-        order by #{order_by}"                
+      sql = SQL.gsub("search_clause", search_clause)
+      sql = sql.gsub("order_by", order_by)              
     else
       names = 
         case params[:activity_search]
@@ -105,18 +108,8 @@ class PackagesController < ApplicationController
           search_clause = ""        
       end
       search_clause += "e.timestamp between '#{@start_date}' and '#{@end_date}' and e.name in #{names}"      
-      sql = "select t1.*
-        from (
-        SELECT p.id, s.name, pj.account_id, pj.id as project_id, s.size_in_bytes, s.number_of_datafiles, ie.title, ie.volume, ie.issue, e.name as event_name, e.timestamp
-          ,rank() over (partition by p.id order by e.timestamp) myrank
-        from packages as p inner join sips as s on (p.id = s.package_id)
-          inner join intentities as ie on (p.id = ie.package_id)
-          inner join projects as pj on (p.project_account_id = pj.account_id and p.project_id = pj.id)
-          inner join events as e on (p.id = e.package_id)
-        where #{search_clause}
-        ) t1
-        where t1.myrank=1
-        order by #{order_by}"                         
+      sql = SQL.gsub("search_clause", search_clause)
+      sql = sql.gsub("order_by", order_by)                        
     end
     @results = DataMapper.repository(:default).adapter.select(sql).paginate(page: params[:page])
   end
@@ -226,7 +219,12 @@ class PackagesController < ApplicationController
   end
 
   def show
-    @package = Package.get(params[:id])  
+    debugger
+    search_clause = "p.id = '#{params[:id]}'"      
+    sql = SQL.gsub("search_clause", search_clause)
+    sql = sql.gsub("order_by", "timestamp")  
+    result = DataMapper.repository(:default).adapter.select(sql) #Package.get(params[:id])  
+    @package = result.first
   end
   
   def submit
@@ -251,6 +249,5 @@ class PackagesController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "desc"
   end
-
 
 end

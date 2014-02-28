@@ -1,5 +1,33 @@
 <% provide(:title, @package.id) %>
-<h1><%= @package.id %></h1>
-<h3><%= @package.uri %></h3>
-<h3><%= @package.project_id %></h3>
-<h3><%= @package.project_account_id %></h3>
+<div class="row-fluid">
+	<div class="span12">
+		<div class="span4">
+			<h3><%= @package.id %></h3>
+		</div>
+		<div class="span8">
+			<table class="table table-condensed table-striped">
+				<thead>
+					<tr>
+						<th>SIP Name</th>
+						<th>Account</th>
+						<th>Project</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><%= @package.name %></td>
+						<td><%= @package.account_id %></td>
+						<td><%= @package.project_id %></td>
+					</tr>
+				</tbody>
+			</table>			
+		</div>	
+	</div>
+</div>
+<h3><%= @package.size_in_bytes %></h3>
+<h3><%= @package.number_of_datafiles %></h3>
+<h3><%= @package.event_name%></h3>
+<h3><%= @package.timestamp.strftime("%a %b %d %Y %I:%M:%S %p") %></h3>
+<h3><%= @package.title %></h3>
+<h3><%= @package.volume %></h3>
+<h3><%= @package.issue %></h3>
