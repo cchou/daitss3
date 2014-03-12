@@ -219,12 +219,18 @@ class PackagesController < ApplicationController
   end
 
   def show
-    debugger
     search_clause = "p.id = '#{params[:id]}'"      
     sql = SQL.gsub("search_clause", search_clause)
     sql = sql.gsub("order_by", "timestamp")  
-    result = DataMapper.repository(:default).adapter.select(sql) #Package.get(params[:id])  
-    @package = result.first
+    results = DataMapper.repository(:default).adapter.select(sql) 
+    @results = results.first
+    @package = Package.get(params[:id])  
+  end
+  
+  # submit request for the curent package
+  def submit_request
+    #TBD add a request to the database
+    redirect_to show_package_path(:id => params[:id]) 
   end
   
   def submit

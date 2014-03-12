@@ -1,6 +1,6 @@
 <% provide(:title, 'Admin View') %>
 <h6>Admin->View</h6>
-<div class="row-fluid">
+<div class="row">
   <div class="span4">
     <label for="account_select">Accounts</label>
     <%= collection_select(:account, :account_id,  @accounts,  :id, :id, {:prompt   => "Select an account"}, {:id => 'account_select', :multiple => true, :size => 20 })%>
