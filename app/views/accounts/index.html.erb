@@ -1,8 +1,8 @@
 <h6>Admin->Accounts</h6>
 
-<div class="row-fluid">
-  <div class="span2 offset10">
-	<%= link_to 'New Account', new_account_path %>
+<div class="row">
+  <div class="col-md-2 col-md-offset-10">
+    <%= link_to 'New Account', new_account_path %>
   </div>
 </div>
 
@@ -16,7 +16,7 @@
     <th></th>
   </tr>
 
-<% @accounts.each do |account| %>
+  <% @accounts.each do |account| %>
   <tr>
     <td><%= account.id %></td>
     <td><%= account.description %></td>
@@ -24,6 +24,6 @@
     <td><%= link_to 'Edit', edit_account_path(account) %></td>
     <td><%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
-<% end %>
+  <% end %>
 </table>
 

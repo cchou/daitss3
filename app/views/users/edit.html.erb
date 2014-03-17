@@ -1,71 +1,73 @@
 <% provide(:title, 'Edit User') %>
 <h1>Update your profile</h1>
 
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for(@user, :as => :user, :html => {:class => "form-horizontal"}) do |f| %>
-      <%#= render 'shared/error_messages' %>
-      <div class="control-group">
-        <%= f.label :id, class: "control-label" %>
-        <div class="controls">
-      	  <%= f.text_field :id, :readonly => true %>
-        </div>
-      </div>
+<div class="">
+  <%= form_for(@user, :as => :user, :html => {:class => "form"}) do |f| %>
+  <%#= render 'shared/error_messages' %>
+  <div class="row">
+    <%= f.label :id, :class=>"col-md-1 col-md-offset-3" %>
+    <div class="col-md-6 ">
+      <%= f.text_field :id,  :class=>"form-control", :readonly => true %>
+    </div>
+  </div>
 
-      <div class="control-group">
-        <%= f.label :description, class: "control-label" %>
-        <div class="controls">
-      	  <%= f.text_field :description %>
-        </div>
-      </div>
+  <div class="row">
+    <%= f.label :description, :class=>"col-md-1 col-md-offset-3"  %>
+    <div class=" col-md-6 ">
+      <%= f.text_field :description, :class=>"form-control" %>
+    </div>
+  </div>
 
-      <div class="control-group">
-        <%= f.label :account_id, class: "control-label" %>
-        <div class="controls">
-          <%= f.select(:account_id, Account.all.collect {|a| a.id}) %>
-        </div>
-      </div>
+  <div class="row">
+    <%= f.label :account_id, :class=>"col-md-1 col-md-offset-3"  %>
+    <div class="col-md-6 ">
+      <%= f.select(:account_id, Account.all.collect {|a| a.id}) %>
+    </div>
+  </div>
 
-     <div class="control-group">
-      <%= f.label :first_name, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_field :first_name %>
-       </div>
-      </div>
+  <div class="row">
+    <%= f.label :first_name, :class=>"col-md-1 col-md-offset-3"  %>
+    <div class="col-md-6 ">
+      <%= f.text_field :first_name, :class=>"form-control" %>
+    </div>
 
-     <div class="control-group">
-      <%= f.label :last_name, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_field :last_name %>
-       </div>
+    <div class="row">
+      <%= f.label :last_name,:class=>"col-md-1 col-md-offset-3"  %>
+      <div class="col-md-6 ">
+        <%= f.text_field :last_name, :class=>"form-control" %>
       </div>
- 
-     <div class="control-group">
-      <%= f.label :email, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_field :email, :type => "email" %>
-       </div>
+    </div>
+    <div class="row">
+      <%= f.label :phone, :class=>"col-md-1 col-md-offset-3"  %>
+      <div class="form-group col-md-6 ">
+        <%= f.text_field :phone, :class=>"form-control" %>
       </div>
+    </div>
+    <div class="row">
+      <%= f.label :email, :class=>"col-md-1 col-md-offset-3"  %>
+      <div class="col-md-6 ">
+        <%= f.text_field :email, :class=>"form-control", :type => "email" %>
+      </div>
+    </div>
 
-      <div class="control-group">
-        <%= f.label :phone, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_field :phone, :type=>'tel', :pattern=>'[\(]\d{3}[\)]\d{3}[\-]\d{4}', :title=>'Phone Number (Format: (999)999-9999)'%>
-        </div>
+    <div class="row">
+      <%= f.label :phone, :class=>"col-md-1 col-md-offset-3"  %>
+      <div class="col-md-6 ">
+        <%= f.text_field :phone, :class=>"form-control", :type=>'tel', :pattern=>'[\(]\d{3}[\)]\d{3}[\-]\d{4}', :title=>'Phone Number (Format: (999)999-9999)'%>
       </div>
+    </div>
 
-      <div class="control-group">
-        <%= f.label :address, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_area :address, rows: "2" %>
-        </div>
+    <div class="row">
+      <%= f.label :address, :class=>"col-md-1 col-md-offset-3"  %>
+      <div class="col-md-6 ">
+        <%= f.text_area :address, :class=>"form-control", rows: "2" %>
       </div>
-
-      <div class="control-group">
-	    <div class="controls">
-          <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-4">
+        <%= f.submit "Save changes", class: "btn btn-lg btn-primary" %>
       </div>
+    </div>
     <% end %>
   </div>
 </div>

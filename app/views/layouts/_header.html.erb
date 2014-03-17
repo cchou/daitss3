@@ -1,29 +1,29 @@
 <header class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
+  <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
-	<div class="span2">
-	  <%= link_to image_tag("FLVC_logo_symbol_medium.png", alt: "FLVC"), 'http://www.flvc.org' %>
-	</div>	
-	<div class="span8">
-      <nav>
-        <ul class="nav pull-right">
-          <% if signed_in? %>
+      <div class="col-md-2 pull-left">
+        <%= link_to image_tag("FLVC_logo_symbol_medium.png", alt: "FLVC"), 'http://www.flvc.org' %>
+      </div>    	
+      <div class="col-md-8">
+        <nav>
+          <ul class="nav navbar-nav navbar-right">
+            <% if signed_in? %>
             <li><%= link_to "Home", dashboard_path %></li>
             <% if current_user.is_admin_contact? || current_user.class == Operator%>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  Admin <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-	              <li><%= link_to "View", admin_path %></li>
-                  <li><%= link_to "Accounts", accounts_path %></li>
-                  <li><%= link_to "Projects", projects_path %></li>
-                  <li><%= link_to "Users", users_path %></li>
-                  <li><%= link_to "Log", '#' %></li>
-                </ul>
-              </li>
-           <% end %>
-           <li class="dropdown">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Admin <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "View", admin_path %></li>
+                <li><%= link_to "Accounts", accounts_path %></li>
+                <li><%= link_to "Projects", projects_path %></li>
+                <li><%= link_to "Users", users_path %></li>
+                <li><%= link_to "Log", '#' %></li>
+              </ul>
+            </li>
+            <% end %>
+            <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 Packages <b class="caret"></b>
               </a>
@@ -43,16 +43,16 @@
                 <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
               </ul>
             </li>
-          <% else %>
+            <% else %>
             <li><%= link_to "Sign in", signin_path %></li>
-          <% end %>
-          <li><%= link_to "Help",    help_path %></li>
-        </ul>
-      </nav>
+            <% end %>
+            <li><%= link_to "Help",    help_path %></li>
+          </ul>
+        </nav>
       </div>
-	<div class="span2 pull-right">
-	  <%= link_to image_tag("FDA-colorLogo.png", alt: "FDA"), 'http://fclaweb.fcla.edu/FDA' %>
-	</div>
+      <div class="col-md-2">
+        <%= link_to image_tag("FDA-colorLogo.png", alt: "FDA"), 'http://fclaweb.fcla.edu/FDA' %>
+      </div>  
     </div>
-  </div>
+  </nav>
 </header>

@@ -5,7 +5,7 @@ ruby "1.9.3"
 gem 'bootstrap-sass','~> 3.1.1'
 gem 'faker', '1.0.1' # to create realistic sample db data
 gem 'will_paginate', '3.0.3'
-gem 'bootstrap-will_paginate', '0.0.9'
+gem 'will_paginate-bootstrap', '~>1.0.0'
 
 gem 'activesupport',      '3.2.13', :require => 'active_support'
 gem 'actionpack',         '3.2.13', :require => 'action_pack'

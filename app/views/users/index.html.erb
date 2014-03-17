@@ -1,9 +1,9 @@
 <% provide(:title, 'All Users') %>
 <h6>Admin->Users</h6>
 
-<div class="row-fluid">
-  <div class="span2 offset10">
-	<%= link_to 'New User', new_user_path %>
+<div class="row">
+  <div class="col-md-2 col-md-offset-10">
+    <%= link_to 'New User', new_user_path %>
   </div>
 </div>
 
@@ -20,7 +20,7 @@
     <th></th>
   </tr>
 
-<% @users.each do |user| %>
+  <% @users.each do |user| %>
   <tr>
     <td><%= link_to user.id, user %></td>
     <td><%= user.account_id %></td>
@@ -29,26 +29,26 @@
     <td><%= user.first_name %></td>
     <td><%= user.last_name %></td>
     <% if admin_user? %>
-	<td><%= link_to 'Edit', edit_user_path(user) %></td>
+    <td><%= link_to 'Edit', edit_user_path(user) %></td>
     <% end %>
     <% if admin_user? && !current_user?(user) %>
-	<td><%= link_to "delete", user, method: :delete,
-                                  data: { confirm: "You sure?" } %></td>
+    <td><%= link_to "delete", user, method: :delete,
+    data: { confirm: "You sure?" } %></td>
     <% end %>
   </tr>
-<% end %>
+  <% end %>
 </table>
 
 <!-- <ul class="users">
-  <% @users.each do |user| %>
-    <li>
-      <%= link_to user.id, user %>
-      <%= user.first_name %>
-      <%= user.last_name %>
-      <%= user.account_id %>
-      <%= user.email %>
-    </li>
-  <% end %>
+<% @users.each do |user| %>
+<li>
+<%= link_to user.id, user %>
+<%= user.first_name %>
+<%= user.last_name %>
+<%= user.account_id %>
+<%= user.email %>
+</li>
+<% end %>
 </ul> -->
 
 <%= will_paginate %>

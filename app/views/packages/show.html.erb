@@ -1,81 +1,81 @@
 <div class="row">
   <!-- <div class="page-header">
   </div> -->
-  <div class="span10" style="padding-right:20px; border-right: 1px solid #ccc;">
-      <h4><%= @results.id %> <small>Archived</small></h4>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>SIP Name</th>
-            <th>Account</th>
-            <th>Project</th>
-			<th>Ingest Elapsed Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%= @results.name %></td>
-            <td><%= @results.account_id %></td>
-            <td><%= @results.project_id %></td>
-			<td><%= @package.elapsed_time.to_s + " sec"%>
+  <div class="col-md-10" style="padding-right:20px; border-right: 1px solid #ccc;">
+    <h4><%= @results.id %> <small>Archived</small></h4>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>SIP Name</th>
+          <th>Account</th>
+          <th>Project</th>
+          <th>Ingest Elapsed Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @results.name %></td>
+          <td><%= @results.account_id %></td>
+          <td><%= @results.project_id %></td>
+          <td><%= @package.elapsed_time.to_s + " sec"%>
           </tr>
         </tbody>
       </table>
-      </br>
-      <h4>Events</h4>
-      <table class="table table-condensed table-bordered">
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Time</th>
-            <th>Agent</th>
-			<th>Comment</th>
-			<th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-	      <% @package.normal_events.each do |event| %>
-          <tr>
-            <td><%= event.polite_name %></td>
-            <td><%= event.timestamp.strftime("%a %b %d %Y %I:%M:%S %p") %></td>
-            <td><%= event.agent.id %></td>
-            <td><%= event.comments.length.to_s + " comment(s)" %></td>
-			<td><%= event.notes%></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-	<h4>Aip</h4>
+    </br>
+    <h4>Events</h4>
+    <table class="table table-condensed table-bordered">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Time</th>
+          <th>Agent</th>
+          <th>Comment</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @package.normal_events.each do |event| %>
+        <tr>
+          <td><%= event.polite_name %></td>
+          <td><%= event.timestamp.strftime("%a %b %d %Y %I:%M:%S %p") %></td>
+          <td><%= event.agent.id %></td>
+          <td><%= event.comments.length.to_s + " comment(s)" %></td>
+          <td><%= event.notes%></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <h4>Aip</h4>
     <table class="table table-condensed table-bordered">
       <thead>
         <tr>
           <th>Title</th>
           <td><%=@results.title%></td>
-       </tr>
-       <tr>
+        </tr>
+        <tr>
           <th>Number of datafiles</th>
           <td><%=@results.number_of_datafiles%></td>
-       </tr>
-       <tr>
+        </tr>
+        <tr>
           <th>Volume</th>
           <td><%=@results.volume%></td>
-       </tr> 
-       <tr>
+        </tr> 
+        <tr>
           <th>Issue</th>
           <td><%=@results.issue%></td>
-       </tr> 
+        </tr> 
       </table>                       
-  </div>
-  <div class="span2">
-	<h4>Batches</h4>
+    </div>
+    <div class="col-md-2">
+      <h4>Batches</h4>
       <%= collection_select(:batch, :batch,  @package.batches,  :id, :id, {}, {:multiple => true, :size => 3 })%>
-	<h4>Request</h4>
-	<form action="submit_request" method ="post" enctype="multipart/form-data">
-      <%= select_tag :request_type, options_for_select(["disseminated", "refresh", "withdraw"]) %>
-      <%= text_field_tag :request_note, params[:request_note], :placeholder => "Note" %>
-      <%= hidden_field_tag :id, @results.id %>
-	  <%= submit_tag "Submit", :class=>"btn", :name => nil %>
-    </form>
-  </div>      
-</div>
+      <h4>Request</h4>
+      <form action="submit_request" method ="post" enctype="multipart/form-data">
+        <%= select_tag :request_type, options_for_select(["disseminated", "refresh", "withdraw"]) %>
+        <%= text_field_tag :request_note, params[:request_note], :placeholder => "Note" %>
+        <%= hidden_field_tag :id, @results.id %>
+        <%= submit_tag "Submit", :class=>"btn", :name => nil %>
+      </form>
+    </div>      
+  </div>
 

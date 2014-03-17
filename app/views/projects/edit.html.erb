@@ -2,21 +2,21 @@
 <h6>Admin->project->Edit</h6>
 
 <div class="row">
-  <div class="span6 offset3">
+  <div class="col-md-6 col-md-offset-3">
     <%= form_for(@project) do |f| %>
-      <%#= render 'shared/error_messages' %>
+    <%#= render 'shared/error_messages' %>
 
-      <%= f.label :id %><br />
-      <%= f.text_field :id %>
+    <%= f.label :id %><br />
+    <%= f.text_field :id %>
 
-      <%= f.label :description %><br />
-      <%= f.text_field :description %>
- 
-      <%= f.label :account_id %><br />
-      <%= f.select(:account_id, Account.user_accounts.collect {|a| a.id}) %>
- 
-	  <%= hidden_field_tag :account_id, @project.account_id%> 
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+
+    <%= f.label :account_id %><br />
+    <%= f.select(:account_id, Account.user_accounts.collect {|a| a.id}) %>
+
+    <%= hidden_field_tag :account_id, @project.account_id%> 
+    <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
     <% end %>
   </div>
 </div>

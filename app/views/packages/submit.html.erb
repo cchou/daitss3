@@ -1,30 +1,30 @@
 <% provide(:title, 'Submit Packages') %>
 <h6>Packages->Submit</h6>
 <div class="row-fluid">
-	<fieldset>
-      <legend>Files Upload</legend>	
-      <form class='form-horizontal' id ="upload" action="upload" method ="post" enctype="multipart/form-data">
-        <div class="span5">
-          <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="100000000" />
-          <label for="batch">Batch</label>
-          <%= text_field_tag :batch, params[:batch], :size => 10 %>
-          <label for="note">Note</label>
-          <%= text_area_tag :note, params[:note] %>
-        </div>
-        <div class="span7">
-          <label for="fileselect">Files to upload:</label>
-          <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
-		  <button id = "upload_all" class="btn btn-success btn-large" type="button"><i class="icon-upload icon-white"></i> Upload All</button>
-		  <button id = "delete_all" class="btn btn-danger btn-large" type="button"><i class="icon-trash icon-white"></i> Delete All</button>
-          <div id="filedrag">or drop files here</div>
-        </div>
-        <div id="submitbutton">
-	      <%= submit_tag "Submit", :class=>"btn", :name => nil %>
-        </div>
-		<%= javascript_tag "load()" %>
-      </form>
-	</fieldset>
+  <fieldset>
+    <legend>Files Upload</legend>	
+    <form class='form-horizontal' id ="upload" action="upload" method ="post" enctype="multipart/form-data">
+      <div class="col-md-5">
+        <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="100000000" />
+        <label for="batch">Batch</label>
+        <%= text_field_tag :batch, params[:batch], :size => 10 %>
+        <label for="note">Note</label>
+        <%= text_area_tag :note, params[:note] %>
+      </div>
+      <div class="col-md-7">
+        <label for="fileselect">Files to upload:</label>
+        <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
+        <button id = "upload_all" class="btn btn-success btn-large" type="button"><i class="glyphicon glyphicon-upload"></i> Upload All</button>
+        <button id = "delete_all" class="btn btn-danger btn-large" type="button"><i class="glyphicon glyphicon-trash"></i> Delete All</button>
+        <div id="filedrag">or drop files here</div>
+      </div>
+      <div id="submitbutton">
+        <%= submit_tag "Submit", :class=>"btn", :name => nil %>
+      </div>
+      <%= javascript_tag "load()" %>
+    </form>
+  </fieldset>
   <div class="alert"><%= @message %></div>
-  <table id="queue" class="table table-striped">
+  <table id="queue" class="table table-hover">
   </table>
 </div>

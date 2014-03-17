@@ -1,27 +1,27 @@
 <% provide(:title, "Sign in") %>
 <div class ="container">
-	<div class="center hero-unit">
-		<h1>Welcome to the Florida Digital Archive</h1>
-	</div>
-	<div class="center row-fluid">
-		<%= form_for(:session, url: sessions_path) do |f| %>
-		<div class="offset4 span4 offset4">
-			<%= f.text_field :id, :size => 20, :name => "id", :placeholder => "User ID" %>
-		</div>
-		<div class="offset4 span4 offset4">
-			<%= f.password_field :auth_key, :size => 20, :name => "auth_key", :placeholder => "Password" %>
-		</div>
-		<div class="offset4 span4 offset4">
-			<%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
-		</div>
-		<% end %>
-		<br/>
-		<div class="offset1 span10 offset1">
-			<p>For best result, please use the latest version of Google Chrome</p>
-			<p>Want to sign up as a new user? Please <a href="mailto:fda@example.com?Subject=Sign%20me%20up" target="_top">
-				Send an email</a> 
-			</p> 
-		</div>
-	</div>
-	<!-- <%= link_to "Sign up now!", signup_path %> -->
+  <div class="center jumbotron">
+    <h1>Welcome to the Florida Digital Archive</h1>
+  </div>
+  <div class="center row">
+    <%= form_for(:session, url: sessions_path) do |f| %>
+    <div class="col-md-offset-4 col-md-4 col-md-offset-4">
+      <%= f.text_field :id, :size => 20, :name => "id", :placeholder => "User ID" %>
+    </div>
+    <div class="col-md-offset-4 col-md-4 col-md-offset-4">
+      <%= f.password_field :auth_key, :size => 20, :name => "auth_key", :placeholder => "Password" %>
+    </div>
+    <div class="col-md-offset-4 col-md-4 col-md-offset-4">
+      <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
+    </div>
+    <% end %>
+    <br/>
+    <div class="col-md-offset-1 col-md-10 col-md-offset-1">
+      <p>For best result, please use the latest version of Google Chrome</p>
+      <p>Want to sign up as a new user? Please <a href="mailto:fda@example.com?Subject=Sign%20me%20up" target="_top">
+        Send an email</a> 
+      </p> 
+    </div>
+  </div>
+  <!-- <%= link_to "Sign up now!", signup_path %> -->
 </div>

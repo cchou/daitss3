@@ -1,4 +1,4 @@
-  class Event
+class Event
     include DataMapper::Resource
 
     property :id, Serial, :key => true
@@ -18,4 +18,4 @@
       name.gsub 'snafu', 'error'
     end
   end
-  end
+end

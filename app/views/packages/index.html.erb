@@ -1,36 +1,40 @@
 <% provide(:title, 'View Packages') %>
 <h6>Packages->View</h6>
-<div class="row-fluid">
-  <div class="span12">
+<div class="row">
   <form action="/packages" class="form-search" method ="get">
-    <div class="span1">
-	  <%= collection_select(:account,  :account_id, Account.all, :id, :id, {:prompt => "Account"}, {:id => 'account_search', :selected=> params[:account] && params[:account]["account_id"]})%>
+    <div class="col-md-1">
+      <%= collection_select(:account,  :account_id, Account.all, :id, :id, {:prompt => "Account"}, {:id => 'account_search', :selected=> params[:account] && params[:account]["account_id"]})%>
     </div>
-    <div class="span1">
-	   <%= collection_select(:project, :project_id,  @projects,  :id, :id, {:prompt   => "Project"}, { :id => 'project_search', :selected=> params[:project] && params[:project]["project_id"] })%>
+    <div class="col-md-1">
+      <%= collection_select(:project, :project_id,  @projects,  :id, :id, {:prompt   => "Project"}, { :id => 'project_search', :selected=> params[:project] && params[:project]["project_id"] })%>
     </div>
-    <div class="span1">
+    <div class="col-md-1">
       <%= text_field_tag :batch_search, params[:batch_search], :placeholder => "Batch" %>
     </div>
-    <div class="span2">
+    <div class="col-md-2">
       <%= select_tag :activity_search, options_for_select(["activities", "submitted", "rejected", "archived", "disseminated", "error", "withdrawn"], params[:activity_search]) %>
     </div>
-    <div class="span2">
+    <div class="col-md-2">
       <%= text_field_tag :start_time_search, params[:start_time_search], :type=> "date", :title => "Start Date" %>
     </div>
-    <div class="span2">
+    <div class="col-md-2">
       <%= text_field_tag :end_time_search, params[:end_time_search], :type=> "date", :title => "End Date" %>
     </div>
-    <div class="span3">
-	  <div class="input-append">
+    <div class="col-md-2">
       <%= text_field_tag :id_search, params[:id_search], :size => 13, :class => 'search-query', :placeholder => "IEID or Package Name" %>
-      <%= button_tag(type: "submit", class: "btn") do %>
-         <i class="icon-search"></i>
-         <% end %>
-	  </div>
-	</div>
-  </form>
+    </div>
+    <div class="col-md-1">
+      <%= submit_tag "Submit", :class=>"btn", :name => nil %>
+
+      <!-- 
+      <span class="input-group-addon">
+      <%= button_tag(type: "submit", class: "btn btn-xs") do %>
+      <span class="glyphicon glyphicon-search"></span>
+      <% end %> -->
+      <!-- </span> -->
+    </div>
   </div>
+</form>
 </div>
 
 <%= will_paginate @results%>
