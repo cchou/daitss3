@@ -4,7 +4,7 @@
       <div class="col-md-2 pull-left">
         <%= link_to image_tag("FLVC_logo_symbol_medium.png", alt: "FLVC"), 'http://www.flvc.org' %>
       </div>    	
-      <div class="col-md-8">
+      <div class="col-md-7">
         <nav>
           <ul class="nav navbar-nav navbar-right">
             <% if signed_in? %>
@@ -19,7 +19,7 @@
                 <li><%= link_to "Accounts", accounts_path %></li>
                 <li><%= link_to "Projects", projects_path %></li>
                 <li><%= link_to "Users", users_path %></li>
-                <li><%= link_to "Log", '#' %></li>
+                <li><%= link_to "Log", log_path %></li>
               </ul>
             </li>
             <% end %>
@@ -50,7 +50,7 @@
           </ul>
         </nav>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-3 pull-left">
         <%= link_to image_tag("FDA-colorLogo.png", alt: "FDA"), 'http://fclaweb.fcla.edu/FDA' %>
       </div>  
     </div>

@@ -5,7 +5,6 @@ Daitss::Application.routes.draw do
   resources :accounts
   resources :projects
   resources :users
-  resources :logs
   resources :packages, only: [:index, :submit]
   resources :sessions, only: [:new, :create, :destroy]
   resources :operators, :controller => "users" # single table inheritance, operator is a kind of user.
@@ -18,6 +17,8 @@ Daitss::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete    
   match '/help',  to: 'main#help'
   match '/admin' => 'main#admin'
+  match '/log', to: 'main#log'  
+  match '/log_message', to: 'main#log_message'
   match '/submit', to: 'packages#submit'
   match '/upload', to: 'packages#upload'
   match '/show_package', to: 'packages#show'

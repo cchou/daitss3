@@ -74,6 +74,7 @@
         <%= select_tag :request_type, options_for_select(["disseminated", "refresh", "withdraw"]) %>
         <%= text_field_tag :request_note, params[:request_note], :placeholder => "Note" %>
         <%= hidden_field_tag :id, @results.id %>
+        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>" />
         <%= submit_tag "Submit", :class=>"btn", :name => nil %>
       </form>
     </div>      

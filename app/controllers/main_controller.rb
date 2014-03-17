@@ -27,4 +27,13 @@ class MainController < ApplicationController
     # map to id for use in options_for_select
     @users = users.map{|a| a.id}    
   end
+  
+  def log
+    @entries = Entry.all  
+  end  
+  
+  #create a new log message
+  def log_message
+    redirect_to log_path
+  end    
 end
