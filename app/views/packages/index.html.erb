@@ -41,6 +41,7 @@
 <table class="table table-condensed table-hover">
   <thead>
     <tr>
+      <th>Select</th>
       <th><%= sortable "IEID" %></th>
       <th><%= sortable "Package Name" %></th>
       <th><%= sortable "Account" %></th>
@@ -57,6 +58,7 @@
   <tbody>
     <% @results.each do |result| %>
     <tr>
+      <td><input type="checkbox" name="pkg_check"></td>
       <td><%= link_to result.id, show_package_path(:id => result.id) %></td>
       <td><%= result.name %></td>
       <td><%= result.account_id %></td>

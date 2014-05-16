@@ -5,7 +5,6 @@ class CreateAccounts < ActiveRecord::Migration
       t.Text :descripton
       t.String :report_email
 
-      t.timestamps
     end
   end
 end

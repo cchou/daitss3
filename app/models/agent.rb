@@ -19,7 +19,7 @@ class Agent
   def encrypt
     encrypt_auth(self.auth_key)
   end
-  
+
   def encrypt_auth pass
     self.auth_key = Digest::SHA1.hexdigest("#{self.salt}:#{pass}")
   end
@@ -27,11 +27,11 @@ class Agent
   def authenticate pass
     self.auth_key == Digest::SHA1.hexdigest("#{self.salt}:#{pass}") and self.deleted_at.nil?
   end
-  
+
   def new_remember_token
     SecureRandom.urlsafe_base64
   end
-   
+
   def create_remember_token
     self.remember_token = new_remember_token
   end     

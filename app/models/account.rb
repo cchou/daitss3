@@ -2,7 +2,7 @@
 #require 'dm-constraints'
 #require 'dm-validations'
 
-class Account
+class Account 
   include DataMapper::Resource
 
   property :id, String, :key => true

@@ -2,6 +2,8 @@
 //# All this logic will automatically be available in application.js.
 //# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
+//$(document).ready -> 
+//  $('#account_search').change ->
 // ajax callback to dynamically display the list of projects under each account.
 $(document).ready(function() {
   $('#account_search').change(function() {
@@ -20,7 +22,6 @@ $(function() {
   $('#start_time_search').tooltip({'trigger':'hover', 'placement':'bottom'});
   $('#end_time_search').tooltip({'trigger':'hover', 'placement':'bottom'});	
 });
-
 
 var upload_queue = {};
 
@@ -171,22 +172,22 @@ function UploadFile(file, progress) {
     xhr.upload.addEventListener("progress", function(evt) {
       var percent = parseInt((evt.loaded/evt.total*100));
       progress.style.width ='#{percent}%';
-      }, false);
+    }, false);
       // whether file uploading were received or failed
-      xhr.onreadystatechange = function(evt) {
-        if (xhr.readyState == 4) {
-          progress.style.width ='100%';
-        }
-      };
-      // start uploading
-      xhr.open("POST", $id("upload").action, true);
-      // pass the csrf token in the ajax post request
-      // see http://www.mindfiresolutions.com/How-to-work-with-CSRF-token-while-AJAX-posting-in-Rails-31-1651.php
-      var token =$("meta[name='csrf-token']").attr("content");
-      xhr.setRequestHeader("X-CSRF-Token", token);  
-      xhr.setRequestHeader("X_FILENAME", file.name);
-      xhr.setRequestHeader("Content-Type", file.type);
+    xhr.onreadystatechange = function(evt) {
+      if (xhr.readyState == 4) {
+        progress.style.width ='100%';
+      }
+    };
+    // start uploading
+    xhr.open("POST", $id("upload").action, true);
+    // pass the csrf token in the ajax post request
+    // see http://www.mindfiresolutions.com/How-to-work-with-CSRF-token-while-AJAX-posting-in-Rails-31-1651.php
+    var token =$("meta[name='csrf-token']").attr("content");
+    xhr.setRequestHeader("X-CSRF-Token", token);  
+    xhr.setRequestHeader("X_FILENAME", file.name);
+    xhr.setRequestHeader("Content-Type", file.type);
 
-      xhr.send(file);
-    }
+    xhr.send(file);
+  }
 }
