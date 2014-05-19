@@ -34,6 +34,10 @@ class MainController < ApplicationController
   
   #create a new log message
   def log_message
+    e = Entry.new
+    e.message = params[:message]
+    e.operator = current_user
+    e.save or error "could not save archive log entry"  
     redirect_to log_path
   end    
 end
