@@ -5,6 +5,7 @@ class MainController < ApplicationController
   def help
   end
   
+  # administer users, accounts and projects
   def admin
     @accounts = Account.user_accounts
     @projects = []
@@ -28,6 +29,7 @@ class MainController < ApplicationController
     @users = users.map{|a| a.id}    
   end
   
+  # FDA log message
   def log
     @entries = Entry.all  
   end  
