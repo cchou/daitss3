@@ -11,11 +11,15 @@ class ProjectsController < ApplicationController
   
   # create a new project model with the information entered.
   def create
+    debugger
     @project = Project.new(params[:project])
       
     if @project.save
       flash[:success] = "Project created"      
       redirect_to projects_url
+    else
+      flash[:error] = "Cannot create project"
+      render 'new'
     end
   end
  

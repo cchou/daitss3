@@ -122,7 +122,7 @@ function InspectFile(file) {
 
   var cell2 = row.insertCell(1);
   if (error.length > 0) {
-    cell2.innerHTML = "<div class=\"alert alert-error\">" + error + "</div>";
+    cell2.innerHTML = "<div class=\"alert alert-danger\">" + error + "</div>";
   } else {
     cell2.innerHTML = "";
   }
