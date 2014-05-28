@@ -76,7 +76,7 @@ class AccountsController < ApplicationController
     if (@account.destroy)
       flash[:success] = "Account destroyed."
     else
-      flash[:error] = "Cannot delete the account, other database records still reference it"
+      flash[:danger] = "Cannot delete the account, other database records still reference it"
     end
       
     respond_to do |format|

@@ -17,7 +17,7 @@ class ProjectsController < ApplicationController
       flash[:success] = "Project created"      
       redirect_to projects_url
     else
-      flash[:error] = "Cannot create project"
+      flash[:danger] = "Cannot create project"
       render 'new'
     end
   end
@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
       flash[:success] = "Project updated"
       redirect_to projects_url  
     else
-      flash[:error] = "Cannot update project"      
+      flash[:danger] = "Cannot update project"      
       render 'edit'
     end
   end  
@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
       flash[:success] = "Project destroyed."
       redirect_to projects_url
     else
-      flash[:error] = "Cannot delete project, other packages still reference it"
+      flash[:danger] = "Cannot delete project, other packages still reference it"
       redirect_to projects_url      
     end
   end
