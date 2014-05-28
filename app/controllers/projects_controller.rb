@@ -11,7 +11,6 @@ class ProjectsController < ApplicationController
   
   # create a new project model with the information entered.
   def create
-    debugger
     @project = Project.new(params[:project])
       
     if @project.save
@@ -32,8 +31,9 @@ class ProjectsController < ApplicationController
     @project = Project.get(params[:id], params[:account_id])
     if @project.update(params[:project])
       flash[:success] = "Project updated"
-      redirect_to projects_url
+      redirect_to projects_url  
     else
+      flash[:error] = "Cannot update project"      
       render 'edit'
     end
   end  

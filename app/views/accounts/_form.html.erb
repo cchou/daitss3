@@ -1,28 +1,32 @@
 <%= form_for(@account) do |f| %>
-  <% unless @account.errors.blank? %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <% unless @account.errors.blank? %>
     <div id="error_explanation">
       <h2><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h2>
 
       <ul>
-      <% @account.errors.full_messages.each do |msg| %>
+        <% @account.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
-      <% end %>
+        <% end %>
       </ul>
     </div>
-  <% end %>
-  <div class="field">
-    <%= f.label :id %><br />
-    <%= f.text_field :id %>
+    <% end %>
+    <div class="field">
+      <%= f.label :id %><br />
+      <%= f.text_field :id %>
+    </div>
+    <div class="field">
+      <%= f.label :description %><br />
+      <%= f.text_field :description %>
+    </div>
+    <div class="field">
+      <%= f.label :report_email %><br />
+      <%= f.text_field :report_email %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
-    <%= f.label :report_email %><br />
-    <%= f.text_field :report_email %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+</div> 
 <% end %>
