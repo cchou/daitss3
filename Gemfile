@@ -15,6 +15,7 @@ gem 'tzinfo'
 gem 'libxml-ruby'
 gem 'nokogiri'
 gem 'thin'
+gem "rails_12factor"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
