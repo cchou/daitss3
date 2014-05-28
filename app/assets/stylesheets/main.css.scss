@@ -154,6 +154,12 @@ input {
 /*  height: auto !important; */
 }
 
+.check-box {
+   height: auto;
+   width: auto;
+   display: inline;
+}
+
 #error_explanation {
   color: #f00;
   ul {

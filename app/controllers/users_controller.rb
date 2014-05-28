@@ -18,7 +18,18 @@ class UsersController < ApplicationController
 
   # create a new user model with the information entered.
   def create
-    @user = User.new(params[:user])
+    debugger
+
+    @user = 
+      if params[:type] == "operator"
+        @user = Operator.new :account => Account.get("SYSTEM")
+      else
+        account_id = params[:account_id]
+        a = Account.get account_id
+        Contact.new :account => a, :permissions => perms
+    end
+    
+    #@user = User.new(params[:user])
     @user.encrypt_auth(@user.auth_key)
     if @user.save
       sign_in @user
@@ -31,7 +42,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.get(params[:id])
-  end  
+  end
 
   # update user profile
   def update
@@ -67,7 +78,7 @@ class UsersController < ApplicationController
   def signed_in_user
     store_location
     redirect_to signin_url, notice: "Please sign in." unless signed_in?
-  end  
+  end
 
   def correct_user
     @user = User.get(params[:id])

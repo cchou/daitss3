@@ -1,65 +1,92 @@
 <% provide(:title, 'Edit User') %>
 <h1>Update your profile</h1>
+<!-- <form role="form">
+<div class="checkbox">
+<label>Admin Contact</label>
+<input type="checkbox"></input>
+</div>
+</form>   -->
 
-  <%= form_for(@user, :as => :user, :html => {:class => "form-horizontal"}) do |f| %>
-  <%#= render 'shared/error_messages' %>
-  <div class="form-group">
-    <%= f.label :id, :class=>"col-md-2 col-md-offset-3 control-label" %>
-    <div class="col-md-3 ">
-      <%= f.text_field :id,  :class=>"form-control", :readonly => true %>
-    </div>
+<%= form_for(@user, :as => :user, :html => {:class => "form-horizontal"}) do |f| %>
+<%#= render 'shared/error_messages' %>
+<div class="form-group">
+  <%= f.label :id, :class=>"col-md-2 col-md-offset-3 control-label" %>
+  <div class="col-md-3 ">
+    <%= f.text_field :id,  :class=>"form-control", :readonly => true %>
   </div>
+</div>
 
-  <div class="form-group">
-    <%= f.label :description, :class=>"col-md-2 col-md-offset-3 control-label"  %>
-    <div class=" col-md-3 ">
-      <%= f.text_field :description, :class=>"form-control" %>
-    </div>
+<div class="form-group">
+  <%= f.label :description, :class=>"col-md-2 col-md-offset-3 control-label"  %>
+  <div class=" col-md-3 ">
+    <%= f.text_field :description, :class=>"form-control" %>
   </div>
+</div>
 
-  <div class="form-group">
-    <%= f.label :account_id, :class=>"col-md-2 col-md-offset-3 control-label"  %>
-    <div class="col-md-3 ">
-      <%= f.select(:account_id, Account.all.collect {|a| a.id}) %>
-    </div>
+<div class="form-group">
+  <%= f.label :account_id, :class=>"col-md-2 col-md-offset-3 control-label"  %>
+  <div class="col-md-3 ">
+    <%= f.select(:account_id, Account.all.collect {|a| a.id}) %>
   </div>
+</div>
 
-  <div class="form-group">
-    <%= f.label :first_name, :class=>"col-md-2 col-md-offset-3 control-label"  %>
-    <div class="col-md-3 ">
-      <%= f.text_field :first_name, :class=>"form-control" %>
-    </div>
-  </div>
+<!-- <div class="form-group"> 
+<div class="col-md-2 col-md-offset-5">
+<label>Admin Contact</label>
+<input type="checkbox" class="check-box"></input>
+</div>
+</div> -->
 
-  <div class="form-group">
-    <%= f.label :last_name,:class=>"col-md-2 col-md-offset-3 control-label"  %>
-    <div class="col-md-3 ">
-      <%= f.text_field :last_name, :class=>"form-control" %>
-    </div>
+<div class="form-group">
+  <%= f.label :first_name, :class=>"col-md-2 col-md-offset-3 control-label"  %>
+  <div class="col-md-3 ">
+    <%= f.text_field :first_name, :class=>"form-control" %>
   </div>
-  <div class="form-group">
-    <%= f.label :phone, :class=>"col-md-2 col-md-offset-3 control-label"  %>
-    <div class="col-md-3 ">
-      <%= f.text_field :phone, :class=>"form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :email, :class=>"col-md-2 col-md-offset-3 control-label"  %>
-    <div class="col-md-3 ">
-      <%= f.text_field :email, :class=>"form-control", :type => "email" %>
-    </div>
-  </div>
+</div>
 
-  <div class="form-group">
-    <%= f.label :address, :class=>"col-md-2 col-md-offset-3 control-label"  %>
-    <div class="col-md-3 ">
-      <%= f.text_area :address, :class=>"form-control", rows: "2" %>
-    </div>
+<div class="form-group">
+  <%= f.label :last_name,:class=>"col-md-2 col-md-offset-3 control-label" %>
+  <div class="col-md-3 ">
+    <%= f.text_field :last_name, :class=>"form-control" %>
   </div>
+</div>
+<div class="form-group">
+  <%= f.label :phone, :class=>"col-md-2 col-md-offset-3 control-label"  %>
+  <div class="col-md-3 ">
+    <%= f.text_field :phone, :class=>"form-control" %>
+  </div>
+</div>
+<div class="form-group">
+  <%= f.label :email, :class=>"col-md-2 col-md-offset-3 control-label"  %>
+  <div class="col-md-3 ">
+    <%= f.text_field :email, :class=>"form-control", :type => "email" %>
+  </div>
+</div>
 
-  <div class="form-group">
-    <div class="col-md-3 col-md-offset-5">
-      <%= f.submit "Save Changes", class: "btn btn-lg btn-primary" %>
-    </div>
+<div class="form-group">
+  <%= f.label :address, :class=>"col-md-2 col-md-offset-3 control-label"  %>
+  <div class="col-md-3 ">
+    <%= f.text_area :address, :class=>"form-control", rows: "2" %>
   </div>
-  <% end %>
+</div>
+
+<div class="form-group"> 
+  <div class="col-md-2 col-md-offset-5">
+    <%= f.check_box :is_admin_contact, :class=>"check-box" %>    
+    <%= f.label :Admin_Contact%>
+  </div>
+</div>
+
+<div class="form-group"> 
+  <div class="col-md-2 col-md-offset-5">
+    <%= f.check_box :is_tech_contact, :class=>"check-box" %>    
+    <%= f.label :Tech_Contact%>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-md-3 col-md-offset-5">
+    <%= f.submit "Save Changes", class: "btn btn-lg btn-primary" %>
+  </div>
+</div>
+<% end %>

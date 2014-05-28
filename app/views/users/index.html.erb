@@ -17,6 +17,8 @@
     <th>Emails</th>
     <th>First Name</th>
     <th>Last Name</th>
+    <th>Tech Contact</th>   
+    <th>Admin Contact</th>        
     <th></th>
   </tr>
 
@@ -28,6 +30,8 @@
     <td><%= user.email %></td>
     <td><%= user.first_name %></td>
     <td><%= user.last_name %></td>
+    <td><label>Yes? </label><input type="checkbox" class="check-box" value="<%=user.is_tech_contact%>"</input></td>
+    <td><label>Yes? </label><input type="checkbox" class="check-box" value="<%=user.is_admin_contact%>"</input></td>
     <% if admin_user? %>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
     <% end %>

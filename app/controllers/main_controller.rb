@@ -15,7 +15,7 @@ class MainController < ApplicationController
       format.html # admin.html.erb
       format.json { render json: @accounts }
     end  
-  end  
+  end
 
   # when a user select an account, retrieve all associated projects and users to that account
   def select_account
@@ -28,12 +28,12 @@ class MainController < ApplicationController
     # map to id for use in options_for_select
     @users = users.map{|a| a.id}    
   end
-  
+
   # FDA log message
   def log
-    @entries = Entry.all  
-  end  
-  
+    @entries = Entry.all
+  end
+
   #create a new log message
   def log_message
     e = Entry.new
