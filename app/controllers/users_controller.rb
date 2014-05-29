@@ -2,6 +2,17 @@ class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy] #only signed in user can edit/update/list
   before_filter :correct_user,   only: [:edit, :update] # make sure an user can only edit his/her own information
 
+  def getPermissions
+    # setup permissions
+    perms = []
+    perms.push :disseminate if params[:disseminate_perm] == "on"
+    perms.push :withdraw if params[:withdraw_perm] == "on"
+    perms.push :peek if params[:peek_perm] == "on"
+    perms.push :submit if params[:submit_perm] == "on"
+    perms.push :report if params[:report_perm] == "on"      
+    perms    
+  end
+
   def index
     # @users = User.all
     @users = User.paginate(page: params[:page])
@@ -23,17 +34,10 @@ class UsersController < ApplicationController
       @user.account = Account.get("SYSTEM")
     else
       account_id = params[:user][:account_id]
-      a = Account.get account_id
-      # setup permissions
-      perms = []
-      perms.push :disseminate if params[:disseminate_perm] == "on"
-      perms.push :withdraw if params[:withdraw_perm] == "on"
-      perms.push :peek if params[:peek_perm] == "on"
-      perms.push :submit if params[:submit_perm] == "on"
-      perms.push :report if params[:report_perm] == "on"        
+      a = Account.get account_id   
       @user = Contact.new (params[:user])
       @user.account = a
-      @user.permissions = perms
+      @user.permissions = getPermissions
       # setup role
       @user.is_admin_contact = true if params[:is_admin_contact] == 'yes'
       @user.is_tech_contact = true if params[:is_tech_contact] == 'yes'
@@ -57,6 +61,13 @@ class UsersController < ApplicationController
   def update
     @user = User.get(params[:id])
     #    if @user.authenticate(params[:user][:auth_key]) && @user.update(params[:user])
+
+    # get the selected permissions
+    if (@user.type == Contact)
+      perms = getPermissions
+      params[:user].merge!("permission" => perms)
+    end
+    
     if @user.update(params[:user])
       flash[:success] = "Profile updated"
       sign_in @user
