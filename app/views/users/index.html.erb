@@ -30,14 +30,13 @@
     <td><%= user.email %></td>
     <td><%= user.first_name %></td>
     <td><%= user.last_name %></td>
-    <td><label>Yes? </label><input type="checkbox" class="check-box" value="<%=user.is_tech_contact%>"</input></td>
-    <td><label>Yes? </label><input type="checkbox" class="check-box" value="<%=user.is_admin_contact%>"</input></td>
+    <td><%= check_box_tag 'tech_contact', user.is_tech_contact, user.is_tech_contact %></td>    
+    <td><%= check_box_tag 'admin_contact', user.is_admin_contact, user.is_admin_contact %></td>
     <% if admin_user? %>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
+      <td><%= link_to 'Edit', edit_user_path(user) %></td>
     <% end %>
     <% if admin_user? && !current_user?(user) %>
-    <td><%= link_to "delete", user, method: :delete,
-    data: { confirm: "You sure?" } %></td>
+      <td><%= link_to "delete", user, method: :delete, data: { confirm: "You sure?" } %></td>
     <% end %>
   </tr>
   <% end %>

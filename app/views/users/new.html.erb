@@ -1,78 +1,99 @@
 <% provide(:title, 'Sign up') %>
 <h1>Sign up</h1>
+<div class="col-md-9 col-md-offset-3">
+  <% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+</div>
+<%= form_for(@user, :as => :user, :html => {:class => "form-horizontal"}) do |f| %>
+<div class="form-group">
+  <%= f.label :id, :class=>"col-md-2 col-md-offset-1 control-label" %>
+  <div class="col-md-2">
+    <%= f.text_field :id,  :class=>"form-control" %>
+  </div>
+  <%= f.label :description, :class=>"col-md-2 control-label"  %>
+  <div class=" col-md-3 ">
+    <%= f.text_field :description, :class=>"form-control" %>
+  </div>  
+</div>
 
-<div class="row">
-  <div class="col-md-12">
-    <%= form_for(@user) do |f| %>
-    <%#= render 'shared/error_messages' %>
-    <div class="form-group">
-      <%= f.label :id, :class=>"col-md-2 col-md-offset-3 control-label" %>
-      <div class="col-md-3 ">    
-        <%= f.text_field :id,  :class=>"form-control" %>
-      </div>
-    </div>
+<div class="form-group">
+  <%= f.label :type, :class=>"col-md-2 col-md-offset-1 control-label " %>
+  <div class="col-md-2">    
+    <%= select_tag(:type, options_for_select([['operator', 'operator'], ['affiliates', 'affiliates']]) )%>
+  </div>
 
-    <div class="form-group">    
-      <%= f.label :description, :class=>"col-md-2 col-md-offset-3 control-label"  %>
-      <div class="col-md-3 ">    
-        <%= f.text_field :description,  :class=>"form-control" %>
-      </div>
-    </div>
+  <%= f.label :account_id, :class=>"col-md-2 control-label"  %>
+  <div class="col-md-3 ">
+    <%= f.select(:account_id, Account.all.collect {|a| a.id}) %>
+  </div>  
+</div>
 
-    <div class="form-group">
-      <%= f.label :type, :class=>"col-md-2 col-md-offset-3 control-label" %>
-      <div class="col-md-3 ">    
-        <%= select_tag(:type, options_for_select([['operator', 'operator'], ['affiliates', 'affiliates']]) )%>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :account_id, :class=>"col-md-2 col-md-offset-3 control-label" %>
-      <div class="col-md-3 ">    
-        <%= f.select(:account_id, Account.all.collect {|a| a.id}) %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :first_name, :class=>"col-md-2 col-md-offset-3 control-label" %>
-      <div class="col-md-3 ">    
-        <%= f.text_field :first_name,  :class=>"form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :last_name, :class=>"col-md-2 col-md-offset-3 control-label" %>
-      <div class="col-md-3 ">    
-        <%= f.text_field :last_name,  :class=>"form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :email, :class=>"col-md-2 col-md-offset-3 control-label" %>
-      <div class="col-md-3 ">    
-        <%= f.text_field :email,  :class=>"form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :password, :class=>"col-md-2 col-md-offset-3 control-label" %>
-      <div class="col-md-3 ">    
-        <%= f.password_field :auth_key,  :class=>"form-control", :placeholder => "Password" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :phone, :class=>"col-md-2 col-md-offset-3 control-label" %>
-      <div class="col-md-3 ">    
-        <%= f.text_field :phone,  :class=>"form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :address, :class=>"col-md-2 col-md-offset-3 control-label" %>
-      <div class="col-md-3 ">    
-        <%= f.text_field :address,  :class=>"form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-md-3 col-md-offset-5">
-        <%= f.submit "Create my account", class: "btn btn-large btn-primary " %>
-      </div>
-    </div>
-    <% end %>
+<div class="form-group">
+  <%= f.label :first_name, :class=>"col-md-2 col-md-offset-1 control-label"  %>
+  <div class="col-md-2">
+    <%= f.text_field :first_name, :class=>"form-control" %>
+  </div>
+  <%= f.label :last_name,:class=>"col-md-2 control-label" %>
+  <div class="col-md-3 ">
+    <%= f.text_field :last_name, :class=>"form-control" %>
   </div>
 </div>
+
+<div class="form-group">
+  <%= f.label :phone, :class=>"col-md-2 col-md-offset-1 control-label"  %>
+  <div class="col-md-2 ">
+    <%= f.text_field :phone, :class=>"form-control" %>
+  </div>
+  <%= f.label :email, :class=>"col-md-2 control-label"  %>
+  <div class="col-md-3 ">
+    <%= f.text_field :email, :class=>"form-control", :type => "email" %>
+  </div>  
+</div>
+
+<div class="form-group">
+  <div class="col-md-2 col-md-offset-3">
+    <%= f.check_box :is_admin_contact, :class=>"check-box", :value=>"yes"%>    
+    <%= f.label :Admin_Contact%>
+    <%= f.check_box :is_tech_contact, :class=>"check-box", :value=>"yes"%>    
+    <%= f.label :Tech_Contact%>    
+  </div>
+  <%= f.label :address, :class=>"col-md-2 control-label"  %>
+  <div class="col-md-3 ">
+    <%= f.text_area :address, :class=>"form-control", rows: "2" %>
+  </div>
+</div>
+
+<div class="form-group ">
+  <%= f.label :permissions, :class=>"col-md-2 control-label col-md-offset-1 "  %>
+  <div class="col-md-7">
+    <label class="checkbox-inline" class="check-box">
+      <input type="checkbox" name="disseminate_perm" class="check-box" value="on"> Disseminate
+    </label>
+    <label class="checkbox-inline" class="check-box" >
+      <input type="checkbox" name="withdraw_perm" class="check-box" value="on"> Withdraw
+    </label>  
+    <label class="checkbox-inline" class="check-box" >
+      <input type="checkbox" name="peek_perm" class="check-box" value="on"> Peek
+    </label>  
+    <label class="checkbox-inline" class="check-box" >
+      <input type="checkbox" name="submit_perm" class="check-box" value="on"> Submit
+    </label>
+    <label class="checkbox-inline" class="check-box" >
+      <input type="checkbox" name="report_perm" class="check-box" value="on"> Report
+    </label>
+  </div>
+</div>
+<div class="form-group">
+  <div class="col-md-2 col-md-offset-5">
+    <%= f.submit "Save", class: "btn btn-lg btn-primary" %>
+  </div>
+</div>
+<% end %>

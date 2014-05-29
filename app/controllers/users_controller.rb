@@ -18,18 +18,27 @@ class UsersController < ApplicationController
 
   # create a new user model with the information entered.
   def create
-    debugger
-
-    @user = 
-      if params[:type] == "operator"
-        @user = Operator.new :account => Account.get("SYSTEM")
-      else
-        account_id = params[:account_id]
-        a = Account.get account_id
-        Contact.new :account => a, :permissions => perms
+    if params[:type] == "operator"
+      @user = Operator.new(params[:user])
+      @user.account = Account.get("SYSTEM")
+    else
+      account_id = params[:user][:account_id]
+      a = Account.get account_id
+      # setup permissions
+      perms = []
+      perms.push :disseminate if params[:disseminate_perm] == "on"
+      perms.push :withdraw if params[:withdraw_perm] == "on"
+      perms.push :peek if params[:peek_perm] == "on"
+      perms.push :submit if params[:submit_perm] == "on"
+      perms.push :report if params[:report_perm] == "on"        
+      @user = Contact.new (params[:user])
+      @user.account = a
+      @user.permissions = perms
+      # setup role
+      @user.is_admin_contact = true if params[:is_admin_contact] == 'yes'
+      @user.is_tech_contact = true if params[:is_tech_contact] == 'yes'
     end
     
-    #@user = User.new(params[:user])
     @user.encrypt_auth(@user.auth_key)
     if @user.save
       sign_in @user
