@@ -37,6 +37,11 @@
 </div>
 
 <div class="form-group">
+
+ 
+</div>
+
+<div class="form-group">
   <%= f.label :first_name, :class=>"col-md-2 col-md-offset-1 control-label"  %>
   <div class="col-md-2">
     <%= f.text_field :first_name, :class=>"form-control" %>
@@ -59,18 +64,27 @@
 </div>
 
 <div class="form-group">
+  <%= f.label :password, :class=>"col-md-2 col-md-offset-1 control-label"  %>
+  <div class="col-md-2">  
+    <%= f.password_field :auth_key, :placeholder => "Password" %>
+  </div>
+  <%= f.label :address, :class=>"col-md-2 control-label"  %>
+  <div class="col-md-3">
+    <%= f.text_area :address, :class=>"form-control", rows: "2" %>
+  </div> 
+</div>
+
+<div class="form-group">
   <div class="col-md-2 col-md-offset-3">
     <%= f.check_box :is_admin_contact, :class=>"check-box", :value=>"yes"%>    
     <%= f.label :Admin_Contact%>
+  </div>
+  <div class="col-md-3 col-md-offset-2">
     <%= f.check_box :is_tech_contact, :class=>"check-box", :value=>"yes"%>    
     <%= f.label :Tech_Contact%>    
   </div>
-  <%= f.label :address, :class=>"col-md-2 control-label"  %>
-  <div class="col-md-3 ">
-    <%= f.text_area :address, :class=>"form-control", rows: "2" %>
-  </div>
 </div>
-
+  
 <div class="form-group ">
   <%= f.label :permissions, :class=>"col-md-2 control-label col-md-offset-1 "  %>
   <div class="col-md-7">
