@@ -50,6 +50,10 @@ class User < Agent
     self.account.projects.packages
   end
   
+  public
+  def is_admin?
+    @is_admin_contact == true || @type == Operator
+  end
 end
 
 class Contact < User

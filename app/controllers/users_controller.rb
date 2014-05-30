@@ -2,8 +2,8 @@ class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy] #only signed in user can edit/update/list
   before_filter :correct_user,   only: [:edit, :update] # make sure an user can only edit his/her own information
 
+  # retrieve selected permissions
   def getPermissions
-    # setup permissions
     perms = []
     perms.push :disseminate if params[:disseminate_perm] == "on"
     perms.push :withdraw if params[:withdraw_perm] == "on"
@@ -75,8 +75,17 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
-  end  
+  end
 
+  def update_password
+   if @user.update(params[:user])
+      flash[:success] = "Password updated"
+      redirect_to @user
+    else
+      render 'edit'
+    end    
+  end
+  
   # update user profile by an administrator
   def admin_update
     @user = User.get(params[:id])

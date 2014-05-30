@@ -30,7 +30,7 @@ module SessionsHelper
   end
 
   def admin_user?
-    current_user.is_admin_contact?
+    current_user.is_admin?
   end
 
   def redirect_back_or(default)
