@@ -77,11 +77,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit_password
+  @user = User.get(params[:id])
+  end
+  
   def update_password
-   if @user.update(params[:user])
-      flash[:success] = "Password updated"
-      redirect_to @user
+    @user = User.get(params[:id])
+    if params[:Password] != params[:Confirm_Password]
+     flash[:danger] = "Password not matched"
+     render 'edit_password'
     else
+      @user.encrypt_auth params[:Password]
+      @user.save or flash[:danger] = "cannot save #{user.id} password, #{user.errors.full_messages}"
+      flash[:success] = "Password updated"
       render 'edit'
     end    
   end

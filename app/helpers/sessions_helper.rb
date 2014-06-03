@@ -22,6 +22,7 @@ module SessionsHelper
   end
 
   def current_user
+    
     @current_user ||= User.first(:remember_token => cookies[:remember_token])
   end  
 

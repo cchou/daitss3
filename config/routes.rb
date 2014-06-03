@@ -17,8 +17,10 @@ Daitss::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete    
   match '/help',  to: 'main#help'
   match '/admin' => 'main#admin'
-  match '/log', to: 'main#log'  
-  match '/log_message', to: 'main#log_message'
+  match '/log', to: 'main#log'
+  match '/log_message', to: 'main#log_message'  
+  match '/edit_password', to: 'users#edit_password'  
+  match '/update_password', to: 'users#update_password'  
   match '/submit', to: 'packages#submit'
   match '/upload', to: 'packages#upload'
   match '/show_package', to: 'packages#show'
