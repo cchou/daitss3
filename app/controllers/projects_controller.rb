@@ -27,13 +27,14 @@ class ProjectsController < ApplicationController
   end  
 
   # update project
-  def update
+  def update   
     @project = Project.get(params[:id], params[:account_id])
-    if @project.update(params[:project])
+    begin
+      @project.update(params[:project])
       flash[:success] = "Project updated"
       redirect_to projects_url  
-    else
-      flash[:danger] = "Cannot update project"      
+    rescue => e
+      flash[:danger] = e.message     
       render 'edit'
     end
   end  
