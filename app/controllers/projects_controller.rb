@@ -34,8 +34,8 @@ class ProjectsController < ApplicationController
       flash[:success] = "Project updated"
       redirect_to projects_url  
     rescue => e
-      flash[:danger] = e.message     
-      render 'edit'
+      flash[:danger] = "Cannot update project, other packages still reference it"
+      redirect_to projects_url        
     end
   end  
 

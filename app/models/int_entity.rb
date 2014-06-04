@@ -21,11 +21,11 @@
       end
       
       unless package.valid?
-        bigmessage = package.errors.full_messages.join "\n" 
+        bigmessage = package.errors.full_messages.join "\n"
         raise bigmessage unless bigmessage.empty?
       end
-          
-      datafiles.each {|df| df.check_errors }    
+      
+      datafiles.each {|df| df.check_errors }
     end
     
     # construct an int entity with the information from the aip descriptor
