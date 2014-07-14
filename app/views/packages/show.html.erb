@@ -17,7 +17,7 @@
           <td><%= @results.name %></td>
           <td><%= @results.account_id %></td>
           <td><%= @results.project_id %></td>
-          <td><%= @package.elapsed_time.to_s + " sec"%>
+          <td><%= @package.elapsed_time.to_s + " sec" rescue "not ingested"%>
           </tr>
         </tbody>
       </table>
@@ -50,7 +50,7 @@
       <thead>
         <tr>
           <th>Title</th>
-          <td><%=@results.title%></td>
+          <td><%=@results.title rescue "" %></td>
         </tr>
         <tr>
           <th>Number of datafiles</th>
@@ -58,11 +58,11 @@
         </tr>
         <tr>
           <th>Volume</th>
-          <td><%=@results.volume%></td>
+          <td><%=@results.volume rescue ""%></td>
         </tr> 
         <tr>
           <th>Issue</th>
-          <td><%=@results.issue%></td>
+          <td><%=@results.issue rescue ""%></td>
         </tr> 
       </table>                       
     </div>

@@ -1,4 +1,10 @@
 require 'will_paginate/array'
+require 'nokogiri'
+require 'daitss'
+require 'debugger'
+
+include Daitss
+include Datyl
 
 # Map Packages View column title to the Database table column name
 Title_To_Column_Name = {
@@ -14,10 +20,9 @@ Title_To_Column_Name = {
 
 SQL = "select t1.*
         from (
-        SELECT p.id, s.name, pj.account_id, pj.id as project_id, s.size_in_bytes, s.number_of_datafiles, ie.title, ie.volume, ie.issue, e.name as event_name, e.timestamp
+        SELECT p.id, s.name, pj.account_id, pj.id as project_id, s.size_in_bytes, s.number_of_datafiles, e.name as event_name, e.timestamp
           ,rank() over (partition by p.id order by e.timestamp) myrank
         from packages as p inner join sips as s on (p.id = s.package_id)
-          inner join intentities as ie on (p.id = ie.package_id)
           inner join projects as pj on (p.project_account_id = pj.account_id and p.project_id = pj.id)
           inner join events as e on (p.id = e.package_id)
         where search_clause
@@ -214,6 +219,26 @@ class PackagesController < ApplicationController
     open(path, 'wb') { |io| io.write data }
     # TODO flash[:success] = "uploaded to #{path}"
     @message = "uploaded to #{path}"
+    #debugger
+    begin  
+      batch_id = params["batch_id"]#.strip == "batch name" ? nil : params["batch_id"].strip
+      note = params["note"] #== "note" ? nil : params["note"].strip
+      
+      p = archive.submit path, current_user, note
+      
+      if batch_id
+        b = Batch.first_or_create(:id => batch_id)
+        b.packages << p
+        b.save
+      end
+      
+      #p
+    rescue => e
+      raise e
+    ensure
+      FileUtils.rm_r dir
+    end
+    
     # return HTTP 200, with empty response_body
     render :nothing => true
   end
@@ -234,6 +259,15 @@ class PackagesController < ApplicationController
   end
   
   def submit
+  end
+  
+  def withdraw
+  end
+  
+  def disseminate
+  end
+  
+  def refresh
   end
 
   # retrieve the list of projects associated with the selected account
