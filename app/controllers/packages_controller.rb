@@ -252,6 +252,10 @@ class PackagesController < ApplicationController
     @package = Package.get(params[:id])  
   end
   
+  def work_space
+
+  end
+  
   # submit request for the curent package
   def submit_request
     #TBD add a request to the database
