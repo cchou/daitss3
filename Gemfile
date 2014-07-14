@@ -16,6 +16,13 @@ gem 'libxml-ruby'
 gem 'nokogiri'
 gem 'thin'
 gem "rails_12factor"
+gem 'sys-proctable'
+gem "datyl", :git => "git://github.com/daitss/datyl.git"
+gem 'curb'
+gem 'rjb'
+
+gem 'therubyracer'
+gem 'semver'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
