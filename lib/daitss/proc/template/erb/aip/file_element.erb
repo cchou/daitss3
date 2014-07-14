@@ -1,0 +1,13 @@
+<file ID='file-<%= df.id %>'
+      OWNERID='<%= df.uri %>'
+      ADMID='<%= @admid_map[df.id].join ' ' %>'
+      SIZE='<%= df.size %>'
+      CHECKSUMTYPE='SHA-1'
+      <% if df.sip_descriptor? %>
+        USE="sip descriptor"
+      <% end %>
+      CHECKSUM='<%= Digest::SHA1.file(df.data_file).hexdigest %>'>
+  <% unless df.obsolete? %>
+    <FLocat LOCTYPE='URL' xlink:href="<%= URI.escape df['aip-path'] %>"/>
+  <% end %>
+</file>

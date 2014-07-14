@@ -75,7 +75,7 @@ namespace :db do
   
   desc "Fill database with sample packages"
   task populate_packages: :environment do
-    password  = "pw"
+    password  = "daitss"
 
     # create sample users, packages
     20.times do |n|
