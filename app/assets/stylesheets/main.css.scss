@@ -146,11 +146,11 @@ input, textarea, select, .uneditable-input {
 }
 
 select {
-  height: 40px
+  height: auto;
 }
 
 input {
-   height: 40px
+   height: auto;
 /*  height: auto !important; */
 }
 

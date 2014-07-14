@@ -38,6 +38,7 @@
 </div>
 
 <%= will_paginate @results%>
+<form>
 <table class="table table-condensed table-hover">
   <thead>
     <tr>
@@ -59,8 +60,8 @@
   <tbody>
     <% @results.each do |result| %>
     <tr>
-      <!--<td><%= check_box_tag "#{result.id}" %></td>-->
-      <td><%= select_tag "#{result.id}", options_for_select(["","refresh", "disseminate", "withdraw"], params[:task]) %></td>
+      <td><%= check_box_tag "#{result.id}" %></td>
+      <!--<td><%= select_tag "#{result.id}", options_for_select(["","refresh", "disseminate", "withdraw"], params[:task]) %></td>-->
       <td><%= link_to result.id, show_package_path(:id => result.id) %></td>
       <td><%= result.name %></td>
       <td><%= result.account_id %></td>
@@ -76,4 +77,8 @@
     <% end %>
   </tbody>
 </table>
+<select>
+</select>
+<input type='submit' value='submit'/>
+</form>
 <%= will_paginate @results%>
