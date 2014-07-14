@@ -31,6 +31,8 @@ The directory structure:
   |-- doc
   |-- lib
   |   |-- assets
+  |   |-- daitss
+  |   |-- mixin
   |   `-- tasks
   |-- log
   |-- public
@@ -98,6 +100,9 @@ lib
   Application specific libraries. Basically, any kind of custom code that
   doesn't belong under controllers, models, or helpers. This directory is in
   the load path.
+
+lib/daitss
+  Daitss submission and preservation code.
 
 public
   The directory available for the web server. Also contains the dispatchers and the
