@@ -1,6 +1,6 @@
 require 'daitss/archive'
 require 'daitss/proc/wip/from_sip'
-require 'debugger'
+#require 'debugger'
 
 module Daitss
 
@@ -9,7 +9,7 @@ module Daitss
     # submit a sip on behalf of an agent
     #
     # @return [Package]
-    def submit sip_path, agent, event_note
+    def submit sipdaitss3_path, agent, event_note
       event_note = "" if event_note == nil
       
       package = Package.new
@@ -101,7 +101,7 @@ module Daitss
 
       # save the package and make a wip, or reject
       begin
-        debugger
+        #debugger
         Package.transaction do
 
           unless package.save
