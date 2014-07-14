@@ -9,7 +9,7 @@ module Daitss
     # submit a sip on behalf of an agent
     #
     # @return [Package]
-    def submit sipdaitss3_path, agent, event_note
+    def submit sip_path, agent, event_note
       event_note = "" if event_note == nil
       
       package = Package.new
