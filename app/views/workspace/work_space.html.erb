@@ -1,0 +1,214 @@
+<% provide(:title, 'Work Space') %>
+<h6>Packages->Work Space</h6>
+
+<form action='action' method="get">
+  <input type='hidden' name='filter' value='true'/>
+  <table>
+    <tr>
+      <th>batch</th>
+      <th>account</th>
+      <th>project</th>
+      <th>start date</th>
+      <th>end date</th>
+      <th>status</th>
+      <th>set scope</th>
+    </tr>
+    
+    <tr>
+      <td class="col-md-2">
+        <select name='batch-scope'>
+          <% Batch.all.each do |b| %>
+            <% if params["batch-scope"] == b.id %>
+              <option selected=true><%= b.id %></option>
+            <% else %>
+              <option><%= b.id %></option>
+            <% end %>
+          <% end %>
+        </select>
+      </td>
+      
+      <td class="col-md-2">
+        <select name='account-scope'>
+          <% Account.all.each do |a| %>
+            <% if params["account-scope"] == a.id %>
+                <option selected=true><%= a.id %></option>
+            <% else %>
+                <option><%= a.id %></option>
+            <% end %>
+          <% end %>
+        </select>
+      </td>
+      
+      <td>
+        <select name='project-scope'>
+          <% Project.all.each do |p| %>
+            <% if params["project-scope"] == p.id + "-" + p.account.id %>
+              <option selected=true><%= "#{p.id}-#{p.account.id}" %></option>
+            <% else %>
+              <option><%= "#{p.id}-#{p.account.id}" %></option>
+            <% end %>
+          <% end %>
+        </select>
+      </td>
+      
+      <td>
+        <% if params['start_date'] %>
+          <input id='start_date' name='start_date' value=<%= params['start_date'] %> />
+        <% else %>
+          <input id='start_date' name='start_date' value=<%= (Time.now - 60 * 60 * 24 * 4).strftime("%m/%d/%Y") %> />
+        <% end %>
+      </td>
+      <td>
+        <% if params['end_date'] %>
+          <input name='end_date' value=<%= params['end_date'] %> />
+        <% else %>
+          <input name='end_date' value=<%= (Time.now + 60 * 60 * 24).strftime("%m/%d/%Y") %> />
+        <% end %>
+      </td>
+      
+      <td>
+        <select name='status-scope'>
+          <option/>
+          <option>running</option>
+          <option>idle</option>
+          <option>error</option>
+          <option>stopped</option>
+          <option>dead</option>
+          <% if params["status-scope"] %>
+            <option selected=true><%= params['status-scope'] %></option>
+          <% end %>
+        </select>
+      </td>
+      <td><input type='submit' value='Set Scope'/></td>
+
+    </tr>
+  </table>
+</form>
+
+<div class="row">
+
+  <h3>Update Jobs</h3>
+
+  <form action='/workspace' method='post'>
+    <% if params[:filter] %>
+      <input name='filter' type='hidden' value='true'/>
+      <% @wips.each do |w| %>
+        <input name='wips[]' type='hidden' value=<%= w.id %>>
+      <% end %>
+    <% end %>
+        
+    <label for='state-start'>start</label>
+    <input id='state-start' type='radio' name='task' value='start'/>
+    
+    <label for='state-stop'>stop</label>
+    <input id='state-stop' type='radio' name='task' value='stop'/>
+    
+    <label for='state-unsnafu'>reset</label>
+    <input id='state-unsnafu' type='radio' name='task' value='unsnafu'/>
+    
+    <label for='state-doover'>do over</label>
+    <input id='state-doover' type='radio' name='task' value='doover'/>
+    
+    <label for='state-stash'>stash</label>
+    <input id='state-stash' type='radio' name='task' value='stash'/>
+    
+    <select name='stash-bin'>
+      <% @bins.each do |bin| %>
+        <option><%= bin.name %></option>
+      <% end %>
+    </select>
+    
+    <label for='note'></label>
+    <input type=textarea id='note' name='note'/>
+    
+    <input type='submit' value="Update" />
+  </form>
+
+  <hr></hr>
+
+
+  
+
+
+  <h3>idle jobs:<%= idle_wips.length %></h3> 
+<!--
+  - total = idle_wips.inject(0) {|sum, w| sum + Sip.first(:package_id => w.id).size_in_bytes }
+  - if total > 1_000_000_000_000
+    %h2= sprintf("size: %5.2f TB",  total / 1_000_000_000_000.0)
+  - elsif total > 1_000_000_000
+    %h2= sprintf("size: %5.2f GB",  total / 1_000_000_000.0)
+  - elsif total > 1_000_000
+    %h2= sprintf("size: %5.2f MB",  total / 1_000_000.0)
+  - elsif total > 1_000
+    %h2= sprintf("size: %5.2f KB",  total / 1_000.0)
+  - else
+    %h2= sprintf("size: %5.2f B",   total)     
+  
+  - total_files =  idle_wips.inject(0) {|sum, w| sum + Sip.first(:package_id => w.id).number_of_datafiles }
+  %h2
+    total number of files:
+    = total_files
+
+  - ingest_count = 0
+  - disseminate_count = 0
+  - withdraw_count = 0
+  - refresh_count = 0
+  - peek_count = 0
+
+  - idle_wips.each do |w|
+    - ingest_count += 1 if w.task == :ingest 
+    - disseminate_count += 1 if w.task == :disseminate
+    - withdraw_count += 1 if w.task == :withdraw
+    - refresh_count += 1 if w.task == :refresh
+    - peek_count += 1 if w.task == :peek
+-->
+  <table>
+    <tr>
+      <th>task</th>
+      <th>count</th>
+    </tr>
+    <tr>
+      <td>ingest</td>
+      <td>ingest_count</td>
+    </tr>
+    <tr>
+      <td>disseminate</td>
+      <td>disseminate_count</td>
+    </tr>
+    <tr>
+      <td>refresh</td>
+      <td>refresh_count</td>
+    </tr>
+    <tr>
+      <td>withdraw</td>
+      <td>withdraw_count</td>
+    </tr>
+    </table>
+
+<!--    
+- @wips = @wips - idle_wips
+
+#results
+  %h2
+    active jobs: 
+    = @wips.size
+
+  %h3
+    running:
+    = archive.workspace.select(&:running?).size
+    &nbsp;
+    throttles:
+    &nbsp;
+    = throttles(:ingest)
+    &nbsp;
+    = throttles(:dissemination)
+    &nbsp;
+    = throttles(:refresh)
+    &nbsp;
+    = throttles(:withdrawal)
+
+    - unless @wips.empty?
+      = partial :wip_table, :locals => { :wips => @wips  }
+
+-->
+</div>
