@@ -1,229 +1,232 @@
 <% provide(:title, 'Work Space') %>
 <h6>Packages->Work Space</h6>
 
-<form action='action' method="get">
-  <input type='hidden' name='filter' value='true'/>
-  <table>
-    <tr>
-      <th>batch</th>
-      <th>account</th>
-      <th>project</th>
-      <th>start date</th>
-      <th>end date</th>
-      <th>status</th>
-      <th>set scope</th>
-    </tr>
-    
-    <tr>
-      <td class="col-md-2">
-        <select name='batch-scope' class="form-control" >
-          <% Batch.all.each do |b| %>
-            <% if params["batch-scope"] == b.id %>
-              <option selected=true><%= b.id %></option>
-            <% else %>
-              <option><%= b.id %></option>
+<div class="container-fluid">
+
+  <form action='action' method="get">
+    <input type='hidden' name='filter' value='true'/>
+    <table>
+      <tr>
+        <th>batch</th>
+        <th>account</th>
+        <th>project</th>
+        <th>start date</th>
+        <th>end date</th>
+        <th>status</th>
+        <th>set scope</th>
+      </tr>
+      
+      <tr>
+        <td class="col-md-2">
+          <select name='batch-scope' class="form-control" >
+            <% Batch.all.each do |b| %>
+              <% if params["batch-scope"] == b.id %>
+                <option selected=true><%= b.id %></option>
+              <% else %>
+                <option><%= b.id %></option>
+              <% end %>
             <% end %>
-          <% end %>
-        </select>
-      </td>
-      
-      <td class="col-md-2">
-        <select name='account-scope' class="form-control">
-          <% Account.all.each do |a| %>
-            <% if params["account-scope"] == a.id %>
-                <option selected=true><%= a.id %></option>
-            <% else %>
-                <option><%= a.id %></option>
+          </select>
+        </td>
+        
+        <td class="col-md-2">
+          <select name='account-scope' class="form-control">
+            <% Account.all.each do |a| %>
+              <% if params["account-scope"] == a.id %>
+                  <option selected=true><%= a.id %></option>
+              <% else %>
+                  <option><%= a.id %></option>
+              <% end %>
             <% end %>
-          <% end %>
-        </select>
-      </td>
-      
-      <td>
-        <select name='project-scope' class="form-control">
-          <% Project.all.each do |p| %>
-            <% if params["project-scope"] == p.id + "-" + p.account.id %>
-              <option selected=true><%= "#{p.id}-#{p.account.id}" %></option>
-            <% else %>
-              <option><%= "#{p.id}-#{p.account.id}" %></option>
+          </select>
+        </td>
+        
+        <td>
+          <select name='project-scope' class="form-control">
+            <% Project.all.each do |p| %>
+              <% if params["project-scope"] == p.id + "-" + p.account.id %>
+                <option selected=true><%= "#{p.id}-#{p.account.id}" %></option>
+              <% else %>
+                <option><%= "#{p.id}-#{p.account.id}" %></option>
+              <% end %>
             <% end %>
+          </select>
+        </td>
+        
+        <td>
+          <% if params['start_date'] %>
+            <input id='start_date' name='start_date' class="form-control" value=<%= params['start_date'] %> />
+          <% else %>
+            <input id='start_date' name='start_date' class="form-control" value=<%= (Time.now - 60 * 60 * 24 * 4).strftime("%m/%d/%Y") %> />
           <% end %>
-        </select>
-      </td>
-      
-      <td>
-        <% if params['start_date'] %>
-          <input id='start_date' name='start_date' class="form-control" value=<%= params['start_date'] %> />
-        <% else %>
-          <input id='start_date' name='start_date' class="form-control" value=<%= (Time.now - 60 * 60 * 24 * 4).strftime("%m/%d/%Y") %> />
-        <% end %>
-      </td>
-      <td>
-        <% if params['end_date'] %>
-          <input name='end_date' class="form-control" value=<%= params['end_date'] %> />
-        <% else %>
-          <input name='end_date' class="form-control" value=<%= (Time.now + 60 * 60 * 24).strftime("%m/%d/%Y") %> />
-        <% end %>
-      </td>
-      
-      <td>
-        <select name='status-scope' class="form-control">
-          <option/>
-          <option>running</option>
-          <option>idle</option>
-          <option>error</option>
-          <option>stopped</option>
-          <option>dead</option>
-          <% if params["status-scope"] %>
-            <option selected=true><%= params['status-scope'] %></option>
+        </td>
+        <td>
+          <% if params['end_date'] %>
+            <input name='end_date' class="form-control" value=<%= params['end_date'] %> />
+          <% else %>
+            <input name='end_date' class="form-control" value=<%= (Time.now + 60 * 60 * 24).strftime("%m/%d/%Y") %> />
           <% end %>
-        </select>
-      </td>
-      <td><input type='submit' value='Set Scope' class="btn btn-default"/></td>
+        </td>
+        
+        <td>
+          <select name='status-scope' class="form-control">
+            <option/>
+            <option>running</option>
+            <option>idle</option>
+            <option>error</option>
+            <option>stopped</option>
+            <option>dead</option>
+            <% if params["status-scope"] %>
+              <option selected=true><%= params['status-scope'] %></option>
+            <% end %>
+          </select>
+        </td>
+        <td><input type='submit' value='Set Scope' class="btn btn-default"/></td>
 
-    </tr>
-  </table>
-</form>
-
-<hr></hr>
-
-<div class="row">
-
-  <h2>Update Jobs</h2>
-
-  <form action='/workspace' method='post' class="form-horizontal">
-    <div class="form-group">
-      <% if params[:filter] %>
-        <input name='filter' type='hidden' value='true'/>
-        <% @wips.each do |w| %>
-          <input name='wips[]' type='hidden' value=<%= w.id %>>
-        <% end %>
-      <% end %>
-    </div>
-    
-    <div class="form-group form-group-lg">
-      <label for='state-start'>start</label>
-      <input id='state-start' type='radio' name='task' value='start'/>
-          
-      <label for='state-stop'>stop</label>
-      <input id='state-stop' type='radio' name='task' value='stop'/>
-    
-      <label for='state-unsnafu'>reset</label>
-      <input id='state-unsnafu' type='radio' name='task' value='unsnafu'/>
-    
-      <label for='state-doover'>do over</label>
-      <input id='state-doover' type='radio' name='task' value='doover'/>
-    
-      <label for='state-stash'>stash</label>
-      <input id='state-stash' type='radio' name='task' value='stash'/>
-    </div>
-    
-    <div class="form-group form-group-sm">
-      <div class="col-sm-4">
-        <label for='stash-bin'>stash-bin</label>
-        <select name='stash-bin' class="form-control">
-          <% @bins.each do |bin| %>
-            <option><%= bin.name %></option>
-          <% end %>
-        </select>
-      </div>
-      <div class="col-sm-4">
-        <label for='note'>Note</label>
-        <textarea id='note' name='note' class="form-control" rows="3"></textarea>
-      </div>
-    </div>
-    
-    <button type='submit' value="Update" class="btn btn-default"/>Update</button>
+      </tr>
+    </table>
   </form>
 
   <hr></hr>
-</div>
 
-<div class="row">
-  <h2>Workspace Statistics</h2>
-  <div class="col-xs-4 col-md-4">
-    
-    <h3>Idle Jobs</h3>
-    <table>
-      <tr>
-        <th>number</th>
-        <th>size</th>
-        <th>total number of files</th>
-      </tr>
-      <tr>
-        <td><%= idle_wips.length %></td>
-        <td><%= total_to_s %></td>   
-        <td><%= total_files %></td>
-      </tr>
-    </table>
-  </div>
-  
-  <div class="col-xs-4 col-md-2">
-    <h3>Tasks</h3>
-    <table>
-      <tr>
-        <th>task</th>
-        <th>count</th>
-      </tr>
-      <tr>
-        <td>ingest</td>
-        <td><%= ingest_count %></td>
-      </tr>
-      <tr>
-        <td>disseminate</td>
-        <td><%= disseminate_count %></td>
-      </tr>
-      <tr>
-        <td>refresh</td>
-        <td><%= refresh_count %></td>
-      </tr>
-      <tr>
-        <td>withdraw</td>
-        <td><%= withdraw_count %></td>
-      </tr>
-    </table>
-  </div>
-  
-  <div class="col-xs-4 col-md-6">
-    <h3>active jobs: <%= active_wips %></h3>
+  <div class="row">
 
-    <table>
-      <tr>
-        <th>running</th>
-        <th>throttles</th>
-      </tr>
-      <tr>
-        <td><%= running? %></td>
-        <td><%= throttle_string %></td>
-      </tr>
-    </table>
-  </div>
-</div>
+    <h2>Update Jobs</h2>
 
-<hr></hr>
-
-<div class="row"> 
-  <h2>Workspace Packages</h2>
-  <table class="table table-striped">
-    <tr>
-      <th>intellectual entity id (ieid)</th>
-      <th>package</th>
-      <th>task</th>
-      <th>status</th>
-      <th>time</th>
-    </tr>
-    <% @wips.each do |w| %>
-      <tr>
-        <td><code><a href="<%="/#{space}/#{w.id}"%>"><%= w.id %></a></code></td>
-        <td><%= w.package.sip.name rescue '' %></td>
-        <td><%= w.task rescue '' %></td>
-        <td><%= w.state.to_s.gsub 'snafu', 'error' rescue '' %></td>
-        <% if File.directory?(w.path) %>
-          <td><%= File.ctime(w.path) %></td>
-        <% else %>
-          <td></td>
+    <form action='/workspace' method='post' class="form-horizontal">
+      <div class="form-group">
+        <% if params[:filter] %>
+          <input name='filter' type='hidden' value='true'/>
+          <% @wips.each do |w| %>
+            <input name='wips[]' type='hidden' value=<%= w.id %>>
+          <% end %>
         <% end %>
+      </div>
+      
+      <div class="form-group form-group-lg">
+        <label for='state-start'>start</label>
+        <input id='state-start' type='radio' name='task' value='start'/>
+            
+        <label for='state-stop'>stop</label>
+        <input id='state-stop' type='radio' name='task' value='stop'/>
+      
+        <label for='state-unsnafu'>reset</label>
+        <input id='state-unsnafu' type='radio' name='task' value='unsnafu'/>
+      
+        <label for='state-doover'>do over</label>
+        <input id='state-doover' type='radio' name='task' value='doover'/>
+      
+        <label for='state-stash'>stash</label>
+        <input id='state-stash' type='radio' name='task' value='stash'/>
+      </div>
+      
+      <div class="form-group form-group-sm">
+        <div class="col-sm-4">
+          <label for='stash-bin'>stash-bin</label>
+          <select name='stash-bin' class="form-control">
+            <% @bins.each do |bin| %>
+              <option><%= bin.name %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="col-sm-4">
+          <label for='note'>Note</label>
+          <textarea id='note' name='note' class="form-control" rows="3"></textarea>
+        </div>
+      </div>
+      
+      <button type='submit' value="Update" class="btn btn-default"/>Update</button>
+    </form>
+
+    <hr></hr>
+  </div>
+
+  <div class="row">
+    <h2>Workspace Statistics</h2>
+    <div class="col-xs-4 col-md-4">
+      
+      <h3>Idle Jobs</h3>
+      <table>
+        <tr>
+          <th>number</th>
+          <th>size</th>
+          <th>total number of files</th>
+        </tr>
+        <tr>
+          <td><%= idle_wips.length %></td>
+          <td><%= total_to_s %></td>   
+          <td><%= total_files %></td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="col-xs-4 col-md-2">
+      <h3>Tasks</h3>
+      <table>
+        <tr>
+          <th>task</th>
+          <th>count</th>
+        </tr>
+        <tr>
+          <td>ingest</td>
+          <td><%= ingest_count %></td>
+        </tr>
+        <tr>
+          <td>disseminate</td>
+          <td><%= disseminate_count %></td>
+        </tr>
+        <tr>
+          <td>refresh</td>
+          <td><%= refresh_count %></td>
+        </tr>
+        <tr>
+          <td>withdraw</td>
+          <td><%= withdraw_count %></td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="col-xs-4 col-md-6">
+      <h3>active jobs: <%= active_wips %></h3>
+
+      <table>
+        <tr>
+          <th>running</th>
+          <th>throttles</th>
+        </tr>
+        <tr>
+          <td><%= running? %></td>
+          <td><%= throttle_string %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <hr></hr>
+
+  <div class="row"> 
+    <h2>Workspace Packages</h2>
+    <table class="table table-striped">
+      <tr>
+        <th>intellectual entity id (ieid)</th>
+        <th>package</th>
+        <th>task</th>
+        <th>status</th>
+        <th>time</th>
       </tr>
-    <% end %>
-  </table>
+      <% @wips.each do |w| %>
+        <tr>
+          <td><code><a href="<%="/#{space}/#{w.id}"%>"><%= w.id %></a></code></td>
+          <td><%= w.package.sip.name rescue '' %></td>
+          <td><%= w.task rescue '' %></td>
+          <td><%= w.state.to_s.gsub 'snafu', 'error' rescue '' %></td>
+          <% if File.directory?(w.path) %>
+            <td><%= File.ctime(w.path) %></td>
+          <% else %>
+            <td></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 </div>

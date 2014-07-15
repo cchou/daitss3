@@ -77,8 +77,14 @@
     <% end %>
   </tbody>
 </table>
-<select>
-</select>
-<input type='submit' value='submit'/>
+  <div class="form-group form-group-sm">
+    <div class="col-sm-2">
+      <select class='form-control'>
+      </select>
+    </div>
+    <div class="col-sm-1">
+      <input type='submit' value='submit' class='btn btn-default'/>
+    </div>
+  </div>  
 </form>
 <%= will_paginate @results%>
