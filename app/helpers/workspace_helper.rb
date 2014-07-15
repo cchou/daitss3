@@ -8,7 +8,7 @@ module WorkspaceHelper
   end
   
   def throttle_string
-    "#{throttles(:ingest)} "#; #{throttles(:dissemination)} ; #{throttles(:refresh)} ; #{throttles(:withdrawal)} "
+    "#{throttles(:ingest)} #{throttles(:dissemination)} #{throttles(:refresh)} #{throttles(:withdrawal)} "
   end
   
   def throttles type
@@ -35,15 +35,15 @@ module WorkspaceHelper
   
   def total_to_s
     if total > 1_000_000_000_000
-      sprintf("size: %5.2f TB",  total / 1_000_000_000_000.0)
+      sprintf("%5.2f TB",  total / 1_000_000_000_000.0)
     elsif total > 1_000_000_000
-      sprintf("size: %5.2f GB",  total / 1_000_000_000.0)
+      sprintf("%5.2f GB",  total / 1_000_000_000.0)
     elsif total > 1_000_000
-      sprintf("size: %5.2f MB",  total / 1_000_000.0)
+      sprintf("%5.2f MB",  total / 1_000_000.0)
     elsif total > 1_000
-      sprintf("size: %5.2f KB",  total / 1_000.0)
+      sprintf("%5.2f KB",  total / 1_000.0)
     else
-      sprintf("size: %5.2f B",   total)
+      sprintf("%5.2f B",   total)
     end
   end
   

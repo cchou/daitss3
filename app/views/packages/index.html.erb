@@ -3,28 +3,28 @@
 <div class="row">
   <form action="/packages" class="form-search" method ="get">
     <div class="col-md-1">
-      <%= collection_select(:account,  :account_id, Account.all, :id, :id, {:prompt => "Account"}, {:id => 'account_search', :selected=> params[:account] && params[:account]["account_id"]})%>
+      <%= collection_select(:account,  :account_id, Account.all, :id, :id, {:prompt => "Account"}, {:id => 'account_search', :class => 'form-control', :selected=> params[:account] && params[:account]["account_id"]})%>
     </div>
     <div class="col-md-1">
-      <%= collection_select(:project, :project_id,  @projects,  :id, :id, {:prompt   => "Project"}, { :id => 'project_search', :selected=> params[:project] && params[:project]["project_id"] })%>
+      <%= collection_select(:project, :project_id,  @projects,  :id, :id, {:prompt   => "Project"}, { :id => 'project_search', :class => 'form-control', :selected=> params[:project] && params[:project]["project_id"] })%>
     </div>
     <div class="col-md-1">
-      <%= text_field_tag :batch_search, params[:batch_search], :placeholder => "Batch" %>
+      <%= text_field_tag :batch_search, params[:batch_search], :placeholder => "Batch", :class => 'form-control' %>
     </div>
     <div class="col-md-2">
-      <%= select_tag :activity_search, options_for_select(["activities", "submitted", "rejected", "archived", "disseminated", "error", "withdrawn"], params[:activity_search]) %>
+      <%= select_tag :activity_search, options_for_select(["activities", "submitted", "rejected", "archived", "disseminated", "error", "withdrawn"], params[:activity_search]), :class => 'form-control' %>
     </div>
     <div class="col-md-2">
-      <%= text_field_tag :start_time_search, params[:start_time_search], :type=> "date", :title => "Start Date" %>
+      <%= text_field_tag :start_time_search, params[:start_time_search], :type=> "date", :title => "Start Date", :class => 'form-control' %>
     </div>
     <div class="col-md-2">
-      <%= text_field_tag :end_time_search, params[:end_time_search], :type=> "date", :title => "End Date" %>
+      <%= text_field_tag :end_time_search, params[:end_time_search], :type=> "date", :title => "End Date", :class => 'form-control' %>
     </div>
     <div class="col-md-2">
-      <%= text_field_tag :id_search, params[:id_search], :size => 13, :class => 'search-query', :placeholder => "IEID or Package Name" %>
+      <%= text_field_tag :id_search, params[:id_search], :size => 13, :class => 'search-query form-control', :placeholder => "IEID or Package Name" %>
     </div>
     <div class="col-md-1">
-      <%= submit_tag "Submit", :class=>"btn", :name => nil %>
+      <%= submit_tag "Submit", :class=>"btn btn-default", :name => nil %>
 
       <!-- 
       <span class="input-group-addon">
