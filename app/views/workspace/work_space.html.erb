@@ -103,24 +103,31 @@
         <% end %>
       </div>
       
-      <div class="form-group form-group-lg">
-        <label for='state-start'>start</label>
-        <input id='state-start' type='radio' name='task' value='start'/>
-            
-        <label for='state-stop'>stop</label>
-        <input id='state-stop' type='radio' name='task' value='stop'/>
-      
-        <label for='state-unsnafu'>reset</label>
-        <input id='state-unsnafu' type='radio' name='task' value='unsnafu'/>
-      
-        <label for='state-doover'>do over</label>
-        <input id='state-doover' type='radio' name='task' value='doover'/>
-      
-        <label for='state-stash'>stash</label>
-        <input id='state-stash' type='radio' name='task' value='stash'/>
-      </div>
-      
       <div class="form-group form-group-sm">
+        <div class="col-sm-2">
+          <div class="radio">
+            <label for='state-start'>start</label>
+            <input id='state-start' type='radio' name='task' value='start'/>
+          </div>
+          <div class="radio">
+            <label for='state-stop'>stop</label>
+            <input id='state-stop' type='radio' name='task' value='stop'/>
+          </div>
+          <div class="radio">
+            <label for='state-unsnafu'>reset</label>
+            <input id='state-unsnafu' type='radio' name='task' value='unsnafu'/>
+          </div>
+          <div class="radio">
+            <label for='state-doover'>do over</label>
+            <input id='state-doover' type='radio' name='task' value='doover'/>
+          </div>
+          <div class="radio">
+            <label for='state-stash'>stash</label>
+            <input id='state-stash' type='radio' name='task' value='stash'/>
+          </div>
+        </div>
+
+      
         <div class="col-sm-4">
           <label for='stash-bin'>stash-bin</label>
           <select name='stash-bin' class="form-control">
