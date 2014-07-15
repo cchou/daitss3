@@ -126,42 +126,12 @@
 
   <hr></hr>
 
-
-  
-
-
   <h3>idle jobs:<%= idle_wips.length %></h3> 
-<!--
-  - total = idle_wips.inject(0) {|sum, w| sum + Sip.first(:package_id => w.id).size_in_bytes }
-  - if total > 1_000_000_000_000
-    %h2= sprintf("size: %5.2f TB",  total / 1_000_000_000_000.0)
-  - elsif total > 1_000_000_000
-    %h2= sprintf("size: %5.2f GB",  total / 1_000_000_000.0)
-  - elsif total > 1_000_000
-    %h2= sprintf("size: %5.2f MB",  total / 1_000_000.0)
-  - elsif total > 1_000
-    %h2= sprintf("size: %5.2f KB",  total / 1_000.0)
-  - else
-    %h2= sprintf("size: %5.2f B",   total)     
-  
-  - total_files =  idle_wips.inject(0) {|sum, w| sum + Sip.first(:package_id => w.id).number_of_datafiles }
-  %h2
-    total number of files:
-    = total_files
 
-  - ingest_count = 0
-  - disseminate_count = 0
-  - withdraw_count = 0
-  - refresh_count = 0
-  - peek_count = 0
+  <h3><%= total_to_s %></h3>   
 
-  - idle_wips.each do |w|
-    - ingest_count += 1 if w.task == :ingest 
-    - disseminate_count += 1 if w.task == :disseminate
-    - withdraw_count += 1 if w.task == :withdraw
-    - refresh_count += 1 if w.task == :refresh
-    - peek_count += 1 if w.task == :peek
--->
+  <h3>total number of files: <%= total_files %></h3>
+
   <table>
     <tr>
       <th>task</th>
@@ -169,46 +139,55 @@
     </tr>
     <tr>
       <td>ingest</td>
-      <td>ingest_count</td>
+      <td><%= ingest_count %></td>
     </tr>
     <tr>
       <td>disseminate</td>
-      <td>disseminate_count</td>
+      <td><%= disseminate_count %></td>
     </tr>
     <tr>
       <td>refresh</td>
-      <td>refresh_count</td>
+      <td><%= refresh_count %></td>
     </tr>
     <tr>
       <td>withdraw</td>
-      <td>withdraw_count</td>
+      <td><%= withdraw_count %></td>
     </tr>
     </table>
+    
+  <h3>active jobs: <%= active_wips %></h3>
 
-<!--    
-- @wips = @wips - idle_wips
+  <table>
+    <tr>
+      <th>running</th>
+      <th>throttles</th>
+    </tr>
+    <tr>
+      <td><%= running? %></td>
+      <td><%= throttle_string %></td>
+    </tr>
+  </table>
 
-#results
-  %h2
-    active jobs: 
-    = @wips.size
-
-  %h3
-    running:
-    = archive.workspace.select(&:running?).size
-    &nbsp;
-    throttles:
-    &nbsp;
-    = throttles(:ingest)
-    &nbsp;
-    = throttles(:dissemination)
-    &nbsp;
-    = throttles(:refresh)
-    &nbsp;
-    = throttles(:withdrawal)
-
-    - unless @wips.empty?
-      = partial :wip_table, :locals => { :wips => @wips  }
-
--->
+  <table>
+    <tr>
+      <th>intellectual entity id (ieid)</th>
+      <th>package</th>
+      <th>task</th>
+      <th>status</th>
+      <th>time</th>
+    </tr>
+    <% @wips.each do |w| %>
+      <tr>
+        <td><code><a href="<%="/#{space}/#{w.id}"%>"><%= w.id %></a></code></td>
+        <td><%= w.package.sip.name rescue '' %></td>
+        <td><%= w.task rescue '' %></td>
+        <td><%= w.state.to_s.gsub 'snafu', 'error' rescue '' %></td>
+        <% if File.directory?(w.path) %>
+          <td><%= File.ctime(w.path) %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
 </div>

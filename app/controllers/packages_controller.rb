@@ -32,7 +32,6 @@ SQL = "select t1.*
         
 class PackagesController < ApplicationController
   helper_method :sort_column, :sort_direction  # make these two methods available to application helpers 
-  helper 
   before_filter :load_vars
   
   #initialize variable only once, skip initialization for ajax request also.
