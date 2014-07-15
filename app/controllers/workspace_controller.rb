@@ -20,7 +20,7 @@ class WorkspaceController < ApplicationController
   def work_space
     @wips = archive.workspace.to_a
     @bins = archive.stashspace
-    
+
     if params['filter'] == 'true'
       
       # filter wips by date range
@@ -97,6 +97,93 @@ class WorkspaceController < ApplicationController
     elsif w.dead? then 4
     else 0
     end
+  end
+  
+  def workspace
+    ws = archive.workspace
+    task = params.require('task')
+
+    case params['task']
+    when 'start'
+      note = params.require(:note)
+      
+      if params['filter'] == 'true'
+        startable = params['wips'].map {|w| Wip.new(File.join(ws.path, w))}
+        startable = startable.reject { |w| w.running? or w.snafu? }
+      else
+        startable = ws.reject { |w| w.running? or w.snafu? }
+      end
+      
+      startable.each do |w|
+        w.unstop if w.stopped?
+        w.reset_process if w.dead?
+        w.spawn note, @user
+      end
+      
+    when 'stop'
+      note = params.require(:note)
+      if params['filter'] == 'true'
+        wip_list = params['wips'].map {|w| Wip.new(File.join(ws.path, w))}
+        wip_list.select(&:running?).each { |w| w.stop note }
+      else
+        ws.select(&:running?).each { |w| w.stop note, @user }
+      end
+      
+    when 'unsnafu'
+      note = params.require(:note)
+      
+      # reset/unsnafu the snafued or dead wip
+      if params['filter'] == 'true'
+        wip_list = params['wips'].map {|w| Wip.new(File.join(ws.path, w))}
+        wip_list.select(&:snafu?).each { |w| w.unsnafu note }
+        wip_list.select(&:dead?).each { |w| w.unsnafu note }      
+      else
+        ws.select(&:snafu?).each { |w| w.unsnafu note, @user }
+        ws.select(&:dead?).each { |w| w.unsnafu note, @user }      
+      end
+      
+    when 'doover'
+      note = params.require(:note)
+      
+      if params['filter'] == 'true'
+        wip_list = params['wips'].map {|w| Wip.new(File.join(ws.path, w))}
+        wip_list.each { |w| w.do_over note, @user }
+      else
+        ws.each { |w| w.do_over note, @user }
+      end
+      
+    when 'stash'
+      params.require('stash-bin')
+      #error 400, 'parameter stash-bin is required' unless params['stash-bin']
+      note = params.require(:note)
+      bin = archive.stashspace.find { |b| b.name == params['stash-bin'] }
+      unless bin
+        #error 400, "bin #{bin} does not exist" unless bin
+        redirect_to '/500'
+        return
+      end
+      
+      if params['filter'] == 'true'
+        stashable = params['wips'].map {|w| Wip.new(File.join(ws.path, w))}
+        stashable = stashable.reject { |w| w.running? }
+      else
+        stashable = ws.reject { |w| w.running? }
+      end
+   
+      stashable.each { |w| ws.stash w.id, bin, note, @user }
+   
+    when nil, ''
+      #flash[:error] = "parameter task is required"
+      redirect_to '/500'
+      return
+    else
+      #flash[:error] = "unknown command: #{params['task']}"
+      redirect_to '/500'
+      return
+    end
+   
+    render 'work_space#workspace'
+    #redirect_to '/work_space'
   end
 
 end

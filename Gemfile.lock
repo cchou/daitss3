@@ -188,6 +188,11 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     stringex (1.5.1)
+    strong_parameters (0.2.3)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
+      activesupport (~> 3.0)
+      railties (~> 3.0)
     sys-proctable (0.9.4)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
@@ -254,6 +259,7 @@ DEPENDENCIES
   rspec-rails (= 2.11.0)
   sass-rails (>= 3.2)
   semver
+  strong_parameters
   sys-proctable
   therubyracer
   thin

@@ -20,6 +20,7 @@ gem 'sys-proctable'
 gem "datyl", :git => "git://github.com/daitss/datyl.git"
 gem 'curb'
 gem 'rjb'
+gem 'strong_parameters'
 
 gem 'therubyracer'
 gem 'semver'
