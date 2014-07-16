@@ -4,102 +4,113 @@
   <h2>daitss: <%= VERSION %></h2>
 </div>
 
-<div>
-  <h2>Account Summaries and Breakdown</h2>
+<div class="container-fluid">
+  <div class="row">
+    <h2>Account Summaries and Breakdown</h2>
 
-  <table>
-    <tr>
-      <th>Totals</th>
-      <th>SIP Count</th>
-      <th>SIP # Files</th>
-      <th>SIP Size in MB</th>
-      <th>AIP Count</th>
-      <th>AIP # Files</th>
-      <th>AIP Size in MB</th>
-    </tr>
-    
-    <tr>
-      <td> </td>
-      <td><%= sip_count %></td>
-      <td><%= sip_num_files %></td>
-      <td><%= sip_size %></td>
-      <td><%= aip_count %></td>
-      <td><%= aip_num_files %></td>
-      <td><%= aip_size %></td>
-    </tr>
-    
-    <tr>
-      <th>Account</th>
-      <th>Sip Count</th>
-      <th># Files</th>
-      <th>Total Size in MB</th>
-      <th>Aip Count</th>
-      <th># Files</th>
-      <th>Total Size in MB</th>
-    </tr>
-    
-    <% sip_data.each do |account| %>
+    <table class="table table-striped">
       <tr>
-        <td><%= account_id(account) %></td>
-        <td><%= account_sip_count(account) %></td>
-        <td><%= account_sip_file_count(account) %></td>
-        <td><%= account_sip_size(account) %></td>
-        <% aip_data.each_with_index do |act, i| %>
-          <% if act.project_account_id == account.project_account_id %>
-            <td><%= account_aip_count(act) %></td>
-            <td><%= account_aip_file_count(act) %></td>
-            <td><%= account_aip_size(act) %></td>
-            <% break %>
-          <% elsif i == aip_data.size-1 %>
-            <td><%= " " %></td>
-            <td><%= " " %></td>
-            <td><%= " " %></td>
-          <% end %>
-        <% end %>
+        <th>Totals</th>
+        <th>SIP Count</th>
+        <th>SIP # Files</th>
+        <th>SIP Size in MB</th>
+        <th>AIP Count</th>
+        <th>AIP # Files</th>
+        <th>AIP Size in MB</th>
       </tr>
-    <% end %>
-  </table>
-  
-</div>
+      
+      <tr>
+        <td> </td>
+        <td><%= sip_count %></td>
+        <td><%= sip_num_files %></td>
+        <td><%= sip_size %></td>
+        <td><%= aip_count %></td>
+        <td><%= aip_num_files %></td>
+        <td><%= aip_size %></td>
+      </tr>
+      
+      <tr>
+        <th>Account</th>
+        <th>Sip Count</th>
+        <th># Files</th>
+        <th>Total Size in MB</th>
+        <th>Aip Count</th>
+        <th># Files</th>
+        <th>Total Size in MB</th>
+      </tr>
+      
+      <% sip_data.each do |account| %>
+        <tr>
+          <td><%= account_id(account) %></td>
+          <td><%= account_sip_count(account) %></td>
+          <td><%= account_sip_file_count(account) %></td>
+          <td><%= account_sip_size(account) %></td>
+          <% aip_data.each_with_index do |act, i| %>
+            <% if act.project_account_id == account.project_account_id %>
+              <td><%= account_aip_count(act) %></td>
+              <td><%= account_aip_file_count(act) %></td>
+              <td><%= account_aip_size(act) %></td>
+              <% break %>
+            <% elsif i == aip_data.size-1 %>
+              <td><%= "0" %></td>
+              <td><%= "0" %></td>
+              <td><%= "0" %></td>
+            <% end %>
+          <% end %>
+          <% if aip_data.size == 0 %>
+            <td><%= "0" %></td>
+            <td><%= "0" %></td>
+            <td><%= "0" %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 
-<div>
-  <h2>Account Summary</h2>
- 
-  <h3><%= "SIP summary for account: #{current_user.account.id}" %></h3>
-  SIP summary includes all archival submission attempts including rejected packages.  
-  <table>
-    <tr>
-      <th>count</th>
-      <td><%= current_user_sip_num %></td>
-    </tr>
-      
-    <tr>
-      <th>files</th>
-      <td><%= current_user_sip_file_num %></td>
-    </tr>
-      
-    <tr>
-      <th>total size</th>
-      <td><%= current_user_sip_size %></td>
-    </tr>
-  </table>
-  
-  <h3><%= "AIP summary for account: #{current_user.account.id}" %></h3>
-  AIP summary consists of all packages currently archived.
-  <table>
-    <tr>
-      <th>count</th>
-      <td><%= current_user_aip_num %></td>
-    </tr>
-      
-    <tr>
-      <th>files</th>
-      <td><%= current_user_aip_file_num %></td>
-    </tr>
-      
-    <tr>
-      <th>total size</th>
-      <td><%= current_user_aip_size %></td>
-    </tr>
-  </table>
+  <div class="row">
+    <h2>Account Summary</h2>
+   
+    <p>SIP summary includes all archival submission attempts including rejected packages.</p>
+    <p>AIP summary consists of all packages currently archived.</p>
+    
+    <div class="col-md-4">
+      <h4><%= "SIP summary for account: #{current_user.account.id}" %></h4>
+      <table class="table table-striped">
+        <tr>
+          <th>count</th>
+          <td><%= current_user_sip_num %></td>
+        </tr>
+          
+        <tr>
+          <th>files</th>
+          <td><%= current_user_sip_file_num %></td>
+        </tr>
+          
+        <tr>
+          <th>total size</th>
+          <td><%= current_user_sip_size %></td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="col-md-4">
+      <h4><%= "AIP summary for account: #{current_user.account.id}" %></h4>
+      <table class="table table-striped">
+        <tr>
+          <th>count</th>
+          <td><%= current_user_aip_num %></td>
+        </tr>
+          
+        <tr>
+          <th>files</th>
+          <td><%= current_user_aip_file_num %></td>
+        </tr>
+          
+        <tr>
+          <th>total size</th>
+          <td><%= current_user_aip_size %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>
