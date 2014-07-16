@@ -17,7 +17,7 @@ class WorkspaceController < ApplicationController
     end
   end
   
-  def work_space
+  def workspace
     @wips = archive.workspace.to_a
     @bins = archive.stashspace
 
@@ -99,7 +99,12 @@ class WorkspaceController < ApplicationController
     end
   end
   
-  def workspace
+  def update
+    #task = params.require('task')
+    render :nothing => true
+  end
+  
+  def workspaces
     ws = archive.workspace
     task = params.require('task')
 
@@ -159,7 +164,7 @@ class WorkspaceController < ApplicationController
       bin = archive.stashspace.find { |b| b.name == params['stash-bin'] }
       unless bin
         #error 400, "bin #{bin} does not exist" unless bin
-        redirect_to '/500'
+        #redirect_to '/500'
         return
       end
       
@@ -174,16 +179,16 @@ class WorkspaceController < ApplicationController
    
     when nil, ''
       #flash[:error] = "parameter task is required"
-      redirect_to '/500'
+      #redirect_to '/500'
       return
     else
       #flash[:error] = "unknown command: #{params['task']}"
-      redirect_to '/500'
+      #redirect_to '/500'
       return
     end
    
-    render 'work_space#workspace'
-    #redirect_to '/work_space'
+    #render 'work_space'
+    #redirect_to :back
   end
 
 end
