@@ -20,12 +20,12 @@
     
     <tr>
       <td> </td>
-      <td><%= Sip.count.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
-      <td><%= (Sip.sum :number_of_datafiles ).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
-      <td><%= sprintf('%.2f', Sip.sum(:size_in_bytes).to_f / (1024*1024)).reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
-      <td><%= (Aip.count - Aip.all(:datafile_count  => 0).count - Aip.all(:datafile_count  => nil).count).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
-      <td><%= (Aip.sum :datafile_count).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
-      <td><%= sprintf('%.2f', Copy.sum(:size).to_f / (1024*1024)).reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+      <td><%= sip_count %></td>
+      <td><%= sip_num_files %></td>
+      <td><%= sip_size %></td>
+      <td><%= aip_count %></td>
+      <td><%= aip_num_files %></td>
+      <td><%= aip_size %></td>
     </tr>
     
     <tr>
@@ -40,15 +40,15 @@
     
     <% sip_data.each do |account| %>
       <tr>
-        <td><%= account.project_account_id %></td>
-        <td><%= account.sip_count.to_i.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
-        <td><%= account.file_count.to_i.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
-        <td><%= sprintf('%.2f', account.size.to_f / (1024*1024)).reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+        <td><%= account_id(account) %></td>
+        <td><%= account_sip_count(account) %></td>
+        <td><%= account_sip_file_count(account) %></td>
+        <td><%= account_sip_size(account) %></td>
         <% aip_data.each_with_index do |act, i| %>
           <% if act.project_account_id == account.project_account_id %>
-            <td><%= act.aip_count.to_i.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
-            <td><%= act.file_count.to_i.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
-            <td><%= sprintf('%.2f', act.size.to_f / (1024*1024)).reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+            <td><%= account_aip_count(act) %></td>
+            <td><%= account_aip_file_count(act) %></td>
+            <td><%= account_aip_size(act) %></td>
             <% break %>
           <% elsif i == aip_data.size-1 %>
             <td><%= " " %></td>
@@ -70,17 +70,17 @@
   <table>
     <tr>
       <th>count</th>
-      <td><%= current_user.packages.sips.all.count.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+      <td><%= current_user_sip_num %></td>
     </tr>
       
     <tr>
       <th>files</th>
-      <td><%= (current_user.packages.sips.all.sum :number_of_datafiles).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+      <td><%= current_user_sip_file_num %></td>
     </tr>
       
     <tr>
       <th>total size</th>
-      <td><%= sprintf('%.2f', current_user.packages.sips.all.sum(:size_in_bytes).to_f / (1024*1024)).reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse + " MB" %></td>
+      <td><%= current_user_sip_size %></td>
     </tr>
   </table>
   
@@ -89,17 +89,17 @@
   <table>
     <tr>
       <th>count</th>
-      <td><%= (current_user.packages.aips.count - current_user.packages.aips.all(:datafile_count => 0).count - current_user.packages.aips.all(:datafile_count => nil).count).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+      <td><%= current_user_aip_num %></td>
     </tr>
       
     <tr>
       <th>files</th>
-      <td><%= (current_user.packages.aips.all.sum :datafile_count).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+      <td><%= current_user_aip_file_num %></td>
     </tr>
       
     <tr>
       <th>total size</th>
-      <td><%= sprintf('%.2f', current_user.packages.aips.copys.all.sum(:size).to_f / (1024*1024)).reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse + " MB" %></td>
+      <td><%= current_user_aip_size %></td>
     </tr>
   </table>
 </div>
