@@ -1,10 +1,9 @@
 development:
   adapter: postgresql
-  encoding: UTF-8
+  encoding: unicode
   database: daitss3
+  username: daitss2
   pool: 5
-  username: daitss
-  password: daitss
   timeout: 5000
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -21,6 +20,6 @@ production:
   adapter: postgresql
   encoding: unicode
   database: daitss3
-  username: daitss
+  username: daitss2
   pool: 5
   timeout: 5000
