@@ -1,4 +1,105 @@
 <% provide(:title, 'Dashboard') %>
 <div class="center jumbotron">
   <h1>Dashboard</h1>
+  <h2>daitss: <%= VERSION %></h2>
+</div>
+
+<div>
+  <h2>Account Summaries and Breakdown</h2>
+
+  <table>
+    <tr>
+      <th>Totals</th>
+      <th>SIP Count</th>
+      <th>SIP # Files</th>
+      <th>SIP Size in MB</th>
+      <th>AIP Count</th>
+      <th>AIP # Files</th>
+      <th>AIP Size in MB</th>
+    </tr>
+    
+    <tr>
+      <td> </td>
+      <td><%= Sip.count.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+      <td><%= (Sip.sum :number_of_datafiles ).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+      <td><%= sprintf('%.2f', Sip.sum(:size_in_bytes).to_f / (1024*1024)).reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+      <td><%= (Aip.count - Aip.all(:datafile_count  => 0).count - Aip.all(:datafile_count  => nil).count).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+      <td><%= (Aip.sum :datafile_count).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+      <td><%= sprintf('%.2f', Copy.sum(:size).to_f / (1024*1024)).reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+    </tr>
+    
+    <tr>
+      <th>Account</th>
+      <th>Sip Count</th>
+      <th># Files</th>
+      <th>Total Size in MB</th>
+      <th>Aip Count</th>
+      <th># Files</th>
+      <th>Total Size in MB</th>
+    </tr>
+    
+    <% sip_data.each do |account| %>
+      <tr>
+        <td><%= account.project_account_id %></td>
+        <td><%= account.sip_count.to_i.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+        <td><%= account.file_count.to_i.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+        <td><%= sprintf('%.2f', account.size.to_f / (1024*1024)).reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+        <% aip_data.each_with_index do |act, i| %>
+          <% if act.project_account_id == account.project_account_id %>
+            <td><%= act.aip_count.to_i.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+            <td><%= act.file_count.to_i.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+            <td><%= sprintf('%.2f', act.size.to_f / (1024*1024)).reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+            <% break %>
+          <% elsif i == aip_data.size-1 %>
+            <td><%= " " %></td>
+            <td><%= " " %></td>
+            <td><%= " " %></td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  
+</div>
+
+<div>
+  <h2>Account Summary</h2>
+ 
+  <h3><%= "SIP summary for account: #{current_user.account.id}" %></h3>
+  SIP summary includes all archival submission attempts including rejected packages.  
+  <table>
+    <tr>
+      <th>count</th>
+      <td><%= current_user.packages.sips.all.count.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+    </tr>
+      
+    <tr>
+      <th>files</th>
+      <td><%= (current_user.packages.sips.all.sum :number_of_datafiles).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+    </tr>
+      
+    <tr>
+      <th>total size</th>
+      <td><%= sprintf('%.2f', current_user.packages.sips.all.sum(:size_in_bytes).to_f / (1024*1024)).reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse + " MB" %></td>
+    </tr>
+  </table>
+  
+  <h3><%= "AIP summary for account: #{current_user.account.id}" %></h3>
+  AIP summary consists of all packages currently archived.
+  <table>
+    <tr>
+      <th>count</th>
+      <td><%= (current_user.packages.aips.count - current_user.packages.aips.all(:datafile_count => 0).count - current_user.packages.aips.all(:datafile_count => nil).count).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+    </tr>
+      
+    <tr>
+      <th>files</th>
+      <td><%= (current_user.packages.aips.all.sum :datafile_count).to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse %></td>
+    </tr>
+      
+    <tr>
+      <th>total size</th>
+      <td><%= sprintf('%.2f', current_user.packages.aips.copys.all.sum(:size).to_f / (1024*1024)).reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse + " MB" %></td>
+    </tr>
+  </table>
 </div>
