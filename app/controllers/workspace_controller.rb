@@ -1,7 +1,7 @@
 require 'will_paginate/array'
 require 'nokogiri'
 require 'daitss'
-require 'debugger'
+
 
 include Daitss
 include Datyl

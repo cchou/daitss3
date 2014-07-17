@@ -1,7 +1,6 @@
 require 'will_paginate/array'
 require 'nokogiri'
 require 'daitss'
-require 'debugger'
 
 include Daitss
 include Datyl
@@ -219,7 +218,7 @@ class PackagesController < ApplicationController
     open(path, 'wb') { |io| io.write data }
     # TODO flash[:success] = "uploaded to #{path}"
     @message = "uploaded to #{path}"
-    #debugger
+
     begin  
       batch_id = params["batch_id"]#.strip == "batch name" ? nil : params["batch_id"].strip
       note = params["note"] #== "note" ? nil : params["note"].strip

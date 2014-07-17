@@ -1,6 +1,4 @@
 require 'semver'
-require 'debugger'
-#debugger
 
 module Daitss
   VERSION_FORMAT = "v%M.%m.%p%s"
