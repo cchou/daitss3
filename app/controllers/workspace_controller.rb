@@ -190,5 +190,10 @@ class WorkspaceController < ApplicationController
     #render 'work_space'
     #redirect_to :back
   end
+  
+  def show
+    id = params[:id]
+    @wip = archive.workspace[id]
+  end
 
 end

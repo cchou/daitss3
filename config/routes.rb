@@ -27,6 +27,7 @@ Daitss::Application.routes.draw do
   match '/submit_request', to: 'packages#submit_request'
   match '/workspace', to: 'workspace#workspace'
   match '/update', to: 'workspace#update'
+  match '/show_wip', to: 'workspace#show'
 
   get 'main/select_account', :as => 'select_account'
   get 'packages/select_package_account', :as => 'select_package_account'
