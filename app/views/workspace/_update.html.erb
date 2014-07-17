@@ -1,0 +1,50 @@
+<form action='<%= @action %>' method='post' class="form-horizontal" enctype="multipart/form-data">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+  <div class="form-group">
+    <% if params[:filter] %>
+      <input name='filter' type='hidden' value='true'/>
+      <% @wips.each do |w| %>
+        <input name='wips[]' type='hidden' value=<%= w.id %>>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="form-group form-group-sm">
+    <div class="col-sm-2">
+      <div class="radio">
+        <label for='state-start'>start</label>
+        <input id='state-start' type='radio' name='task' value='start'/>
+      </div>
+      <div class="radio">
+        <label for='state-stop'>stop</label>
+        <input id='state-stop' type='radio' name='task' value='stop'/>
+      </div>
+      <div class="radio">
+        <label for='state-unsnafu'>reset</label>
+        <input id='state-unsnafu' type='radio' name='task' value='unsnafu'/>
+      </div>
+      <div class="radio">
+        <label for='state-doover'>do over</label>
+        <input id='state-doover' type='radio' name='task' value='doover'/>
+      </div>
+      <div class="radio">
+        <label for='state-stash'>stash</label>
+        <input id='state-stash' type='radio' name='task' value='stash'/>
+      </div>
+    </div>
+
+
+    <div class="col-sm-4">
+      <label for='stash-bin'>stash-bin</label>
+      <select name='stash-bin' class="form-control">
+        <% @bins.each do |bin| %>
+          <option><%= bin.name %></option>
+        <% end %>
+      </select>
+      <label for='note'>Note</label>
+      <textarea id='note' name='note' class="form-control" rows="3" required></textarea>
+    </div>
+  </div>
+
+  <button id='updateBtn' type='submit' value="Update" class="btn btn-default"/>Update</button>
+</form>
