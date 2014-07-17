@@ -20,6 +20,7 @@ class WorkspaceController < ApplicationController
   def workspace
     @wips = archive.workspace.to_a
     @bins = archive.stashspace
+    @action = '/workspace'
 
     if params['filter'] == 'true'
       
@@ -193,7 +194,9 @@ class WorkspaceController < ApplicationController
   
   def show
     id = params[:id]
+    @bins = archive.stashspace
     @wip = archive.workspace[id]
+    @action = "/workspace/#{@wip.id}"
   end
 
 end
