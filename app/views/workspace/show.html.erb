@@ -2,10 +2,22 @@
 
 <h3><a href="/package/<%= @wip.id %>"><%= @wip.id %></a></h3>
 <h3><%= @wip.task %> <%= @wip.state.to_s.gsub("snafu", "error") %></h3>
-  
-  <%= render "update" %>
-  
-  <hr></hr>
 
-  <h3>progress</h3>
+<% if @wip.snafu? %>
+  <%= render "snafu" %>
+<% elsif @wip.dead? %>
+  <%= render "dead" %>
+<% end %>
+  
+<%= render "update" %>
+  
+<hr></hr>
 
+<h3>progress</h3>
+
+<% case @wip.task %>
+<% when :ingest, :disseminate, :withdraw, :refresh %>
+  <%= render "progress" %>
+<% else %>
+  <h4>unknown progress</h4>
+<% end %>  

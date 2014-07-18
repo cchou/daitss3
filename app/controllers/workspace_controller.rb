@@ -197,6 +197,11 @@ class WorkspaceController < ApplicationController
     @bins = archive.stashspace
     @wip = archive.workspace[id]
     @action = "/workspace/#{@wip.id}"
+    
+    out, err = @wip.std_data
+    out = "no output data" unless out
+    err = "no error data" unless err
+    
   end
 
 end
