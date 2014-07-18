@@ -1,0 +1,17 @@
+<h3>Snafu</h3>
+
+<table>
+  <tr>
+    <th>time</th>
+    <td><%= @wip.process[:time] %></td>
+  </tr>
+  <tr>
+    <th>message</th>
+    <td><pre><%= @wip.process[:message] %></pre></td>
+  </tr>
+  <tr>
+    <th>trace</th>
+    <td><pre><%= @wip.process[:backtrace].join "\n" %></pre></td>
+  </tr>
+</table>
+
