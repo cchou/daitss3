@@ -7,7 +7,7 @@ Daitss::Application.routes.draw do
   resources :users
   resources :packages, only: [:index, :submit]
   resources :sessions, only: [:new, :create, :destroy]
-  #resource :workspace
+  resource :workspace, :controller => :workspace, except: [:show]
   resources :operators, :controller => "users" # single table inheritance, operator is a kind of user.
   resources :contacts, :controller => "users" # single table inheritance, contact is a kind of user.
 
@@ -28,8 +28,8 @@ Daitss::Application.routes.draw do
   match '/submit_request', to: 'packages#submit_request'
   match '/workspace', to: 'workspace#workspace'
   match '/update', to: 'workspace#update'
-  match '/show_wip', to: 'workspace#show'
 
+  get '/workspace/:id', to: 'workspace#show', :as => 'get_wip'
   get 'main/select_account', :as => 'select_account'
   get 'packages/select_package_account', :as => 'select_package_account'
   

@@ -101,12 +101,8 @@ class WorkspaceController < ApplicationController
     end
   end
   
-  def update
-    #task = params.require('task')
-    render :nothing => true
-  end
   
-  def workspaces
+  def update
     ws = archive.workspace
     task = params.require('task')
 
@@ -190,7 +186,7 @@ class WorkspaceController < ApplicationController
     end
    
     #render 'work_space'
-    #redirect_to :back
+    redirect_to :back
   end
   
   def show
