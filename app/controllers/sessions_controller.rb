@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       # Sign the user in and redirect to package submission page.
       sign_in user
       # redirect_to user
-      redirect_back_or submit_path
+      redirect_back_or dashboard_path
     else
       flash.now[:danger] = 'Invalid email/password combination'
       render 'new'

@@ -8,7 +8,8 @@ include Datyl
 
 class WorkspaceController < ApplicationController
   helper WorkspaceHelper
-  before_filter :load_vars
+  before_filter :authenticate_admin, :load_vars
+
   
   #initialize variable only once, skip initialization for ajax request also.
   def load_vars

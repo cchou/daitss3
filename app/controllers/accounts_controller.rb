@@ -1,6 +1,8 @@
 class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.json
+  before_filter :authenticate_admin
+  
   def index
     @accounts = Account.user_accounts
 
