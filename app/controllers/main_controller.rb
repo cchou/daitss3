@@ -8,6 +8,10 @@ class MainController < ApplicationController
   
   # administer users, accounts and projects
   def admin
+    unless admin_user?
+      authenticate_admin
+      return
+    end
     @accounts = Account.user_accounts
     @projects = []
     @users = []
@@ -32,6 +36,10 @@ class MainController < ApplicationController
 
   # FDA log message
   def log
+    unless admin_user?
+      authenticate_admin
+      return
+    end
     @entries = Entry.all
   end
 
