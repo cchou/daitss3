@@ -173,7 +173,7 @@
       </tr>
       <% @wips.each do |w| %>
         <tr>
-          <td><code><%= link_to w.id, get_wip_path(w.id) %></code></td>
+          <td><code><%= link_to w.id, wip_path(w.id) %></code></td>
           <td><%= w.package.sip.name rescue '' %></td>
           <td><%= w.task rescue '' %></td>
           <td><%= w.state.to_s.gsub 'snafu', 'error' rescue '' %></td>

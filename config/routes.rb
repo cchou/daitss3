@@ -24,12 +24,13 @@ Daitss::Application.routes.draw do
   match '/update_password', to: 'users#update_password'  
   match '/submit', to: 'packages#submit'
   match '/upload', to: 'packages#upload'
-  match '/show_package', to: 'packages#show'
+  
   match '/submit_request', to: 'packages#submit_request'
   match '/workspace', to: 'workspace#workspace'
   match '/update', to: 'workspace#update'
-
-  get '/workspace/:id', to: 'workspace#show', :as => 'get_wip'
+  
+  get '/packages/:id', to: 'packages#show', :as => 'package'
+  get '/workspace/:id', to: 'workspace#show', :as => 'wip'
   get 'main/select_account', :as => 'select_account'
   get 'packages/select_package_account', :as => 'select_package_account'
   

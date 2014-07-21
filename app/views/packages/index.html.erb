@@ -62,7 +62,7 @@
     <tr>
       <td><%= check_box_tag "#{result.id}" %></td>
       <!--<td><%= select_tag "#{result.id}", options_for_select(["","refresh", "disseminate", "withdraw"], params[:task]) %></td>-->
-      <td><%= link_to result.id, show_package_path(:id => result.id) %></td>
+      <td><%= link_to result.id, package_path(result.id) %></td>
       <td><%= result.name %></td>
       <td><%= result.account_id %></td>
       <td><%= result.project_id %></td>
