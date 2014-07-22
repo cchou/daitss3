@@ -1,0 +1,9 @@
+<form action='/stashspace' method='POST' class="form-horizontal">
+  <div class="form-group">
+    <div class="col-sm-2">
+      <input name='name' class="form-control"></input>
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+      <input type='submit' value="Create" class="btn btn-default"/>
+    </div>
+  </div>
+</form>

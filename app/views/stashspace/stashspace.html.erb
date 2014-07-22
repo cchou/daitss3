@@ -1,0 +1,37 @@
+<% provide(:title, 'Stash Space') %>
+<h6>Packages->Work Space</h6>
+
+<div class="container-fluid">
+
+  <h3> new stash bin</h3>
+  
+  <%= render "create" %>
+
+  <hr></hr>
+
+  <h3>current stash bins: <%= @bins.size rescue '0' %></h3>
+
+  <table>
+    <tr>
+      <th>name</th>
+      <th>wips</th>
+    </tr>
+    <% @bins.each do |bin| %>
+      <tr>
+        <td><a href="/stashspace/<%= bin.id %>"><%= bin.name %></a></td>
+        <td>
+          <% if bin.empty? %>
+            <form action="/stashspace/<%= bin.id %>" method='POST' />
+              <input type='hidden' name='_method' value ='DELETE' />
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+              <input type='submit' value="Delete" />
+            </form>
+          <% else %>
+            <%= bin.size %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>
