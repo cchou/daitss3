@@ -49,6 +49,11 @@ module Daitss
   def archive
     Archive.instance
   end
+  
+  #method holder for log errors
+  def error msg
+    STDERR.puts "Error: " + msg
+  end
 
   alias_method :load_archive, :archive
   module_function :archive

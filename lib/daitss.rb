@@ -10,6 +10,7 @@ require 'daitss/archive/submit'
 require 'daitss/datetime'
 require 'daitss/proc'
 
+
 def DEPRECATED m
   raise m
 end

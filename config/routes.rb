@@ -8,6 +8,7 @@ Daitss::Application.routes.draw do
   resources :packages, only: [:index, :submit]
   resources :sessions, only: [:new, :create, :destroy]
   resource :workspace, :controller => :workspace, except: [:show]
+  resource :stashspace, :controller => :stashspace, except: [:show]
   resources :operators, :controller => "users" # single table inheritance, operator is a kind of user.
   resources :contacts, :controller => "users" # single table inheritance, contact is a kind of user.
 
@@ -24,10 +25,11 @@ Daitss::Application.routes.draw do
   match '/update_password', to: 'users#update_password'  
   match '/submit', to: 'packages#submit'
   match '/upload', to: 'packages#upload'
-  
   match '/submit_request', to: 'packages#submit_request'
   match '/workspace', to: 'workspace#workspace'
   match '/update', to: 'workspace#update'
+  match '/stashspace', to: 'stashspace#stashspace'
+  match '/stashspace/:id', to: 'stashspace#delete'
   
   get '/packages/:id', to: 'packages#show', :as => 'package'
   get '/workspace/:id', to: 'workspace#show', :as => 'wip'
